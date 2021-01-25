@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="GeoLib.Controls.DataXYZControl" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:GeoLib.Controls">
+  <Grid>
+    <StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <Label Width="24">X</Label>
+        <TextBox Height="22" TextWrapping="NoWrap" Width="120" Text="{Binding X}" />
+      </StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <Label Width="24">Y</Label>
+        <TextBox Height="22" TextWrapping="NoWrap" Width="120" Text="{Binding Y}" />
+      </StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <Label Width="24">Z</Label>
+        <TextBox Height="22" TextWrapping="NoWrap" Width="120" Text="{Binding Z}" />
+      </StackPanel>
+    </StackPanel>
+  </Grid>
+</UserControl>

@@ -1,0 +1,52 @@
+﻿namespace GeoLib.Entities.Table
+{
+    using ZwSoft.ZwCAD.DatabaseServices;
+    using GeoLib.Entities;
+    using System;
+
+    public class EntityTable : EntityBaseTyped<BlockReference, EntityTableData>
+    {
+        public EntityTable(BlockReference blockReference, EntityTableData data) : base(blockReference, data)
+        {
+        }
+
+        public override void Regen()
+        {
+            double? nullable;
+            double? nullable2;
+            double? nullable3;
+            Database database = base.entity.Database;
+            Transaction topTransaction = database.TransactionManager.TopTransaction;
+            TableUtils.RecalculateTableContent(database, this, out nullable, out nullable2, out nullable3);
+            foreach (ObjectId id in base.Entity.AttributeCollection)
+            {
+                AttributeReference attRef = (AttributeReference) topTransaction.GetObject(id, OpenMode.ForRead);
+                if (attRef.Tag == "X_1")
+                {
+                    EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, nullable);
+                }
+                if (attRef.Tag == "Y_1")
+                {
+                    EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, nullable2);
+                }
+                if (attRef.Tag == "Z_1")
+                {
+                    EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, nullable3);
+                }
+                if (attRef.Tag == "X_2")
+                {
+                    EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, base.Data.X2);
+                }
+                if (attRef.Tag == "Y_2")
+                {
+                    EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, base.Data.Y2);
+                }
+                if (attRef.Tag == "Z_2")
+                {
+                    EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, base.Data.Z2);
+                }
+            }
+        }
+    }
+}
+

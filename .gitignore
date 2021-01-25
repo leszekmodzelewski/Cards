@@ -1,0 +1,9 @@
+obj/*
+bin/*
+obj/
+bin/
+*.suo
+.vs/*
+bin
+Inspinia_MVC5_SeedProject/UI360.csproj.user
+Inspinia_MVC5_SeedProject/client.config
