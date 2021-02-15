@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Forms;
@@ -24,11 +25,11 @@ namespace GeoLib.Entities.Table
         {
             using (Winforms.CalculateDataWindow dlg = new CalculateDataWindow())
             {
-                var res = dlg.ShowDialog();
-                if (res == DialogResult.OK)
+                //var res = dlg.ShowDialog();
+                //if (res == DialogResult.OK)
                 {
                     FileCoordsDataUtils.ReadPointsFromFile(dlg.FileName, dlg.ScaleFactor);
-                    //CalculationUtils.Calculate(Application.DocumentManager.MdiActiveDocument.Database, dlg.FileName);
+                    CalculationUtils.Calculate(ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database, dlg.FileName);
 
                 }
             }
@@ -101,7 +102,7 @@ namespace GeoLib.Entities.Table
 
         public static void ExportToFile(Database database)
         {
-            List<ObjectId> coords = new List<ObjectId>();
+            var coords = new List<long>();
 
 
             var sb = new StringBuilder();
@@ -115,13 +116,14 @@ namespace GeoLib.Entities.Table
                         var xyz = GetXYZ(database, eTable);
                         sb.Append(id2.Handle.Value).Append(";").Append(xyz[0]).Append(";").Append(xyz[1]).Append(";").Append(xyz[2]).Append(Environment.NewLine);
 
-                        coords.Add(id2);
+                        coords.Add(id2.Handle.Value);
                     }
                 }
                 transaction.Commit();
             }
 
-            File.WriteAllText(@"D:\Temp\Coord.txt", sb.ToString().TrimEnd());
+            string filePath = Path.Combine(Path.GetTempPath(), "Coord.txt");
+            File.WriteAllText(filePath, sb.ToString().TrimEnd());
 
 
             PointCalculator pc = new PointCalculator();
@@ -134,21 +136,20 @@ namespace GeoLib.Entities.Table
 
         }
 
-        private static void UpdateCadEntity(List<ObjectId> coords, List<MatchedPoint> res, Database database)
+        private static void UpdateCadEntity(List<long> coords, List<MatchedPoint> res, Database database)
         {
             using (Transaction transaction = database.TransactionManager.StartTransaction())
             {
                 foreach (ObjectId id2 in transaction.GetObject(SymbolUtilityServices.GetBlockModelSpaceId(database), OpenMode.ForWrite) as BlockTableRecord)
                 {
-                    if (!coords.Contains(id2))
+                    var coordinate = res.FirstOrDefault(m => m.RealPoint?.Id == id2.Handle.Value);
+                    if (coordinate == null)
                         continue;
 
                     EntityBase base2 = EntityFactory.Create(transaction.GetObject(id2, OpenMode.ForWrite));
                     if (base2 is EntityTable eTable)
                     {
-                        int index = coords.IndexOf(id2);
-
-                        UpdateAboutRealValues(database, eTable, res[index]);
+                        UpdateAboutRealValues(database, eTable, coordinate);
 
                     }
                 }
@@ -156,7 +157,7 @@ namespace GeoLib.Entities.Table
             }
         }
 
-        private static void UpdateAboutRealValues(Database database, EntityTable eTable, MatchedPoint realPoint)
+        private static void UpdateAboutRealValues(Database database, EntityTable eTable, MatchedPoint point)
         {
             Transaction topTransaction = database.TransactionManager.TopTransaction;
             TableUtils.RecalculateTableContent(database, eTable, out double? nullable, out double? nullable2, out double? nullable3);
@@ -165,9 +166,9 @@ namespace GeoLib.Entities.Table
                 AttributeReference attRef = (AttributeReference)topTransaction.GetObject(id, OpenMode.ForWrite);
                 if (attRef.Tag == "X_2")
                 {
-                    if (realPoint.RealPoint != null)
+                    if (point.RealPoint != null)
                     {
-                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, realPoint.RealPoint.X);
+                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, point.TheoryPoint.X);
                     }
                     else
                     {
@@ -176,9 +177,9 @@ namespace GeoLib.Entities.Table
                 }
                 if (attRef.Tag == "Y_2")
                 {
-                    if (realPoint.RealPoint != null)
+                    if (point.RealPoint != null)
                     {
-                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, realPoint.RealPoint.Y);
+                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, point.TheoryPoint.Y);
                     }
                     else
                     {
@@ -187,9 +188,9 @@ namespace GeoLib.Entities.Table
                 }
                 if (attRef.Tag == "Z_2")
                 {
-                    if (realPoint.RealPoint != null)
+                    if (point.RealPoint != null)
                     {
-                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, realPoint.RealPoint.Z);
+                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, point.TheoryPoint.Z);
                     }
                     else
                     {

@@ -21,13 +21,9 @@
               <Label Height="23" Width="54">View</Label>
               <ComboBox Height="22" Width="120" DisplayMemberPath="Data.Name" SelectedValue="{Binding FirstOrigin}" ItemsSource="{Binding Items}" SelectionChanged="ComboBox_SelectionChanged" />
             </StackPanel>
-            <StackPanel IsEnabled="{Binding AreCoordinatesEnabled}">
-              <Controls:DataXYZControl Margin="32,8,0,8" DataContext="{Binding FirstShipDrawing}" IsEnabled="{Binding AreCoordinatesEnabled}" />
-            </StackPanel>
-            <StackPanel>
-              <Controls:DataXYZControl Margin="32,8,0,8" DataContext="{Binding FirstShipMeasure}" />
-            </StackPanel>
-          </StackPanel>
+            <StackPanel IsEnabled="{Binding AreCoordinatesEnabled}"/>
+                        <StackPanel/>
+                    </StackPanel>
         </GroupBox>
             </StackPanel>
       <StackPanel Margin="0,8,0,8" Orientation="Horizontal" HorizontalAlignment="Right">

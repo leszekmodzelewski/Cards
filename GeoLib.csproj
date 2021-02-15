@@ -76,12 +76,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\BestFitCtrl.xaml.cs">
+      <DependentUpon>BestFitCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FitCtrl.xaml.cs">
+      <DependentUpon>FitCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RangeCtrl.xaml.cs">
+      <DependentUpon>RangeCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ValueOffsetCtrl.xaml.cs">
+      <DependentUpon>ValueOffsetCtrl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Table\Cmd_DwgCreate.cs" />
     <Compile Include="Entities\Table\Cmd_TblCalculate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\FitViewModel.cs" />
+    <Compile Include="ViewModels\RangeViewModel.cs" />
+    <Compile Include="ViewModels\ValueOffsetViewModel.cs" />
     <Compile Include="Winforms\CalculateDataWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -400,6 +415,22 @@
     <EmbeddedResource Include="Winforms\ImportedFilesWindow.resx">
       <DependentUpon>ImportedFilesWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <Page Include="Controls\BestFitCtrl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FitCtrl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RangeCtrl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ValueOffsetCtrl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Entities\Origin\OriginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -445,11 +476,12 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Wpf\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy $(TargetPath) c:\ProgramData\Autodesk\ApplicationPlugins\Cards.bundle\$(TargetFileName) /Y
-
-xcopy $(TargetDir)$(TargetName).pdb c:\ProgramData\Autodesk\ApplicationPlugins\Cards.bundle\$(TargetName).pdb /Y
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

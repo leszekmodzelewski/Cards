@@ -97,6 +97,7 @@
                                 UseBasePoint = true,
                                 DefaultValue = defaultTableSize
                             };
+                            //var scale = editor.GetInteger("Podaj skale");
                             PromptDoubleResult distance = editor.GetDistance(options);
                             if (distance.Status == PromptStatus.OK)
                             {
