@@ -4,30 +4,62 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GeoLib.Controls"
+             xmlns:viewModels="clr-namespace:GeoLib.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="360" d:DesignWidth="648">
+             d:DesignHeight="378.5" d:DesignWidth="647.5" d:DataContext="{d:DesignInstance viewModels:FitViewModel}">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,19,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="517"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,19,0,0" TextWrapping="Wrap" Text="{Binding FilePath}" VerticalAlignment="Top" Width="517"/>
         <Button Content="Import data" HorizontalAlignment="Left" Margin="541,22,0,0" VerticalAlignment="Top" Width="75"/>
         <Label Content="X" HorizontalAlignment="Left" Margin="23,81,0,0" VerticalAlignment="Top"/>
-        <Label Content="Y" HorizontalAlignment="Left" Margin="23,108,0,0" VerticalAlignment="Top"/>
-        <Label Content="Z" HorizontalAlignment="Left" Margin="23,134,0,0" VerticalAlignment="Top"/>
-        <Button Content="+" HorizontalAlignment="Left" Margin="5,90,0,0" VerticalAlignment="Top" Width="18" Height="26"/>
-        <Button Content="-" HorizontalAlignment="Left" Margin="5,128,0,0" VerticalAlignment="Top" Width="18" Height="26"/>
-        <StackPanel Orientation="Horizontal">
+        <Label Content="Y" HorizontalAlignment="Left" Margin="23,117,0,0" VerticalAlignment="Top"/>
+        <Label Content="Z" HorizontalAlignment="Left" Margin="23,152,0,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding AddValueOffsetCommand}" Content="+" HorizontalAlignment="Left" Margin="5,90,0,0" VerticalAlignment="Top" Width="18" Height="38"/>
+        <Button Command="{Binding RemoveValueOffsetCommand}" Content="-" HorizontalAlignment="Left" Margin="5,136,0,0" VerticalAlignment="Top" Width="18" Height="38"/>
+
+        <StackPanel Margin="40,50,32,45">
+            <ScrollViewer  HorizontalScrollBarVisibility="Auto">
+                <ItemsControl  ItemsSource="{Binding  ValueOffset}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:ValueOffsetCtrl />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <ScrollViewer Padding="0, 20, 0,0" HorizontalScrollBarVisibility="Auto">
+                <ItemsControl  ItemsSource="{Binding  Ranges}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:RangeCtrl />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
         </StackPanel>
 
-        <Label Content="X" HorizontalAlignment="Left" Margin="23,196,0,0" VerticalAlignment="Top"/>
-        <Label Content="Y" HorizontalAlignment="Left" Margin="23,224,0,0" VerticalAlignment="Top"/>
-        <Label Content="Z" HorizontalAlignment="Left" Margin="23,250,0,0" VerticalAlignment="Top"/>
-        <Button Content="+" HorizontalAlignment="Left" Margin="5,206,0,0" VerticalAlignment="Top" Width="18" Height="26"/>
-        <Button Content="-" HorizontalAlignment="Left" Margin="5,244,0,0" VerticalAlignment="Top" Width="18" Height="26"/>
+
+        <Label Content="X" HorizontalAlignment="Left" Margin="23,231,0,0" VerticalAlignment="Top"/>
+        <Label Content="Y" HorizontalAlignment="Left" Margin="23,258,0,0" VerticalAlignment="Top"/>
+        <Label Content="Z" HorizontalAlignment="Left" Margin="23,286,0,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding AddRangeCommand}" Content="+" HorizontalAlignment="Left" Margin="5,203,0,0" VerticalAlignment="Top" Width="18" Height="51"/>
+        <Button Command="{Binding RemoveRangeCommand}" Content="-" HorizontalAlignment="Left" Margin="5,257,0,0" VerticalAlignment="Top" Width="18" Height="53"/>
 
         <StackPanel Orientation="Horizontal">
         </StackPanel>
-        <Button Content="Apply" HorizontalAlignment="Left" Margin="471,323,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Clear" HorizontalAlignment="Left" Margin="10,328,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="OK" HorizontalAlignment="Left" Margin="563,323,0,0" VerticalAlignment="Top" Width="75"/>
-
+        <Button Content="Apply" HorizontalAlignment="Left" Margin="471,354,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Clear" HorizontalAlignment="Left" Margin="10,353,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="OK" HorizontalAlignment="Left" Margin="563,353,0,0" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </UserControl>

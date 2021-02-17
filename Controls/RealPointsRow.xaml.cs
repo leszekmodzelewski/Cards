@@ -17,18 +17,18 @@ using GeoLib.ViewModels;
 namespace GeoLib.Controls
 {
     /// <summary>
-    /// Interaction logic for BestFitCtrl.xaml
+    /// Interaction logic for RealPointsRow.xaml
     /// </summary>
-    public partial class BestFitCtrl : UserControl
+    public partial class RealPointsRow : UserControl
     {
-        public BestFitCtrl()
+        public RealPointsRow()
         {
             InitializeComponent();
         }
 
-        public BestFitCtrl(BestFitViewModel bf) : this()
+        public RealPointsRow(RealPointsRowViewModel vm) : this()
         {
-            this.DataContext = bf;
+            this.DataContext = vm;
         }
     }
 }

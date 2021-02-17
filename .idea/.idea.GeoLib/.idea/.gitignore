@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/projectSettingsUpdater.xml
+/contentModel.xml
+/modules.xml
+/.idea.GeoLib.iml
+# Datasource local storage ignored files
+/../../../../../../../../:\NetPrograms\Zwcad\Dev\ZwCad\.idea\.idea.GeoLib\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/

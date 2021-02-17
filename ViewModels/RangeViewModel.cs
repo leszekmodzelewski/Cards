@@ -10,26 +10,47 @@ namespace GeoLib.ViewModels
 {
     public class RangeViewModel : INotifyPropertyChanged
     {
+        private int x;
+        private int y;
+        private int z;
+        private string range = string.Empty;
+
         public string Range
         {
-            get;
-            set;
+            get => range;
+            set
+            {
+                range = value;
+                OnPropertyChanged();
+            }
         }
 
         public int X
         {
-            get;
-            set;
+            get => x;
+            set
+            {
+                x = value;
+                OnPropertyChanged();
+            }
         }
         public int Y
         {
-            get;
-            set;
+            get => y;
+            set
+            {
+                y = value;
+                OnPropertyChanged();
+            }
         }
         public int Z
         {
-            get;
-            set;
+            get => z;
+            set
+            {
+                z = value;
+                OnPropertyChanged();
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

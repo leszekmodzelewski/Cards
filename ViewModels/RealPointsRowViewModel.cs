@@ -1,22 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using GeoLib.Wpf;
 
 namespace GeoLib.ViewModels
 {
-    public class ValueOffsetViewModel : INotifyPropertyChanged
+    public class RealPointsRowViewModel : INotifyPropertyChanged
     {
         private int x;
         private int y;
         private int z;
+        private int dx;
+        private int dy;
+        private int dz;
+        private string id = string.Empty;
 
-        private int ox;
-        private int oy;
-        private int oz;
+        public string Id
+        {
+            get => id;
+            set
+            {
+                id = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public int X
         {
@@ -46,33 +58,41 @@ namespace GeoLib.ViewModels
             }
         }
 
-        public int OffsetX
+        public int Dx
         {
-            get => ox;
+            get => dx;
             set
             {
-                ox = value;
+                dx = value;
                 OnPropertyChanged();
             }
         }
-        public int OffsetY
+        public int Dy
         {
-            get => oy;
+            get => dy;
             set
             {
-                oy = value;
+                dy = value;
                 OnPropertyChanged();
             }
         }
-        public int OffsetZ
+        public int Dz
         {
-            get => oz;
+            get => dz;
             set
             {
-                oz = value;
+                dz = value;
                 OnPropertyChanged();
             }
         }
+
+        public ICommand DxExecuteCommand => new SimpleCommand(DxExecute);
+
+        private void DxExecute()
+        {
+            this.Dx += 1;
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

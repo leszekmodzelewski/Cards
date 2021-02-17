@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GeoLib.ViewModels;
 
 namespace GeoLib.Controls
 {
@@ -23,6 +24,11 @@ namespace GeoLib.Controls
         public FitCtrl()
         {
             InitializeComponent();
+        }
+
+        public FitCtrl(FitViewModel vm) : this()
+        {
+            this.DataContext = vm;
         }
     }
 }

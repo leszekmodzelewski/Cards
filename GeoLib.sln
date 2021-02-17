@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoLib", "GeoLib.csproj", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PointCalc", "..\PointCalc\PointCalc.csproj", "{1CBB555A-3052-4F78-B84C-535B7D3BBC8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "..\TestApp\TestApp.csproj", "{723521C6-68B2-449A-A207-0197416A9604}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,14 @@ Global
 		{1CBB555A-3052-4F78-B84C-535B7D3BBC8A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1CBB555A-3052-4F78-B84C-535B7D3BBC8A}.Release|x64.ActiveCfg = Release|x64
 		{1CBB555A-3052-4F78-B84C-535B7D3BBC8A}.Release|x64.Build.0 = Release|x64
+		{723521C6-68B2-449A-A207-0197416A9604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{723521C6-68B2-449A-A207-0197416A9604}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{723521C6-68B2-449A-A207-0197416A9604}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{723521C6-68B2-449A-A207-0197416A9604}.Debug|x64.Build.0 = Debug|Any CPU
+		{723521C6-68B2-449A-A207-0197416A9604}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{723521C6-68B2-449A-A207-0197416A9604}.Release|Any CPU.Build.0 = Release|Any CPU
+		{723521C6-68B2-449A-A207-0197416A9604}.Release|x64.ActiveCfg = Release|Any CPU
+		{723521C6-68B2-449A-A207-0197416A9604}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

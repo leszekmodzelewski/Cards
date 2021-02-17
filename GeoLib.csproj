@@ -66,6 +66,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
     <Reference Include="ZwDatabaseMgd">
       <HintPath>C:\Program Files\ZWSOFT\ZWCAD 2021\ZwDatabaseMgd.dll</HintPath>
       <Private>False</Private>
@@ -76,6 +77,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Cmd_BestFit.cs" />
+    <Compile Include="Commands\Cmd_Fit.cs" />
     <Compile Include="Controls\BestFitCtrl.xaml.cs">
       <DependentUpon>BestFitCtrl.xaml</DependentUpon>
     </Compile>
@@ -84,6 +87,9 @@
     </Compile>
     <Compile Include="Controls\RangeCtrl.xaml.cs">
       <DependentUpon>RangeCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RealPointsRow.xaml.cs">
+      <DependentUpon>RealPointsRow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ValueOffsetCtrl.xaml.cs">
       <DependentUpon>ValueOffsetCtrl.xaml</DependentUpon>
@@ -94,14 +100,23 @@
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\BestFitViewModel.cs" />
     <Compile Include="ViewModels\FitViewModel.cs" />
     <Compile Include="ViewModels\RangeViewModel.cs" />
+    <Compile Include="ViewModels\RealPointsRowViewModel.cs" />
+    <Compile Include="Wpf\SimpleCommand.cs" />
     <Compile Include="ViewModels\ValueOffsetViewModel.cs" />
     <Compile Include="Winforms\CalculateDataWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Winforms\CalculateDataWindow.Designer.cs">
       <DependentUpon>CalculateDataWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Winforms\GenericWinFormForWpf.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Winforms\GenericWinFormForWpf.Designer.cs">
+      <DependentUpon>GenericWinFormForWpf.cs</DependentUpon>
     </Compile>
     <Compile Include="Winforms\ImportedFilesWindow.cs">
       <SubType>Form</SubType>
@@ -427,6 +442,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\RealPointsRow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ValueOffsetCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -476,9 +495,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Wpf\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
