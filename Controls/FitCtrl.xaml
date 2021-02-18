@@ -6,10 +6,10 @@
              xmlns:local="clr-namespace:GeoLib.Controls"
              xmlns:viewModels="clr-namespace:GeoLib.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="378.5" d:DesignWidth="647.5" d:DataContext="{d:DesignInstance viewModels:FitViewModel}">
+             d:DesignHeight="407.413" d:DesignWidth="648.376" d:DataContext="{d:DesignInstance viewModels:FitViewModel}">
     <Grid>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="10,19,0,0" TextWrapping="Wrap" Text="{Binding FilePath}" VerticalAlignment="Top" Width="517"/>
-        <Button Content="Import data" HorizontalAlignment="Left" Margin="541,22,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Command="{Binding ReadFromFileCommand}" Content="Import data" HorizontalAlignment="Left" Margin="541,22,0,0" VerticalAlignment="Top" Width="75"/>
         <Label Content="X" HorizontalAlignment="Left" Margin="23,81,0,0" VerticalAlignment="Top"/>
         <Label Content="Y" HorizontalAlignment="Left" Margin="23,117,0,0" VerticalAlignment="Top"/>
         <Label Content="Z" HorizontalAlignment="Left" Margin="23,152,0,0" VerticalAlignment="Top"/>
@@ -55,11 +55,10 @@
         <Label Content="Z" HorizontalAlignment="Left" Margin="23,286,0,0" VerticalAlignment="Top"/>
         <Button Command="{Binding AddRangeCommand}" Content="+" HorizontalAlignment="Left" Margin="5,203,0,0" VerticalAlignment="Top" Width="18" Height="51"/>
         <Button Command="{Binding RemoveRangeCommand}" Content="-" HorizontalAlignment="Left" Margin="5,257,0,0" VerticalAlignment="Top" Width="18" Height="53"/>
-
-        <StackPanel Orientation="Horizontal">
-        </StackPanel>
-        <Button Content="Apply" HorizontalAlignment="Left" Margin="471,354,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Clear" HorizontalAlignment="Left" Margin="10,353,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="OK" HorizontalAlignment="Left" Margin="563,353,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Command="{Binding ApplyCommand}" Content="Apply" HorizontalAlignment="Left" Margin="471,378,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Clear" HorizontalAlignment="Left" Margin="10,377,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="OK" HorizontalAlignment="Left" Margin="563,377,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,339,0,0" TextWrapping="Wrap" Text="{Binding MaxErrorFit}" VerticalAlignment="Top" Width="55" RenderTransformOrigin="1.052,0.271"/>
+        <Label Content="Maximum fit error" HorizontalAlignment="Left" Margin="70,339,0,0" VerticalAlignment="Top" Width="180"/>
     </Grid>
 </UserControl>

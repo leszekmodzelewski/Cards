@@ -19,7 +19,7 @@
     <WarningLevel>4</WarningLevel>
     <DebugType>full</DebugType>
     <ErrorReport>prompt</ErrorReport>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -102,8 +102,11 @@
     </Compile>
     <Compile Include="ViewModels\BestFitViewModel.cs" />
     <Compile Include="ViewModels\FitViewModel.cs" />
+    <Compile Include="ViewModels\Points.cs" />
+    <Compile Include="ViewModels\Ranges.cs" />
     <Compile Include="ViewModels\RangeViewModel.cs" />
     <Compile Include="ViewModels\RealPointsRowViewModel.cs" />
+    <Compile Include="ViewModels\SingleRange.cs" />
     <Compile Include="Wpf\SimpleCommand.cs" />
     <Compile Include="ViewModels\ValueOffsetViewModel.cs" />
     <Compile Include="Winforms\CalculateDataWindow.cs">

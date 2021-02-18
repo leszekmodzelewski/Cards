@@ -1,25 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GeoLib.Wpf;
+using PointCalc;
 
 namespace GeoLib.ViewModels
 {
     public class RealPointsRowViewModel : INotifyPropertyChanged
     {
-        private int x;
-        private int y;
-        private int z;
-        private int dx;
-        private int dy;
-        private int dz;
-        private string id = string.Empty;
+        //private int x;
+        //private int y;
+        //private int z;
+        //private int dx;
+        //private int dy;
+        //private int dz;
+        private int dxFactor;
+        private int dyFactor;
+        private int dzFactor;
+        private int id;
+        private const string missing = "Missing";
 
-        public string Id
+        public int Id
         {
             get => id;
             set
@@ -30,67 +37,83 @@ namespace GeoLib.ViewModels
         }
 
 
-        public int X
+        public int X => Convert.ToInt32(this.MatchedPoint.TheoryPoint.X);
+        public int Y => Convert.ToInt32(this.MatchedPoint.TheoryPoint.Y);
+        public int Z => Convert.ToInt32(this.MatchedPoint.TheoryPoint.Z);
+
+
+        public string Dx
         {
-            get => x;
-            set
+            get
             {
-                x = value;
-                OnPropertyChanged();
+                if (this.MatchedPoint.RealPoint == null)
+                {
+                    return missing;
+                }
+
+                return (this.MatchedPoint.RealPoint.X - this.MatchedPoint.TheoryPoint.X + DxFactor).ToString(CultureInfo.CurrentCulture);
             }
         }
-        public int Y
+        public string Dy
         {
-            get => y;
-            set
+            get
             {
-                y = value;
-                OnPropertyChanged();
+                if (this.MatchedPoint.RealPoint == null)
+                {
+                    return missing;
+                }
+
+                return (this.MatchedPoint.RealPoint.Y - this.MatchedPoint.TheoryPoint.Y + DyFactor).ToString(CultureInfo.CurrentCulture);
             }
         }
-        public int Z
+        public string Dz
         {
-            get => z;
-            set
+            get
             {
-                z = value;
-                OnPropertyChanged();
+                if (this.MatchedPoint.RealPoint == null)
+                {
+                    return missing;
+                }
+
+                return (this.MatchedPoint.RealPoint.Z - this.MatchedPoint.TheoryPoint.Z + DzFactor).ToString(CultureInfo.CurrentCulture);
             }
         }
 
-        public int Dx
+        public int DxFactor
         {
-            get => dx;
+            get => dxFactor;
             set
             {
-                dx = value;
-                OnPropertyChanged();
+                dxFactor = value;
+                OnPropertyChanged("Dx");
             }
         }
-        public int Dy
+        public int DyFactor
         {
-            get => dy;
+            get => dyFactor;
             set
             {
-                dy = value;
-                OnPropertyChanged();
+                dyFactor = value;
+                OnPropertyChanged("Dy");
             }
         }
-        public int Dz
+        public int DzFactor
         {
-            get => dz;
+            get => dzFactor;
             set
             {
-                dz = value;
-                OnPropertyChanged();
+                dzFactor = value;
+                OnPropertyChanged("Dz");
             }
         }
+
+        
+        public MatchedPoint MatchedPoint { get; set; }
 
         public ICommand DxExecuteCommand => new SimpleCommand(DxExecute);
-
         private void DxExecute()
         {
-            this.Dx += 1;
+            //this.Dx += 1;
         }
 
 

@@ -5,8 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Media.Media3D;
+using GeoLib.ViewModels;
 using GeoLib.Winforms;
 using PointCalc;
 
@@ -127,22 +129,65 @@ namespace GeoLib.Entities.Table
 
 
             PointCalculator pc = new PointCalculator();
-            var res = pc.Calculate();
+            //var res = pc.Calculate();
 
-            Debug.Assert(res.Count == coords.Count);
+            //Debug.Assert(res.Count == coords.Count);
 
-            UpdateCadEntity(coords, res, database);
+            // UpdateCadEntity(coords, res, database);
+            
+
+        }
+
+
+        public static List<MyPoint3D> ReadFromCad(Database database)
+        {
+            var coords = new List<long>();
+            List<MyPoint3D> cadPoints = new List<MyPoint3D>();
+
+            
+            using (Transaction transaction = database.TransactionManager.StartTransaction())
+            {
+                foreach (ObjectId id2 in transaction.GetObject(SymbolUtilityServices.GetBlockModelSpaceId(database), OpenMode.ForWrite) as BlockTableRecord)
+                {
+                    EntityBase base2 = EntityFactory.Create(transaction.GetObject(id2, OpenMode.ForWrite));
+                    if (base2 is EntityTable eTable)
+                    {
+                        var xyz = GetXYZ(database, eTable);
+
+                        double x = double.Parse(xyz[0]);
+                        double y = double.Parse(xyz[1]);
+                        double z = double.Parse(xyz[2]);
+
+                        cadPoints.Add(new MyPoint3D(new Point3D(x, y, z), id2.Handle.Value));
+
+                        coords.Add(id2.Handle.Value);
+                    }
+                }
+                transaction.Commit();
+            }
+
+            return cadPoints;
+            //string filePath = Path.Combine(Path.GetTempPath(), "Coord.txt");
+            //File.WriteAllText(filePath, sb.ToString().TrimEnd());
+
+
+            //PointCalculator pc = new PointCalculator();
+            //var res = pc.Calculate();
+
+            //Debug.Assert(res.Count == coords.Count);
+
+            //UpdateCadEntity(coords, res, database);
 
 
         }
 
-        private static void UpdateCadEntity(List<long> coords, List<MatchedPoint> res, Database database)
+        public static void UpdateCadEntity(List<MatchedPoint> res, Database database)
         {
             using (Transaction transaction = database.TransactionManager.StartTransaction())
             {
                 foreach (ObjectId id2 in transaction.GetObject(SymbolUtilityServices.GetBlockModelSpaceId(database), OpenMode.ForWrite) as BlockTableRecord)
                 {
-                    var coordinate = res.FirstOrDefault(m => m.RealPoint?.Id == id2.Handle.Value);
+                    var coordinate = res.FirstOrDefault(m => m.TheoryPoint?.Id == id2.Handle.Value);
                     if (coordinate == null)
                         continue;
 
@@ -168,7 +213,7 @@ namespace GeoLib.Entities.Table
                 {
                     if (point.RealPoint != null)
                     {
-                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, point.TheoryPoint.X);
+                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, point.RealPoint.X);
                     }
                     else
                     {
@@ -179,7 +224,7 @@ namespace GeoLib.Entities.Table
                 {
                     if (point.RealPoint != null)
                     {
-                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, point.TheoryPoint.Y);
+                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, point.RealPoint.Y);
                     }
                     else
                     {
@@ -190,13 +235,33 @@ namespace GeoLib.Entities.Table
                 {
                     if (point.RealPoint != null)
                     {
-                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, point.TheoryPoint.Z);
+                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, point.RealPoint.Z);
                     }
                     else
                     {
                         attRef.TextString = "Missing";
                     }
                 }
+
+                UpdateRange(point, attRef);
+            }
+        }
+
+        private static void UpdateRange(MatchedPoint matchedPoint, AttributeReference attRef)
+        {
+            if (attRef.Tag == "X_3")
+            {
+                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, Convert.ToDouble(Points.GetRangeForX(matchedPoint.TheoryPoint.X)));
+            }
+
+            if (attRef.Tag == "Y_3")
+            {
+                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, Convert.ToDouble(Points.GetRangeForY(matchedPoint.TheoryPoint.Y)));
+            }
+
+            if (attRef.Tag == "Z_3")
+            {
+                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, Convert.ToDouble(Points.GetRangeForZ(matchedPoint.TheoryPoint.Z)));
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using GeoLib.Controls;
 using GeoLib.Entities.Table;
 using GeoLib.ViewModels;
 using GeoLib.Winforms;
+using PointCalc;
 using ZwSoft.ZwCAD.Runtime;
 
 namespace GeoLib.Commands
@@ -19,19 +21,21 @@ namespace GeoLib.Commands
         {
             using (Winforms.CalculateDataWindow dlg = new CalculateDataWindow())
             {
-                var vm = new FitViewModel();
+                Points.TheoryPoints = ReadTheoryPointsFromCad().ToArray();
+                var vm = new FitViewModel(Points.ValueOffset, Points.Range);
                 var form = new GenericWinFormForWpf(new FitCtrl(vm));
                 form.ShowDialog();
-                
-                
-                //var res = dlg.ShowDialog();
-                //if (res == DialogResult.OK)
-                //{
-                //    FileCoordsDataUtils.ReadPointsFromFile(dlg.FileName, dlg.ScaleFactor);
-                //    CalculationUtils.Calculate(ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database, dlg.FileName);
 
-                //}
+                PointCalculator pc = new PointCalculator();
+                Points.MatchedPoints = pc.Calculate(Points.TheoryPoints, Points.RealPoints, Points.MaxErrorFit);
+
+                CalculationUtils.UpdateCadEntity(Points.MatchedPoints, ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database);
             }
+        }
+
+        private List<MyPoint3D> ReadTheoryPointsFromCad()
+        {
+            return CalculationUtils.ReadFromCad(ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database);
         }
     }
 }

@@ -1,19 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using GeoLib.Wpf;
+using PointCalc;
 
 namespace GeoLib.ViewModels
 {
     public class FitViewModel : INotifyPropertyChanged
     {
-        private string filePath;
+        private string filePath = @"c:\NetPrograms\Zwcad\PointsDataForCardsWithSemiColon.txt";
+        private int maxErrorFit;
+
         public string FilePath
         {
             get => filePath;
@@ -21,6 +24,29 @@ namespace GeoLib.ViewModels
             {
                 filePath = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public int MaxErrorFit
+        {
+            get => maxErrorFit;
+            set
+            {
+                maxErrorFit = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public FitViewModel(IEnumerable<ValueOffsetViewModel> valueOffset, IEnumerable<RangeViewModel> ranges)
+        {
+            foreach (var rangeViewModel in ranges)
+            {
+                Ranges.Add(rangeViewModel);
+            }
+
+            foreach (var valueOffsetViewModel in valueOffset)
+            {
+                ValueOffset.Add(valueOffsetViewModel);
             }
         }
 
@@ -60,6 +86,24 @@ namespace GeoLib.ViewModels
             {
                 this.Ranges.RemoveAt(this.Ranges.Count - 1);
             }
+        }
+
+
+        public ICommand ReadFromFileCommand => new SimpleCommand(ReadFromFileExecute);
+
+        private void ReadFromFileExecute()
+        {
+            Points.RealPoints = PointData.GetPoints(filePath);
+            MessageBox.Show($@"Read {Points.RealPoints.Length} points from file.");
+        }
+
+        public ICommand ApplyCommand => new SimpleCommand(ApplyExecute);
+
+        private void ApplyExecute()
+        {
+            Points.SetRangeData(this.Ranges);
+            Points.SetValueOffsetData(this.ValueOffset);
+            Points.MaxErrorFit = this.MaxErrorFit;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

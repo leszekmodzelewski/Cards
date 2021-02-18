@@ -9,9 +9,9 @@
              d:DesignHeight="120.659" d:DesignWidth="136.374" d:DataContext="{d:DesignInstance viewModels:RangeViewModel}">
     <Grid>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="10,8,0,0" TextWrapping="Wrap" Text="{Binding Path= Range}" VerticalAlignment="Top" Width="119"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="36,92,0,0" TextWrapping="Wrap" Text="{Binding Path= X}" VerticalAlignment="Top" Width="93"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="36,92,0,0" TextWrapping="Wrap" Text="{Binding Path= Z}" VerticalAlignment="Top" Width="93"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="36,64,0,0" TextWrapping="Wrap" Text="{Binding Path= Y}" VerticalAlignment="Top" Width="93"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="36,36,0,0" TextWrapping="Wrap" Text="{Binding Path= Z}" VerticalAlignment="Top" Width="93"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="36,36,0,0" TextWrapping="Wrap" Text="{Binding Path= X}" VerticalAlignment="Top" Width="93"/>
         <Label Content="+/-" HorizontalAlignment="Left" Margin="8,33,0,0" VerticalAlignment="Top"/>
         <Label Content="+/-" HorizontalAlignment="Left" Margin="8,89,0,0" VerticalAlignment="Top"/>
         <Label Content="+/-" HorizontalAlignment="Left" Margin="8,61,0,0" VerticalAlignment="Top"/>
