@@ -1,4 +1,4 @@
-﻿namespace GeoLib.ViewModels
+﻿namespace GeoLib.Logic
 {
     class SingleRange
     {

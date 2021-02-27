@@ -12,7 +12,7 @@
         <Label Content="Best fit maximal mistake" HorizontalAlignment="Left" Margin="16,14,0,0" VerticalAlignment="Top"/>
         <Button Content="Save to file" HorizontalAlignment="Left" Margin="16,420,0,0" VerticalAlignment="Top" Width="95"/>
         <Button Content="Clear" HorizontalAlignment="Left" Margin="556,420,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Apply" HorizontalAlignment="Left" Margin="636,420,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Apply" Command="{Binding ApplyCommand}" HorizontalAlignment="Left" Margin="636,420,0,0" VerticalAlignment="Top" Width="75"/>
         <Button Content="Ok" HorizontalAlignment="Left" Margin="716,420,0,0" VerticalAlignment="Top" Width="75"/>
         <Label Content="No" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top"/>
         <Label Content="X" HorizontalAlignment="Left" Margin="94,57,0,0" VerticalAlignment="Top"/>

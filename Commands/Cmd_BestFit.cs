@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using GeoLib.Controls;
+using GeoLib.Entities.Table;
+using GeoLib.Logic;
 using GeoLib.ViewModels;
 using GeoLib.Winforms;
+using PointCalc;
 using ZwSoft.ZwCAD.Runtime;
 
 namespace GeoLib.Commands
@@ -19,39 +22,26 @@ namespace GeoLib.Commands
                 return;
             }
 
-            var points = new List<RealPointsRowViewModel>();
 
-            for (int i=0; i<Points.MatchedPoints.Count; ++i)
-            { 
-                points.Add(new RealPointsRowViewModel
-                {
-                    MatchedPoint = Points.MatchedPoints[i],
-                    Id = i+1
+            var matchedPoints = Points.MatchedPointsBestFit == null || Points.MatchedPointsBestFit.Count == 0
+                ? Points.MatchedPoints
+                : Points.MatchedPointsBestFit;
 
-                    //RealX = Points.MatchedPoints[i].RealPoint?.X,
-                    //RealY = Points.MatchedPoints[i].RealPoint?.Y,
-                    //RealZ = Points.MatchedPoints[i].RealPoint?.Z,
-
-                    //X = Convert.ToInt32(Points.MatchedPoints[i].TheoryPoint.X),
-                    //Y = Convert.ToInt32(Points.MatchedPoints[i].TheoryPoint.Y),
-                    //Z = Convert.ToInt32(Points.MatchedPoints[i].TheoryPoint.Z),
-                }
-                );
-
-                if(Points.BestFitPointOffsetDictionary.TryGetValue(Points.MatchedPoints[i].TheoryPoint.Id, out int [] pointFactor))
-                {
-                    points[points.Count - 1].DxFactor = pointFactor[0];
-                    points[points.Count - 1].DyFactor = pointFactor[1];
-                    points[points.Count - 1].DzFactor = pointFactor[2];
-                }
-            }
-           
+            var points = BestFitViewModel.GetPointsForBestFitDialog(matchedPoints);
 
             var bf = new BestFitViewModel(points);
+            bf.MaxFitValue = Points.MaxErrorBestFit;
             using (var form = new GenericWinFormForWpf(new BestFitCtrl(bf)))
             {
                 form.ShowDialog();
             }
+
+            //PointCalculator pc = new PointCalculator();
+            //Points.MatchedPointsBestFit = pc.CalculateBestFit(Points.TheoryPoints, Points.RealPoints, Points.MaxErrorBestFit);
+
+            //CalculationUtils.UpdateCadEntity(Points.MatchedPointsBestFit, ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database);
         }
+
+       
     }
 }

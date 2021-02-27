@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
+using GeoLib.Logic;
 using GeoLib.Wpf;
 using PointCalc;
 

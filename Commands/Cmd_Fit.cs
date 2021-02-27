@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GeoLib.Controls;
 using GeoLib.Entities.Table;
+using GeoLib.Logic;
 using GeoLib.ViewModels;
 using GeoLib.Winforms;
 using PointCalc;
@@ -23,6 +24,7 @@ namespace GeoLib.Commands
             {
                 Points.TheoryPoints = ReadTheoryPointsFromCad().ToArray();
                 var vm = new FitViewModel(Points.ValueOffset, Points.Range);
+                vm.MaxErrorFit = Points.MaxErrorFit;
                 var form = new GenericWinFormForWpf(new FitCtrl(vm));
                 form.ShowDialog();
 

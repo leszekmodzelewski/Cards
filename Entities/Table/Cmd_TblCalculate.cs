@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Media.Media3D;
+using GeoLib.Logic;
 using GeoLib.ViewModels;
 using GeoLib.Winforms;
 using PointCalc;

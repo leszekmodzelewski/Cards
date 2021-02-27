@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GeoLib.ViewModels;
 using PointCalc;
 
-namespace GeoLib.ViewModels
+namespace GeoLib.Logic
 {
     public static class Points
     {
@@ -19,7 +20,7 @@ namespace GeoLib.ViewModels
         public static MyPoint3D[] RealPoints { get; set; }
 
         public static MyPoint3D[] TheoryPoints { get; set; }
-        public static double MaxErrorFit { get; set; }
+        public static int MaxErrorFit { get; set; }
         public static List<MatchedPoint> MatchedPoints { get; set; }
 
         public static void SetValueOffsetData(IEnumerable<ValueOffsetViewModel> valueOffsetViewModel)
@@ -76,5 +77,7 @@ namespace GeoLib.ViewModels
         }
 
         public static Dictionary<long, int[]> BestFitPointOffsetDictionary { get; } = new Dictionary<long, int[]>();
+        public static List<MatchedPoint> MatchedPointsBestFit { get; set; }
+        public static int MaxErrorBestFit { get; set; }
     }
 }
