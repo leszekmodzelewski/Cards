@@ -103,7 +103,7 @@ namespace GeoLib.ViewModels
         private void ApplyExecute()
         {
             Points.SetRangeData(this.Ranges);
-            Points.SetValueOffsetData(this.ValueOffset);
+            Points.SetValueOffsetDataForTheoryPoints(this.ValueOffset);
             Points.MaxErrorFit = this.MaxErrorFit;
         }
 

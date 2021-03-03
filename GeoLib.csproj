@@ -8,7 +8,7 @@
     <AssemblyName>GeoLib</AssemblyName>
     <OutputType>Library</OutputType>
     <RootNamespace>GeoLib</RootNamespace>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -82,6 +82,9 @@
     <Compile Include="Controls\BestFitCtrl.xaml.cs">
       <DependentUpon>BestFitCtrl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\BoxWithText.xaml.cs">
+      <DependentUpon>BoxWithText.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\FitCtrl.xaml.cs">
       <DependentUpon>FitCtrl.xaml</DependentUpon>
     </Compile>
@@ -101,6 +104,7 @@
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\BestFitViewModel.cs" />
+    <Compile Include="ViewModels\BoxWithTextViewModel.cs" />
     <Compile Include="ViewModels\FitViewModel.cs" />
     <Compile Include="Logic\Points.cs" />
     <Compile Include="Logic\Ranges.cs" />
@@ -434,6 +438,10 @@
       <DependentUpon>ImportedFilesWindow.cs</DependentUpon>
     </EmbeddedResource>
     <Page Include="Controls\BestFitCtrl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\BoxWithText.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

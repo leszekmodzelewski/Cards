@@ -6,18 +6,21 @@
              xmlns:local="clr-namespace:GeoLib.Controls"
              xmlns:viewModels="clr-namespace:GeoLib.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="23.25" d:DesignWidth="653.25" d:DataContext="{d:DesignInstance viewModels:RealPointsRowViewModel}">
+             d:DesignHeight="44.863" d:DesignWidth="652.368" d:DataContext="{d:DesignInstance viewModels:RealPointsRowViewModel}">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding X}" VerticalAlignment="Top" Width="120" Margin="31,0,0,0"/>
-        <TextBlock HorizontalAlignment="Left" Height="23" Margin="156,0,0,0" TextWrapping="Wrap" Text="{Binding Y}" VerticalAlignment="Top" Width="120"/>
-        <TextBlock HorizontalAlignment="Left" Height="23" Margin="281,0,0,0" TextWrapping="Wrap" Text="{Binding Z}" VerticalAlignment="Top" Width="120"/>
-        <TextBlock HorizontalAlignment="Left" Height="23" Margin="406,0,0,0" TextWrapping="Wrap" Text="{Binding Dx}" VerticalAlignment="Top" Width="62"/>
-        <Button Command="{Binding DxExecuteCommand}" Content="+" HorizontalAlignment="Left" Margin="468,0,0,0" VerticalAlignment="Top" Width="18" Height="23"/>
-        <TextBlock HorizontalAlignment="Left" Height="23" Margin="489,0,0,0" TextWrapping="Wrap" Text="{Binding Dy}" VerticalAlignment="Top" Width="62"/>
-        <Button Content="+" HorizontalAlignment="Left" Margin="551,0,0,0" VerticalAlignment="Top" Width="18" Height="23"/>
-        <TextBlock HorizontalAlignment="Left" Height="23" Margin="572,0,0,0" TextWrapping="Wrap" Text="{Binding Dz}" VerticalAlignment="Top" Width="62"/>
-        <Button Content="+" HorizontalAlignment="Left" Margin="634,0,0,0" VerticalAlignment="Top" Width="18" Height="23"/>
-        <TextBlock HorizontalAlignment="Left" Margin="0,2,0,-27" TextWrapping="Wrap" Text="{Binding Id}" VerticalAlignment="Top" Width="26"/>
+        <TextBlock HorizontalAlignment="Left" Height="45" TextWrapping="Wrap" Text="{Binding X}" VerticalAlignment="Top" Width="120" Margin="31,0,0,0"/>
+        <TextBlock HorizontalAlignment="Left" Height="45" Margin="156,0,0,0" TextWrapping="Wrap" Text="{Binding Y}" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Height="45" Margin="281,0,0,0" TextWrapping="Wrap" Text="{Binding Z}" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Height="45" Margin="406,0,0,0" TextWrapping="Wrap" Text="{Binding Dx}" VerticalAlignment="Top" Width="50"/>
+        <Button Command="{Binding DxExecuteCommand}" Content="{Binding DxFactorText}" HorizontalAlignment="Left" Margin="456,0,0,0" VerticalAlignment="Top" Width="30" Height="23"/>
+        <TextBlock HorizontalAlignment="Left" Height="45" Margin="489,0,0,0" TextWrapping="Wrap" Text="{Binding Dy}" VerticalAlignment="Top" Width="50"/>
+        <Button Command="{Binding DyExecuteCommand}" Content="{Binding DyFactorText}" HorizontalAlignment="Left" Margin="539,0,0,0" VerticalAlignment="Top" Width="30" Height="23"/>
+        <TextBlock HorizontalAlignment="Left" Height="45" Margin="572,0,0,0" TextWrapping="Wrap" Text="{Binding Dz}" VerticalAlignment="Top" Width="50"/>
+        <Button Command="{Binding DzExecuteCommand}" Content="{Binding DzFactorText}" HorizontalAlignment="Left" Margin="622,0,0,0" VerticalAlignment="Top" Width="30" Height="23"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Id}" VerticalAlignment="Top" Width="26" Height="45"/>
+        <TextBlock HorizontalAlignment="Left" Margin="457,23,0,0" TextWrapping="Wrap" Text="{Binding DxModifiedFactor}" VerticalAlignment="Top" Width="29" Height="22"/>
+        <TextBlock HorizontalAlignment="Left" Margin="539,23,0,0" TextWrapping="Wrap" Text="{Binding DyModifiedFactor}" VerticalAlignment="Top" Width="29" Height="22"/>
+        <TextBlock HorizontalAlignment="Left" Margin="622,23,0,0" TextWrapping="Wrap" Text="{Binding DzModifiedFactor}" VerticalAlignment="Top" Width="29" Height="22"/>
 
     </Grid>
 </UserControl>

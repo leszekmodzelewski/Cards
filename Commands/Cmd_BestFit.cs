@@ -22,7 +22,6 @@ namespace GeoLib.Commands
                 return;
             }
 
-
             var matchedPoints = Points.MatchedPointsBestFit == null || Points.MatchedPointsBestFit.Count == 0
                 ? Points.MatchedPoints
                 : Points.MatchedPointsBestFit;
@@ -35,11 +34,6 @@ namespace GeoLib.Commands
             {
                 form.ShowDialog();
             }
-
-            //PointCalculator pc = new PointCalculator();
-            //Points.MatchedPointsBestFit = pc.CalculateBestFit(Points.TheoryPoints, Points.RealPoints, Points.MaxErrorBestFit);
-
-            //CalculationUtils.UpdateCadEntity(Points.MatchedPointsBestFit, ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database);
         }
 
        

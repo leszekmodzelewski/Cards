@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 using GeoLib.Entities.Table;
 using GeoLib.Wpf;
@@ -45,8 +46,9 @@ namespace GeoLib.ViewModels
 
         private void ApplyExecute()
         {
-            //Logic.Points.SetRangeData(this.Ranges);
-            //Logic.Points.SetValueOffsetData(this.ValueOffset);
+            Logic.Points.SetValueOffsetDataForRealPoints(Points);
+            
+
             Logic.Points.MaxErrorBestFit = this.MaxFitValue;
 
             CalculateUsingBestFit();
@@ -60,7 +62,7 @@ namespace GeoLib.ViewModels
             Logic.Points.MatchedPointsBestFit = pc.CalculateBestFit(Logic.Points.TheoryPoints, Logic.Points.RealPoints, Logic.Points.MaxErrorBestFit);
 
             CalculationUtils.UpdateCadEntity(Logic.Points.MatchedPointsBestFit, ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database);
-
+            
             this.Points.Clear();
 
             foreach (var realPointsRowViewModel in GetPointsForBestFitDialog(Logic.Points.MatchedPointsBestFit))
@@ -80,15 +82,20 @@ namespace GeoLib.ViewModels
                 points.Add(new RealPointsRowViewModel
                     {
                         MatchedPoint = matchedPoints[i],
-                        Id = i + 1
-                    }
+                        Id = i + 1,
+                        RealPointId = matchedPoints[i].RealPoint?.Id ?? matchedPoints[i].TheoryPoint.Id
+                }
                 );
 
-                if (Logic.Points.BestFitPointOffsetDictionary.TryGetValue(matchedPoints[i].TheoryPoint.Id, out int[] pointFactor))
+                if (matchedPoints[i].RealPoint != null)
                 {
-                    points[points.Count - 1].DxFactor = pointFactor[0];
-                    points[points.Count - 1].DyFactor = pointFactor[1];
-                    points[points.Count - 1].DzFactor = pointFactor[2];
+                    if (Logic.Points.BestFitPointOffsetDictionary.TryGetValue(matchedPoints[i].RealPoint.Id,
+                        out int[] pointFactor))
+                    {
+                        points[points.Count - 1].DxModifiedFactor = pointFactor[0];
+                        points[points.Count - 1].DyModifiedFactor = pointFactor[1];
+                        points[points.Count - 1].DzModifiedFactor = pointFactor[2];
+                    }
                 }
             }
 

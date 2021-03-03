@@ -245,6 +245,7 @@ namespace GeoLib.Entities.Table
                 }
 
                 UpdateRange(point, attRef);
+                UpdateRealMinusTheory(point, attRef);
             }
         }
 
@@ -263,6 +264,27 @@ namespace GeoLib.Entities.Table
             if (attRef.Tag == "Z_3")
             {
                 EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, Convert.ToDouble(Points.GetRangeForZ(matchedPoint.TheoryPoint.Z)));
+            }
+        }
+
+        private static void UpdateRealMinusTheory(MatchedPoint matchedPoint, AttributeReference attRef)
+        {
+            if (matchedPoint.RealPoint == null)
+                return;
+
+            if (attRef.Tag == "X_4")
+            {
+                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, matchedPoint.RealPoint.X - matchedPoint.TheoryPoint.X);
+            }
+
+            if (attRef.Tag == "Y_4")
+            {
+                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, matchedPoint.RealPoint.Y - matchedPoint.TheoryPoint.Y);
+            }
+
+            if (attRef.Tag == "Z_4")
+            {
+                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, matchedPoint.RealPoint.Z - matchedPoint.TheoryPoint.Z);
             }
         }
 
