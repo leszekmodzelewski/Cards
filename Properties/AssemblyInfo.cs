@@ -15,6 +15,6 @@ using System.Runtime.Versioning;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: CompilationRelaxations(8)]
 [assembly: ComVisible(false)]
-[assembly: Debuggable(DebuggableAttribute.DebuggingModes.IgnoreSymbolStoreSequencePoints)]
+//[assembly: Debuggable(DebuggableAttribute.DebuggingModes.EnableEditAndContinue)]
 [assembly: Guid("2f057bff-17c9-44b1-9975-1f670ad76e2e")]
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows=true)]

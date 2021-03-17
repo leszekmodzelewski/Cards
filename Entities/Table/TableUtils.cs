@@ -297,13 +297,13 @@ namespace GeoLib.Entities.Table
         {
             if (sectionType == TableSectionTypes.TOP)
             {
-                return new Point3d(tablePosition.X - originPosition.X, -(tablePosition.Y - originPosition.Y), tablePosition.Z - originPosition.Z);
+                return new Point3d(tablePosition.X - originPosition.X, (tablePosition.Y - originPosition.Y), tablePosition.Z - originPosition.Z);
             }
             if (sectionType != TableSectionTypes.FRAME)
             {
                 return ((sectionType != TableSectionTypes.SIDE) ? Point3d.Origin : new Point3d(tablePosition.X - originPosition.X, tablePosition.Z - originPosition.Z, tablePosition.Y - originPosition.Y));
             }
-            return new Point3d(-(tablePosition.Z - originPosition.Z), tablePosition.X - originPosition.X, tablePosition.Y - originPosition.Y);
+            return new Point3d((tablePosition.Z - originPosition.Z), tablePosition.X - originPosition.X, tablePosition.Y - originPosition.Y);
         }
 
         private static void UpdateNullableDoubleAttribute(AttributeReference attRef, double? value)

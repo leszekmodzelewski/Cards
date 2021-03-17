@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Forms;
 using GeoLib.Controls;
 using GeoLib.Entities.Table;
@@ -22,6 +23,12 @@ namespace GeoLib.Commands
                 return;
             }
 
+            if (!Verify(Points.MatchedPoints))
+            {
+                MessageBox.Show("There should be at least 2 points matched before proceed.", "Fit error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
+
             var matchedPoints = Points.MatchedPointsBestFit == null || Points.MatchedPointsBestFit.Count == 0
                 ? Points.MatchedPoints
                 : Points.MatchedPointsBestFit;
@@ -36,6 +43,20 @@ namespace GeoLib.Commands
             }
         }
 
-       
+        private bool Verify(List<MatchedPoint> matchedPoints)
+        {
+            int matchedPointsCount = 0;
+            foreach (MatchedPoint matchedPoint in matchedPoints)
+            {
+                if (matchedPoint.TheoryPoint != null && matchedPoint.RealPoint != null)
+                {
+                    matchedPointsCount++;
+                    if (matchedPointsCount >= 2)
+                        return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

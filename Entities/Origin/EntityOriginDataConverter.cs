@@ -1,4 +1,6 @@
-﻿namespace GeoLib.Entities.Origin
+﻿using GeoLib.Controls;
+
+namespace GeoLib.Entities.Origin
 {
     using GeoLib.Entities.Table;
     using System;
@@ -39,9 +41,10 @@
             OriginWindowModel model1 = new OriginWindowModel();
             model1.Name = data.Name;
             model1.SectionType = (TableSectionTypes) data.SectionTypes;
-            model1.Ship.X = new double?(data.X);
-            model1.Ship.Y = new double?(data.Y);
-            model1.Ship.Z = new double?(data.Z);
+            model1.Ship = new DataXYZModel(data.X, data.Y, data.Z);
+            // model1.Ship.X = new double?(data.X);
+            // model1.Ship.Y = new double?(data.Y);
+            // model1.Ship.Z = new double?(data.Z);
             return model1;
         }
     }

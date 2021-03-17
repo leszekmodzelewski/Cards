@@ -10,28 +10,34 @@
     <Grid>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="159,18,0,0" TextWrapping="Wrap" Text="{Binding MaxFitValue}" VerticalAlignment="Top" Width="120"/>
         <Label Content="Best fit maximal mistake" HorizontalAlignment="Left" Margin="16,14,0,0" VerticalAlignment="Top"/>
-        <Button Content="Save to file" HorizontalAlignment="Left" Margin="16,420,0,0" VerticalAlignment="Top" Width="95"/>
-        <Button Content="Clear" HorizontalAlignment="Left" Margin="556,420,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Apply" Command="{Binding ApplyCommand}" HorizontalAlignment="Left" Margin="636,420,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Ok" HorizontalAlignment="Left" Margin="716,420,0,0" VerticalAlignment="Top" Width="75"/>
-        <Label Content="No" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top"/>
-        <Label Content="X" HorizontalAlignment="Left" Margin="94,57,0,0" VerticalAlignment="Top"/>
-        <Label Content="Y" HorizontalAlignment="Left" Margin="216,57,0,0" VerticalAlignment="Top"/>
-        <Label Content="Z" HorizontalAlignment="Left" Margin="348,57,0,0" VerticalAlignment="Top"/>
-        <Label Content="dX" HorizontalAlignment="Left" Margin="444,57,0,0" VerticalAlignment="Top"/>
-        <Label Content="dY" HorizontalAlignment="Left" Margin="524,57,0,0" VerticalAlignment="Top"/>
-        <Label Content="dZ" HorizontalAlignment="Left" Margin="607,57,0,0" VerticalAlignment="Top"/>
-        
-            <ItemsControl Margin="15,77,16,52" ItemsSource="{Binding Points}">
+        <Button Content="Save to file" HorizontalAlignment="Left" Margin="16,0,0,10" VerticalAlignment="Bottom" Width="95"/>
+        <Button Content="Clear" HorizontalAlignment="Left" Margin="555,0,0,10" Width="75" VerticalAlignment="Bottom"/>
+        <Button Content="Apply" Command="{Binding ApplyCommand}" HorizontalAlignment="Left" Margin="635,0,0,10" VerticalAlignment="Bottom" Width="75"/>
+        <Button Content="Ok" HorizontalAlignment="Left" Margin="715,0,0,10" VerticalAlignment="Bottom" Width="75"/>
+        <Label Content="No" HorizontalAlignment="Left" Margin="7,57,0,0" VerticalAlignment="Top"/>
+        <Label Content="X" HorizontalAlignment="Left" Margin="54,57,0,0" VerticalAlignment="Top"/>
+        <Label Content="Y" HorizontalAlignment="Left" Margin="176,57,0,0" VerticalAlignment="Top"/>
+        <Label Content="Z" HorizontalAlignment="Left" Margin="300,57,0,0" VerticalAlignment="Top"/>
+        <Label Content="dX" HorizontalAlignment="Left" Margin="417,57,0,0" VerticalAlignment="Top"/>
+        <Label Content="dY" HorizontalAlignment="Left" Margin="500,57,0,0" VerticalAlignment="Top"/>
+        <Label Content="dZ" HorizontalAlignment="Left" Margin="584,57,0,0" VerticalAlignment="Top"/>
+
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Name="RowViewer" Margin="15,83,0,44">
+            <ItemsControl ItemsSource="{Binding Points}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:RealPointsRow />
+                        <StackPanel>
+                            <Separator></Separator>
+                            <local:RealPointsRow />
+                        </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+        </ScrollViewer>
 
-            <!--<local:RealPointsRow HorizontalAlignment="Left" Margin="17,88,0,0" VerticalAlignment="Top"/>-->
-        
+        <!--<local:RealPointsRow HorizontalAlignment="Left" Margin="17,88,0,0" VerticalAlignment="Top"/>-->
+
 
     </Grid>
 </UserControl>

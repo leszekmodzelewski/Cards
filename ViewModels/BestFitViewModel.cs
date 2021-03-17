@@ -58,8 +58,21 @@ namespace GeoLib.ViewModels
 
         private void CalculateUsingBestFit()
         {
+            var r = new List<MyPoint3D>();
+            var t = new List<MyPoint3D>();
+            foreach (RealPointsRowViewModel pointsRowViewModel in Points)
+            {
+                if (pointsRowViewModel.MatchedPoint.RealPoint != null &&
+                    pointsRowViewModel.MatchedPoint.TheoryPoint != null)
+                {
+                    r.Add(pointsRowViewModel.MatchedPoint.RealPoint);
+                    t.Add(pointsRowViewModel.MatchedPoint.TheoryPoint);
+                }
+            }
+            
+
             PointCalculator pc = new PointCalculator();
-            Logic.Points.MatchedPointsBestFit = pc.CalculateBestFit(Logic.Points.TheoryPoints, Logic.Points.RealPoints, Logic.Points.MaxErrorBestFit);
+            Logic.Points.MatchedPointsBestFit = pc.CalculateBestFit(t.ToArray(), r.ToArray(), Logic.Points.MaxErrorBestFit);
 
             CalculationUtils.UpdateCadEntity(Logic.Points.MatchedPointsBestFit, ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database);
             
