@@ -274,17 +274,17 @@ namespace GeoLib.Entities.Table
 
             if (attRef.Tag == "X_4")
             {
-                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, matchedPoint.RealPoint.X - matchedPoint.TheoryPoint.X);
+                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, Math.Abs(matchedPoint.RealPoint.X - matchedPoint.TheoryPoint.X));
             }
 
             if (attRef.Tag == "Y_4")
             {
-                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, matchedPoint.RealPoint.Y - matchedPoint.TheoryPoint.Y);
+                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, Math.Abs(matchedPoint.RealPoint.Y - matchedPoint.TheoryPoint.Y));
             }
 
             if (attRef.Tag == "Z_4")
             {
-                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, matchedPoint.RealPoint.Z - matchedPoint.TheoryPoint.Z);
+                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, Math.Abs(matchedPoint.RealPoint.Z - matchedPoint.TheoryPoint.Z));
             }
         }
 

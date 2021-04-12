@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PointCalc", "..\PointCalc\P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "..\TestApp\TestApp.csproj", "{723521C6-68B2-449A-A207-0197416A9604}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "..\Setup\Setup.vdproj", "{F81B6609-A83D-47DB-8A86-929E5A467CC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,8 +40,12 @@ Global
 		{723521C6-68B2-449A-A207-0197416A9604}.Debug|x64.Build.0 = Debug|x64
 		{723521C6-68B2-449A-A207-0197416A9604}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{723521C6-68B2-449A-A207-0197416A9604}.Release|Any CPU.Build.0 = Release|Any CPU
-		{723521C6-68B2-449A-A207-0197416A9604}.Release|x64.ActiveCfg = Release|Any CPU
-		{723521C6-68B2-449A-A207-0197416A9604}.Release|x64.Build.0 = Release|Any CPU
+		{723521C6-68B2-449A-A207-0197416A9604}.Release|x64.ActiveCfg = Release|x64
+		{723521C6-68B2-449A-A207-0197416A9604}.Release|x64.Build.0 = Release|x64
+		{F81B6609-A83D-47DB-8A86-929E5A467CC7}.Debug|Any CPU.ActiveCfg = Debug
+		{F81B6609-A83D-47DB-8A86-929E5A467CC7}.Debug|x64.ActiveCfg = Debug
+		{F81B6609-A83D-47DB-8A86-929E5A467CC7}.Release|Any CPU.ActiveCfg = Release
+		{F81B6609-A83D-47DB-8A86-929E5A467CC7}.Release|x64.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
