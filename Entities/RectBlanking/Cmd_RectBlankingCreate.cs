@@ -1,5 +1,13 @@
 ﻿
 
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
+using PointCalc;
+using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
+
 namespace GeoLib.Entities.RectBlanking
 {
     using ZwSoft.ZwCAD.ApplicationServices;
@@ -10,35 +18,198 @@ namespace GeoLib.Entities.RectBlanking
     using GeoLib;
     using System;
 
+
+    public struct Point3dWithId
+    {
+        public Point3dWithId(Point3d point, string textId)
+        {
+            Point = point;
+            TextId = textId;
+        }
+
+        public Point3d Point { get; }
+        public string TextId { get; }
+
+        public override string ToString()
+        {
+            return $"{TextId},{Point.X:N3},{Point.Y:N3},{Point.Z:N3}";
+        }
+    }
+
+    public static class CardsData
+    {
+        public static Vector3d? VectorBetweenTextAndPoint { get; set; }
+    }
+    
     public class Cmd_RectBlankingCreate
     {
-        [CommandMethod("RECTBLANKINGCREATE", CommandFlags.UsePickSet)]
+        // DKO: Export to file selected points
+        [CommandMethod("EXPORTPOINTSTOFILE", CommandFlags.UsePickSet)]
         public void CreateRectBlanking()
         {
-            Document mdiActiveDocument = ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
-            Editor editor = mdiActiveDocument.Editor;
-            ObjectId blockId = AppUtils.EnsureRectBlanking(mdiActiveDocument.Database);
-            if (!blockId.IsNull)
+            Document mdiActiveDocument = Application.DocumentManager.MdiActiveDocument;
+
+            PromptSelectionResult acSSPrompt = mdiActiveDocument.Editor.SelectImplied();
+
+            SelectionSet acSSet;
+
+            var points = new List<Point3d>();
+            var textForPoints = new List<Point3dWithId>();
+
+            // If the prompt status is OK, objects were selected before
+            // the command was started
+            if (acSSPrompt.Status == PromptStatus.OK)
             {
-                PromptPointResult point = editor.GetPoint("Specify first point.");
-                if (point.Status == PromptStatus.OK)
+                acSSet = acSSPrompt.Value;
+
+                using (Transaction transaction = mdiActiveDocument.Database.TransactionManager.StartTransaction())
                 {
-                    PromptPointResult result2 = null;
-                    using (new TransientRectBlanking(point.Value))
+                    foreach (SelectedObject acSSObj in acSSet)
                     {
-                        result2 = editor.GetPoint("Specify second point.");
-                        if (result2.Status != PromptStatus.OK)
+                        // Check to make sure a valid SelectedObject object was returned
+                        if (acSSObj != null)
                         {
-                            return;
+                            // Open the selected object for write
+                            Entity acEnt = transaction.GetObject(acSSObj.ObjectId, OpenMode.ForRead) as Entity;
+
+                            if (acEnt != null)
+                            {
+                                switch (acEnt)
+                                {
+                                    case DBPoint point:
+                                        points.Add(point.Position);
+                                        break;
+
+                                }
+                            }
                         }
                     }
-                    double x = Math.Min(point.Value.X, result2.Value.X);
-                    double num2 = Math.Max(point.Value.X, result2.Value.X);
-                    double y = Math.Min(point.Value.Y, result2.Value.Y);
-                    Point3d start = new Point3d(x, y, 0.0);
-                    RectBlankingUtils.CreateBlockReference(mdiActiveDocument.Database, blockId, start, num2 - x, Math.Max(point.Value.Y, result2.Value.Y) - y);
+
+
+                    if (points.Any() && CardsData.VectorBetweenTextAndPoint.HasValue)
+                    {
+                        PromptSelectionResult selRes = mdiActiveDocument.Editor.SelectAll(new SelectionFilter(new List<TypedValue>() {new TypedValue(0, "TEXT")}.ToArray()));
+
+                        if (selRes.Status == PromptStatus.OK)
+                        {
+                            acSSet = selRes.Value;
+                            foreach (SelectedObject acSSObj in acSSet)
+                            {
+                                // Check to make sure a valid SelectedObject object was returned
+                                if (acSSObj != null)
+                                {
+                                    // Open the selected object for write
+                                    Entity acEnt = transaction.GetObject(acSSObj.ObjectId, OpenMode.ForRead) as Entity;
+
+                                    if (acEnt != null)
+                                    {
+                                        switch (acEnt)
+                                        {
+                                            case DBText text:
+                                                textForPoints.Add(new Point3dWithId(text.Position, text.TextString));
+                                                break;
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
+
+
+            if (points.Any())
+            {
+                List<Point3dWithId> pointsToSave = null;
+                if (textForPoints.Any())
+                {
+                    pointsToSave = TryMatchPointWithText(textForPoints, points, CardsData.VectorBetweenTextAndPoint.Value);
+                }
+                pointsToSave = pointsToSave ?? points.Select((m, i) => new Point3dWithId(m, i.ToString())).ToList();
+
+                var saveDialog = new System.Windows.Forms.SaveFileDialog();
+
+                if (saveDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string[] textContent = pointsToSave.Select(m => m.ToString()).ToArray();
+                    File.WriteAllLines(saveDialog.FileName, textContent);
+                }
+            }
+
+            return;
+
+
+
+
+
+            // Document mdiActiveDocument = ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            // Editor editor = mdiActiveDocument.Editor;
+            // ObjectId blockId = AppUtils.EnsureRectBlanking(mdiActiveDocument.Database);
+            // if (!blockId.IsNull)
+            // {
+            //     PromptPointResult point = editor.GetPoint("Specify first point.");
+            //     if (point.Status == PromptStatus.OK)
+            //     {
+            //         PromptPointResult result2 = null;
+            //         using (new TransientRectBlanking(point.Value))
+            //         {
+            //             result2 = editor.GetPoint("Specify second point.");
+            //             if (result2.Status != PromptStatus.OK)
+            //             {
+            //                 return;
+            //             }
+            //         }
+            //         double x = Math.Min(point.Value.X, result2.Value.X);
+            //         double num2 = Math.Max(point.Value.X, result2.Value.X);
+            //         double y = Math.Min(point.Value.Y, result2.Value.Y);
+            //         Point3d start = new Point3d(x, y, 0.0);
+            //         RectBlankingUtils.CreateBlockReference(mdiActiveDocument.Database, blockId, start, num2 - x, Math.Max(point.Value.Y, result2.Value.Y) - y);
+            //     }
+            // }
+        }
+
+        private List<Point3dWithId> TryMatchPointWithText(List<Point3dWithId> textForPoints, List<Point3d> points, Vector3d vector)
+        {
+            double tolerance = 0.001;
+            
+            if (points.Count > textForPoints.Count)
+            {
+                Application.ShowAlertDialog($"Unable to match text with points because points number is greater than texts - Points:{points.Count}:Texts:{textForPoints.Count}");
+                return null;
+            }
+            
+            List<Point3dWithId> pointsWithText = new List<Point3dWithId>();
+
+            var textForPointsForCalc = new List<Point3dWithId>();
+            textForPointsForCalc.AddRange(textForPoints);
+            
+            foreach (var point in points)
+            {
+                var textPointIndex = textForPointsForCalc.FindIndex(m => (point.GetVectorTo(m.Point) - vector).Length < tolerance);
+                if (textPointIndex >=0 )
+                {
+                    pointsWithText.Add(new Point3dWithId(point, textForPointsForCalc[textPointIndex].TextId));
+                    textForPointsForCalc.RemoveAt(textPointIndex);
+                }
+                else
+                {
+                    Application.ShowAlertDialog($"Unable to match text with point - point: X:{point.X}; Y:{point.Y}; Z:{point.Z}");
+                    pointsWithText.Clear();
+                    break;
+                }
+            }
+
+            if (pointsWithText.Any())
+            {
+                var r = pointsWithText.GroupBy(x => x.TextId).Where(g => g.Count() > 1).Select(y => y.Key).ToList();
+                if (r.Count <= 0)
+                {
+                    return pointsWithText;
+                }
+                Application.ShowAlertDialog($"Unable to match text with points because matched texts has the same Id's, i.e. {r[0]}");
+            }
+            return null;
         }
     }
 }

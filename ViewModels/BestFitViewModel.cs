@@ -46,14 +46,21 @@ namespace GeoLib.ViewModels
 
         private void ApplyExecute()
         {
-            Logic.Points.SetValueOffsetDataForRealPoints(Points);
-            
+            applyExecuted = true;
+        }
 
-            Logic.Points.MaxErrorBestFit = this.MaxFitValue;
+        public bool applyExecuted = false;
 
-            CalculateUsingBestFit();
+        public void Calculate()
+        {
+            if (applyExecuted)
+            {
+                Logic.Points.SetValueOffsetDataForRealPoints(Points);
 
+                Logic.Points.MaxErrorBestFit = this.MaxFitValue;
 
+                CalculateUsingBestFit();
+            }
         }
 
         private void CalculateUsingBestFit()

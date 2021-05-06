@@ -303,7 +303,7 @@ namespace GeoLib.Entities.Table
             {
                 return ((sectionType != TableSectionTypes.SIDE) ? Point3d.Origin : new Point3d(tablePosition.X - originPosition.X, tablePosition.Z - originPosition.Z, tablePosition.Y - originPosition.Y));
             }
-            return new Point3d((tablePosition.Z - originPosition.Z), tablePosition.X - originPosition.X, tablePosition.Y - originPosition.Y);
+            return new Point3d((tablePosition.Z - originPosition.Z), originPosition.X - tablePosition.X , tablePosition.Y - originPosition.Y);
         }
 
         private static void UpdateNullableDoubleAttribute(AttributeReference attRef, double? value)
