@@ -1,28 +1,18 @@
-﻿
-
-using System.Collections.Generic;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using GeoLib.Entities.RectBlanking;
+﻿using GeoLib.Entities.RectBlanking;
+using GeoLib.Entities.Table;
+using ZwSoft.ZwCAD.ApplicationServices;
+using ZwSoft.ZwCAD.DatabaseServices;
+using ZwSoft.ZwCAD.EditorInput;
+using ZwSoft.ZwCAD.Geometry;
+using ZwSoft.ZwCAD.Runtime;
 
 namespace GeoLib.Entities.TableRef
 {
-    using ZwSoft.ZwCAD.ApplicationServices;
-    using ZwSoft.ZwCAD.DatabaseServices;
-    using ZwSoft.ZwCAD.EditorInput;
-    using ZwSoft.ZwCAD.Geometry;
-    using ZwSoft.ZwCAD.Runtime;
-    using GeoLib;
-    using GeoLib.Entities;
-    using GeoLib.Entities.Table;
-    using GeoLib.XData;
-    using System;
-
-    public class Cmd_TableRefCreate
+    public class Cmd_EstablishTextVector
     {
         // DKO: Find MTEXT and POINT vertex
         [CommandMethod("SETTEXTVECTOR", CommandFlags.UsePickSet)]
-        public void CreateEmptyTable()
+        public void SetTextVector()
         {
             Document mdiActiveDocument = Application.DocumentManager.MdiActiveDocument;
             Database database = mdiActiveDocument.Database;
@@ -196,6 +186,7 @@ namespace GeoLib.Entities.TableRef
             }
             return null;
         }
+
+        //
     }
 }
-

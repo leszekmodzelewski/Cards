@@ -97,6 +97,7 @@
     <Compile Include="Controls\ValueOffsetCtrl.xaml.cs">
       <DependentUpon>ValueOffsetCtrl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Commands\Cmd_EstablishTextVector.cs" />
     <Compile Include="Entities\Table\Cmd_DwgCreate.cs" />
     <Compile Include="Entities\Table\Cmd_TblCalculate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -323,7 +324,7 @@
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Entities\TableRef\Cmd_TableRefCreate.cs">
+    <Compile Include="Commands\Cmd_DrawTheoryPoints.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>
@@ -355,7 +356,7 @@
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Entities\RectBlanking\Cmd_RectBlankingCreate.cs">
+    <Compile Include="Commands\Cmd_ExportPointsToFile.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>

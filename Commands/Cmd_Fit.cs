@@ -23,8 +23,8 @@ namespace GeoLib.Commands
         {
             using (Winforms.CalculateDataWindow dlg = new CalculateDataWindow())
             {
-                Points.TheoryPoints = ReadTheoryPointsFromCad().ToArray();
-                SaveTofile();
+                Points.TheoryPoints = CalculationUtils.ReadTheoryPointsFromCad().ToArray();
+                SaveToFile();
                 var vm = new FitViewModel(Points.ValueOffset, Points.Range);
                 vm.MaxErrorFit = Points.MaxErrorFit;
                 var form = new GenericWinFormForWpf(new FitCtrl(vm));
@@ -37,12 +37,8 @@ namespace GeoLib.Commands
             }
         }
 
-        private List<MyPoint3D> ReadTheoryPointsFromCad()
-        {
-            return CalculationUtils.ReadFromCad(ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database);
-        }
 
-        public void SaveTofile()
+        public void SaveToFile()
         {
             var path = @"c:\NetPrograms\Zwcad\theoryPoint.txt";
 

@@ -39,7 +39,7 @@ namespace GeoLib.ViewModels
             }
         }
 
-        public long RealPointId { get; set; }
+        public string RealPointId { get; set; }
 
 
         public int X => Convert.ToInt32(this.MatchedPoint.TheoryPoint.X);

@@ -17,7 +17,6 @@ namespace GeoLib.Commands
         [CommandMethod("BESTFIT", CommandFlags.UsePickSet)]
         public void Execute()
         {
-            MessageBox.Show("aa");
             if (Points.MatchedPoints == null)
             {
                 MessageBox.Show("Points are not matched yet.", "Fit error", MessageBoxButtons.OK, MessageBoxIcon.Hand);

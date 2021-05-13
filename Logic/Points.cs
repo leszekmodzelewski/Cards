@@ -20,7 +20,7 @@ namespace GeoLib.Logic
         public static MyPoint3D[] TheoryPoints { get; set; }
         public static int MaxErrorFit { get; set; }
         
-        public static Dictionary<long, int[]> BestFitPointOffsetDictionary { get; } = new Dictionary<long, int[]>();
+        public static Dictionary<string, int[]> BestFitPointOffsetDictionary { get; } = new Dictionary<string, int[]>();
 
         public static List<MatchedPoint> MatchedPoints { get; set; }
         public static List<MatchedPoint> MatchedPointsBestFit { get; set; }
@@ -39,7 +39,7 @@ namespace GeoLib.Logic
         {
             BestFitPointOffsetDictionary.Clear();
 
-            Dictionary<long, int[]> valuesToModifyRealPoints = new Dictionary<long, int[]>();
+            var valuesToModifyRealPoints = new Dictionary<string, int[]>();
             foreach (RealPointsRowViewModel realPointsRowViewModel in valueOffsetViewModel)
             {
                 Logic.Points.BestFitPointOffsetDictionary[realPointsRowViewModel.RealPointId] = new int[]
@@ -70,7 +70,7 @@ namespace GeoLib.Logic
             }
         }
 
-        private static void UpdateRealPointsAboutOffset(Dictionary<long, int[]> valuesToModifyRealPoints)
+        private static void UpdateRealPointsAboutOffset(Dictionary<string, int[]> valuesToModifyRealPoints)
         {
             foreach (var myPoint3D in RealPoints)
             {

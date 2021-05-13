@@ -39,13 +39,14 @@ namespace GeoLib.Entities.RectBlanking
     public static class CardsData
     {
         public static Vector3d? VectorBetweenTextAndPoint { get; set; }
+        public static List<Point3dWithId> RecentlyExportedPoints { get; set; }
     }
     
-    public class Cmd_RectBlankingCreate
+    public class Cmd_ExportPointsToFile
     {
         // DKO: Export to file selected points
         [CommandMethod("EXPORTPOINTSTOFILE", CommandFlags.UsePickSet)]
-        public void CreateRectBlanking()
+        public void ExportToFile()
         {
             Document mdiActiveDocument = Application.DocumentManager.MdiActiveDocument;
 
@@ -134,6 +135,7 @@ namespace GeoLib.Entities.RectBlanking
                 {
                     string[] textContent = pointsToSave.Select(m => m.ToString()).ToArray();
                     File.WriteAllLines(saveDialog.FileName, textContent);
+                    CardsData.RecentlyExportedPoints = pointsToSave;
                 }
             }
 

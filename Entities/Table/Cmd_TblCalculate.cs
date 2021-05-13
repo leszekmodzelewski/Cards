@@ -139,8 +139,12 @@ namespace GeoLib.Entities.Table
 
         }
 
+        public static List<MyPoint3D> ReadTheoryPointsFromCad()
+        {
+            return CalculationUtils.ReadFromCad(ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database);
+        }
 
-        public static List<MyPoint3D> ReadFromCad(Database database)
+        private static List<MyPoint3D> ReadFromCad(Database database)
         {
             var coords = new List<long>();
             List<MyPoint3D> cadPoints = new List<MyPoint3D>();
@@ -159,7 +163,7 @@ namespace GeoLib.Entities.Table
                         double y = double.Parse(xyz[1]);
                         double z = double.Parse(xyz[2]);
 
-                        cadPoints.Add(new MyPoint3D(new Point3D(x, y, z), id2.Handle.Value));
+                        cadPoints.Add(new MyPoint3D(new Point3D(x, y, z), id2.Handle.Value.ToString(CultureInfo.InvariantCulture)));
 
                         coords.Add(id2.Handle.Value);
                     }
@@ -188,7 +192,7 @@ namespace GeoLib.Entities.Table
             {
                 foreach (ObjectId id2 in transaction.GetObject(SymbolUtilityServices.GetBlockModelSpaceId(database), OpenMode.ForWrite) as BlockTableRecord)
                 {
-                    var coordinate = res.FirstOrDefault(m => m.TheoryPoint?.Id == id2.Handle.Value);
+                    var coordinate = res.FirstOrDefault(m => m.TheoryPoint?.Id == id2.Handle.Value.ToString(CultureInfo.InvariantCulture));
                     if (coordinate == null)
                         continue;
 
