@@ -43,6 +43,7 @@ namespace GeoLib.Controls
             if (openFileDialog.ShowDialog() == true)
             {
                 vm.FilePath = openFileDialog.FileName;
+                vm.ReadFromFileCommand.Execute(null);
             }
         }
     }

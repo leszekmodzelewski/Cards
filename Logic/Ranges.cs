@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using GeoLib.ViewModels;
 
@@ -9,7 +10,7 @@ namespace GeoLib.Logic
         public Ranges(IEnumerable<RangeViewModel> rangesDataViewModel)
         {
             AllRanges = new List<SingleRange>();
-            DefaultRange = new[] {0, 0, 0};
+            DefaultRange = new RangeValue();
             ConvertToUsableData(rangesDataViewModel);
         }
 
@@ -20,9 +21,13 @@ namespace GeoLib.Logic
             {
                 if (rangeViewModel.Range.Trim().ToUpper() == "ALL")
                 {
-                    DefaultRange[0] = rangeViewModel.X;
-                    DefaultRange[1] = rangeViewModel.Y;
-                    DefaultRange[2] = rangeViewModel.Z;
+                    DefaultRange.Xmax = rangeViewModel.X2;
+                    DefaultRange.Ymax = rangeViewModel.Y2;
+                    DefaultRange.Zmax = rangeViewModel.Z2;
+
+                    DefaultRange.Xmin = GetValMin(rangeViewModel.X1, rangeViewModel.X2);
+                    DefaultRange.Ymin = GetValMin(rangeViewModel.Y1, rangeViewModel.Y2);
+                    DefaultRange.Zmin = GetValMin(rangeViewModel.Z1, rangeViewModel.Z2);
 
                     continue;
                 }
@@ -52,18 +57,45 @@ namespace GeoLib.Logic
                     continue;
                 }
 
-                singleRange.Val = new[] {rangeViewModel.X, rangeViewModel.Y, rangeViewModel.Z};
+                RangeValue rv = new RangeValue();
+                rv.Xmax = rangeViewModel.X2;
+                rv.Ymax = rangeViewModel.Y2;
+                rv.Zmax = rangeViewModel.Z2;
+
+                rv.Xmin = GetValMin(rangeViewModel.X1, rangeViewModel.X2);
+                rv.Ymin = GetValMin(rangeViewModel.Y1, rangeViewModel.Y2);
+                rv.Zmin = GetValMin(rangeViewModel.Z1, rangeViewModel.Z2);
+                
                 this.AllRanges.Add(singleRange);
             }
         }
 
+        int GetValMin(string strVal, int maxVal)
+        {
+            return string.IsNullOrEmpty(strVal) ? -maxVal : int.Parse(strVal);
+        }
 
-        public int[] DefaultRange { get; private set; }
+        public RangeValue DefaultRange { get; private set; }
 
         public List<SingleRange> AllRanges
         {
             get;
         }
+    }
+
+    public class RangeValue
+    {
+        public int Xmin { get; set; }
+        public int Xmax { get; set; }
+
+        public int Ymin { get; set; }
+        public int Ymax { get; set; }
+
+
+        public int Zmin { get; set; }
+        public int Zmax { get; set; }
+
 
     }
+
 }

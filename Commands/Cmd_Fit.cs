@@ -24,19 +24,42 @@ namespace GeoLib.Commands
             using (Winforms.CalculateDataWindow dlg = new CalculateDataWindow())
             {
                 Points.TheoryPoints = CalculationUtils.ReadTheoryPointsFromCad().ToArray();
-                SaveToFile();
+               
                 var vm = new FitViewModel(Points.ValueOffset, Points.Range);
                 vm.MaxErrorFit = Points.MaxErrorFit;
                 var form = new GenericWinFormForWpf(new FitCtrl(vm));
+
+
+                vm.Close += (o, a) =>
+                {
+                    form.Close();
+                    form.Dispose();
+                    if (a.Result == DialogResult.OK)
+                    {
+                        if (Points.RealPoints != null && Points.RealPoints.Length > 0)
+                        {
+                            PointCalculator pc = new PointCalculator();
+                            Points.MatchedPoints = pc.Calculate(Points.TheoryPoints, Points.RealPoints,
+                                string.IsNullOrEmpty(Points.MaxErrorFit)
+                                    ? Double.MaxValue
+                                    : int.Parse(Points.MaxErrorFit));
+
+                            CalculationUtils.UpdateCadEntity(Points.MatchedPoints, ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database, Points.OffsetToRealPointForDisplayPurposeOnly);
+                        }
+                        else
+                        {
+                            CalculationUtils.UpdateCadRangeOnlyEntity(ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database, Points.TheoryPoints);
+                        }
+
+                        
+                    }
+                };
+
                 form.ShowDialog();
-
-                PointCalculator pc = new PointCalculator();
-                Points.MatchedPoints = pc.Calculate(Points.TheoryPoints, Points.RealPoints, Points.MaxErrorFit);
-
-                CalculationUtils.UpdateCadEntity(Points.MatchedPoints, ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database);
             }
         }
 
+        
 
         public void SaveToFile()
         {

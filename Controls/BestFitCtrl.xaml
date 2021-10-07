@@ -13,14 +13,14 @@
         <Button Content="Save to file" HorizontalAlignment="Left" Margin="16,0,0,10" VerticalAlignment="Bottom" Width="95"/>
         <Button Content="Clear" HorizontalAlignment="Left" Margin="555,0,0,10" Width="75" VerticalAlignment="Bottom"/>
         <Button Content="Apply" Command="{Binding ApplyCommand}" HorizontalAlignment="Left" Margin="635,0,0,10" VerticalAlignment="Bottom" Width="75"/>
-        <Button Content="Ok" HorizontalAlignment="Left" Margin="715,0,0,10" VerticalAlignment="Bottom" Width="75"/>
-        <Label Content="No" HorizontalAlignment="Left" Margin="7,57,0,0" VerticalAlignment="Top"/>
-        <Label Content="X" HorizontalAlignment="Left" Margin="54,57,0,0" VerticalAlignment="Top"/>
-        <Label Content="Y" HorizontalAlignment="Left" Margin="176,57,0,0" VerticalAlignment="Top"/>
-        <Label Content="Z" HorizontalAlignment="Left" Margin="300,57,0,0" VerticalAlignment="Top"/>
-        <Label Content="dX" HorizontalAlignment="Left" Margin="417,57,0,0" VerticalAlignment="Top"/>
-        <Label Content="dY" HorizontalAlignment="Left" Margin="500,57,0,0" VerticalAlignment="Top"/>
-        <Label Content="dZ" HorizontalAlignment="Left" Margin="584,57,0,0" VerticalAlignment="Top"/>
+        <Button Content="Ok" Command="{Binding OkCommand}" HorizontalAlignment="Left" Margin="715,0,0,10" VerticalAlignment="Bottom" Width="75"/>
+        <Label Content="No" HorizontalAlignment="Left" Margin="14,57,0,0" VerticalAlignment="Top"/>
+        <Label Content="X" HorizontalAlignment="Left" Margin="100,57,0,0" VerticalAlignment="Top"/>
+        <Label Content="Y" HorizontalAlignment="Left" Margin="222,57,0,0" VerticalAlignment="Top"/>
+        <Label Content="Z" HorizontalAlignment="Left" Margin="346,57,0,0" VerticalAlignment="Top"/>
+        <Label Content="dX" HorizontalAlignment="Left" Margin="447,57,0,0" VerticalAlignment="Top"/>
+        <Label Content="dY" HorizontalAlignment="Left" Margin="530,57,0,0" VerticalAlignment="Top"/>
+        <Label Content="dZ" HorizontalAlignment="Left" Margin="614,57,0,0" VerticalAlignment="Top"/>
 
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" Name="RowViewer" Margin="15,83,0,44">

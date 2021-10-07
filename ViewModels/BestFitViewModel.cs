@@ -44,6 +44,16 @@ namespace GeoLib.ViewModels
 
         public ICommand ApplyCommand => new SimpleCommand(ApplyExecute);
 
+        public ICommand OkCommand => new SimpleCommand(OkExecute);
+
+        private void OkExecute()
+        {
+            ApplyExecute();
+            Close?.Invoke(this, new CloseEventArgs(DialogResult.OK));
+        }
+
+        public event EventHandler<CloseEventArgs> Close;
+
         private void ApplyExecute()
         {
             applyExecuted = true;
@@ -81,7 +91,7 @@ namespace GeoLib.ViewModels
             PointCalculator pc = new PointCalculator();
             Logic.Points.MatchedPointsBestFit = pc.CalculateBestFit(t.ToArray(), r.ToArray(), Logic.Points.MaxErrorBestFit);
 
-            CalculationUtils.UpdateCadEntity(Logic.Points.MatchedPointsBestFit, ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database);
+            CalculationUtils.UpdateCadEntity(Logic.Points.MatchedPointsBestFit, ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database, Logic.Points.OffsetToRealPointForDisplayPurposeOnly);
             
             this.Points.Clear();
 

@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="Commands\Cmd_BestFit.cs" />
     <Compile Include="Commands\Cmd_Fit.cs" />
+    <Compile Include="Commands\Cmd_Move.cs" />
     <Compile Include="Controls\BestFitCtrl.xaml.cs">
       <DependentUpon>BestFitCtrl.xaml</DependentUpon>
     </Compile>
@@ -87,6 +88,9 @@
     </Compile>
     <Compile Include="Controls\FitCtrl.xaml.cs">
       <DependentUpon>FitCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MoveCtrl.xaml.cs">
+      <DependentUpon>MoveCtrl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RangeCtrl.xaml.cs">
       <DependentUpon>RangeCtrl.xaml</DependentUpon>
@@ -106,9 +110,11 @@
     </Compile>
     <Compile Include="ViewModels\BestFitViewModel.cs" />
     <Compile Include="ViewModels\BoxWithTextViewModel.cs" />
+    <Compile Include="ViewModels\CloseEventArgs.cs" />
     <Compile Include="ViewModels\FitViewModel.cs" />
     <Compile Include="Logic\Points.cs" />
     <Compile Include="Logic\Ranges.cs" />
+    <Compile Include="ViewModels\MoveViewModel.cs" />
     <Compile Include="ViewModels\RangeViewModel.cs" />
     <Compile Include="ViewModels\RealPointsRowViewModel.cs" />
     <Compile Include="Logic\SingleRange.cs" />
@@ -447,6 +453,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\FitCtrl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MoveCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

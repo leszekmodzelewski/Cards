@@ -9,8 +9,24 @@ namespace GeoLib.Logic
 {
     public static class Points
     {
+        static Points()
+        {
+            MaxErrorBestFit = 10;
+
+            rangeData = new List<RangeViewModel>();
+            rangeData.Add(new RangeViewModel() {Range = "All", X2 = 5, Y2 =5, Z2 = 5});
+        }
+
+        private static int[] offsetToRealPointForDisplayPurposeOnly;
+
+        public static int[] OffsetToRealPointForDisplayPurposeOnly
+        {
+            get => offsetToRealPointForDisplayPurposeOnly ?? new[] {0, 0, 0};
+            set => offsetToRealPointForDisplayPurposeOnly = value;
+        }
+
         private static List<ValueOffsetViewModel> valueOffset = new List<ValueOffsetViewModel>();
-        private static List<RangeViewModel> rangeData = new List<RangeViewModel>();
+        private static List<RangeViewModel> rangeData;
         private static Ranges ranges;
 
 
@@ -18,7 +34,7 @@ namespace GeoLib.Logic
         public static List<RangeViewModel> Range => rangeData;
         public static MyPoint3D[] RealPoints { get; set; }
         public static MyPoint3D[] TheoryPoints { get; set; }
-        public static int MaxErrorFit { get; set; }
+        public static string MaxErrorFit { get; set; }
         
         public static Dictionary<string, int[]> BestFitPointOffsetDictionary { get; } = new Dictionary<string, int[]>();
 
@@ -91,28 +107,28 @@ namespace GeoLib.Logic
 
         }
 
-        public static int GetRangeForX(double val)
+        public static int[] GetRangeForX(double val)
         {
             int pointAsInt = Math.Abs(Convert.ToInt32(val));
 
             var range = ranges.AllRanges.FirstOrDefault(m => m.From <= pointAsInt && pointAsInt < m.To)?.Val ?? ranges.DefaultRange;
-            return range[0];
+            return new []{range.Xmin, range.Xmax};
         }
 
-        public static int GetRangeForY(double val)
+        public static int[] GetRangeForY(double val)
         {
             int pointAsInt = Math.Abs(Convert.ToInt32(val));
 
             var range = ranges.AllRanges.FirstOrDefault(m => m.From <= pointAsInt && pointAsInt < m.To)?.Val ?? ranges.DefaultRange;
-            return range[1];
+            return new[] { range.Ymin, range.Ymax };
         }
 
-        public static int GetRangeForZ(double val)
+        public static int[] GetRangeForZ(double val)
         {
             int pointAsInt = Math.Abs(Convert.ToInt32(val));
 
             var range = ranges.AllRanges.FirstOrDefault(m => m.From <= pointAsInt && pointAsInt < m.To)?.Val ?? ranges.DefaultRange;
-            return range[2];
+            return new[] { range.Zmin, range.Zmax };
         }
 
         

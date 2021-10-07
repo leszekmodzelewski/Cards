@@ -152,9 +152,9 @@ namespace GeoLib.Entities.Table
             
             using (Transaction transaction = database.TransactionManager.StartTransaction())
             {
-                foreach (ObjectId id2 in transaction.GetObject(SymbolUtilityServices.GetBlockModelSpaceId(database), OpenMode.ForWrite) as BlockTableRecord)
+                foreach (ObjectId id2 in transaction.GetObject(SymbolUtilityServices.GetBlockModelSpaceId(database), OpenMode.ForRead) as BlockTableRecord)
                 {
-                    EntityBase base2 = EntityFactory.Create(transaction.GetObject(id2, OpenMode.ForWrite));
+                    EntityBase base2 = EntityFactory.Create(transaction.GetObject(id2, OpenMode.ForRead));
                     if (base2 is EntityTable eTable)
                     {
                         var xyz = GetXYZ(database, eTable);
@@ -186,8 +186,38 @@ namespace GeoLib.Entities.Table
 
         }
 
-        public static void UpdateCadEntity(List<MatchedPoint> res, Database database)
+        public static void UpdateCadRangeOnlyEntity(Database database, MyPoint3D[] theoryPoints)
         {
+            using (Transaction transaction = database.TransactionManager.StartTransaction())
+            {
+                foreach (ObjectId id2 in transaction.GetObject(SymbolUtilityServices.GetBlockModelSpaceId(database),
+                    OpenMode.ForWrite) as BlockTableRecord)
+                {
+                    var coordinate = theoryPoints.FirstOrDefault(m =>
+                        m.Id == id2.Handle.Value.ToString(CultureInfo.InvariantCulture));
+                    if (coordinate == null)
+                        continue;
+
+                    EntityBase base2 = EntityFactory.Create(transaction.GetObject(id2, OpenMode.ForWrite));
+                    if (base2 is EntityTable eTable)
+                    {
+                        Transaction topTransaction = database.TransactionManager.TopTransaction;
+                        foreach (ObjectId id in eTable.Entity.AttributeCollection)
+                        {
+                            AttributeReference attRef = (AttributeReference)topTransaction.GetObject(id, OpenMode.ForWrite);
+                            UpdateRange(coordinate, attRef);
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+        }
+
+
+        public static void UpdateCadEntity(List<MatchedPoint> res, Database database, int[] extraOffset)
+        {
+            int missingPointCounter = 0;
+            int updatedPointsCount = 0;
             using (Transaction transaction = database.TransactionManager.StartTransaction())
             {
                 foreach (ObjectId id2 in transaction.GetObject(SymbolUtilityServices.GetBlockModelSpaceId(database), OpenMode.ForWrite) as BlockTableRecord)
@@ -199,96 +229,111 @@ namespace GeoLib.Entities.Table
                     EntityBase base2 = EntityFactory.Create(transaction.GetObject(id2, OpenMode.ForWrite));
                     if (base2 is EntityTable eTable)
                     {
-                        UpdateAboutRealValues(database, eTable, coordinate);
+                        UpdateAboutRealValues(database, eTable, coordinate, extraOffset);
+
+                        updatedPointsCount++;
+                        if (coordinate.RealPoint == null)
+                            missingPointCounter++;
 
                     }
+
+                    
                 }
                 transaction.Commit();
             }
+
+            if (missingPointCounter == updatedPointsCount)
+            {
+                MessageBox.Show("No matched points.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
-        private static void UpdateAboutRealValues(Database database, EntityTable eTable, MatchedPoint point)
+        private static void UpdateAboutRealValues(Database database, EntityTable eTable, MatchedPoint point, int[] extraOffset)
         {
             Transaction topTransaction = database.TransactionManager.TopTransaction;
             TableUtils.RecalculateTableContent(database, eTable, out double? nullable, out double? nullable2, out double? nullable3);
             foreach (ObjectId id in eTable.Entity.AttributeCollection)
             {
                 AttributeReference attRef = (AttributeReference)topTransaction.GetObject(id, OpenMode.ForWrite);
+                const string missingText = "";
+
                 if (attRef.Tag == "X_2")
                 {
                     if (point.RealPoint != null)
                     {
-                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, point.RealPoint.X);
+                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, point.RealPoint.X + extraOffset[0]);
                     }
                     else
                     {
-                        attRef.TextString = "Missing";
+                        attRef.TextString = missingText;
                     }
                 }
                 if (attRef.Tag == "Y_2")
                 {
                     if (point.RealPoint != null)
                     {
-                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, point.RealPoint.Y);
+                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, point.RealPoint.Y + extraOffset[1]);
                     }
                     else
                     {
-                        attRef.TextString = "Missing";
+                        attRef.TextString = missingText;
                     }
                 }
                 if (attRef.Tag == "Z_2")
                 {
                     if (point.RealPoint != null)
                     {
-                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, point.RealPoint.Z);
+                        EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, point.RealPoint.Z + extraOffset[2]);
                     }
                     else
                     {
-                        attRef.TextString = "Missing";
+                        attRef.TextString = missingText;
                     }
                 }
 
-                UpdateRange(point, attRef);
-                UpdateRealMinusTheory(point, attRef);
+                UpdateRange(point.TheoryPoint, attRef);
+                UpdateRealMinusTheory(point, attRef, extraOffset);
             }
         }
 
-        private static void UpdateRange(MatchedPoint matchedPoint, AttributeReference attRef)
+        private static void UpdateRange(MyPoint3D theoryPoint, AttributeReference attRef)
         {
             if (attRef.Tag == "X_3")
             {
-                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, Convert.ToDouble(Points.GetRangeForX(matchedPoint.TheoryPoint.X)));
+                EntityBaseUtils.UpdateRangeAttribute(attRef, Points.GetRangeForX(theoryPoint.X));
             }
 
             if (attRef.Tag == "Y_3")
             {
-                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, Convert.ToDouble(Points.GetRangeForY(matchedPoint.TheoryPoint.Y)));
+                EntityBaseUtils.UpdateRangeAttribute(attRef, Points.GetRangeForY(theoryPoint.Y));
             }
 
             if (attRef.Tag == "Z_3")
             {
-                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, Convert.ToDouble(Points.GetRangeForZ(matchedPoint.TheoryPoint.Z)));
+                EntityBaseUtils.UpdateRangeAttribute(attRef, Points.GetRangeForZ(theoryPoint.Z));
             }
         }
 
-        private static void UpdateRealMinusTheory(MatchedPoint matchedPoint, AttributeReference attRef)
+
+
+        private static void UpdateRealMinusTheory(MatchedPoint matchedPoint, AttributeReference attRef, int [] extraOffset)
         {
             if (matchedPoint.RealPoint == null)
                 return;
 
             if (attRef.Tag == "X_4")
             {
-                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef,Math.Abs(matchedPoint.RealPoint.X) - Math.Abs(matchedPoint.TheoryPoint.X));
+                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef,Math.Abs(matchedPoint.RealPoint.X + +extraOffset[0]) - Math.Abs(matchedPoint.TheoryPoint.X) );
             }
 
             if (attRef.Tag == "Y_4")
             {
-                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, Math.Abs(matchedPoint.RealPoint.Y) - Math.Abs(matchedPoint.TheoryPoint.Y));
+                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, Math.Abs(matchedPoint.RealPoint.Y + extraOffset[1]) - Math.Abs(matchedPoint.TheoryPoint.Y));
             }
 
             if (attRef.Tag == "Z_4")
             {
-                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, Math.Abs(matchedPoint.RealPoint.Z) - Math.Abs(matchedPoint.TheoryPoint.Z));
+                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, matchedPoint.RealPoint.Z - matchedPoint.TheoryPoint.Z + extraOffset[2]);
             }
         }
 

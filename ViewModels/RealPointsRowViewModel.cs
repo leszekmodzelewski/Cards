@@ -27,7 +27,7 @@ namespace GeoLib.ViewModels
         private int dyFactor;
         private int dzFactor;
         private int id;
-        private const string missing = "Missing";
+        private const string missing = " ";
 
         public int Id
         {

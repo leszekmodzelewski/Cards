@@ -15,13 +15,13 @@ namespace GeoLib
         public XDataApp()
         {
             this.version = 1;
-            this.defaultTableSize = 150.0;
+            this.defaultTableSize = 1500.0;
         }
 
         public XDataApp(ResultBuffer buffer)
         {
             this.version = 1;
-            this.defaultTableSize = 150.0;
+            this.defaultTableSize = 1500.0;
             TypedValue[] valueArray = buffer.AsArray();
             int num = 0;
             string text1 = (string) valueArray[num++].Value;

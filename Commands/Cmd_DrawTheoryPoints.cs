@@ -32,8 +32,12 @@ namespace GeoLib.Entities.TableRef
             if (!theoryPoints.Any())
                 return;
 
+
+
             Document mdiActiveDocument = Application.DocumentManager.MdiActiveDocument;
             Database database = mdiActiveDocument.Database;
+
+            DeleteExistingTheoryLayer(database);
 
             string theoryLayer = GetOrCreateTheoryLayer(database);
 
@@ -42,7 +46,8 @@ namespace GeoLib.Entities.TableRef
                 var acBlkTbl = transaction.GetObject(database.BlockTableId, OpenMode.ForRead) as BlockTable;
 
                 // Open the Block table record Model space for write
-                var acBlkTblRec = transaction.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+                var acBlkTblRec =
+                    transaction.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
 
                 foreach (var point3D in theoryPoints)
                 {
@@ -99,6 +104,85 @@ namespace GeoLib.Entities.TableRef
             }
 
             return theoryLayerName;
+        }
+
+        private void DeleteExistingTheoryLayer(Database database)
+        {
+            var objToRemove = GetEntitiesOnLayer(theoryLayerName);
+            if (objToRemove.Count > 0)
+            {
+                using (Transaction acTrans = database.TransactionManager.StartTransaction())
+                {
+                    var acLyrTbl = acTrans.GetObject(database.LayerTableId, OpenMode.ForRead) as LayerTable;
+                    var acLyrTblRec = acTrans.GetObject(acLyrTbl[theoryLayerName], OpenMode.ForWrite) as LayerTableRecord;
+                    acLyrTblRec.IsLocked = false;
+
+
+                    foreach (ObjectId id in objToRemove)
+                    {
+                        var o = acTrans.GetObject(id, OpenMode.ForWrite);
+                        o.Erase(true);
+                    }
+                    acLyrTblRec.IsLocked = true;
+                    acTrans.Commit();
+                }
+            }
+
+            return;
+            using (Transaction acTrans = database.TransactionManager.StartTransaction())
+            {
+                // Open the Layer table for read
+                var acLyrTbl = acTrans.GetObject(database.LayerTableId, OpenMode.ForRead) as LayerTable;
+                if (acLyrTbl.Has(theoryLayerName) == false)
+                {
+                    return;
+                }
+
+                ObjectIdCollection acObjIdColl = new ObjectIdCollection();
+                acObjIdColl.Add(acLyrTbl[theoryLayerName]);
+                //database.Purge(acObjIdColl);
+
+                if (acObjIdColl.Count > 0)
+                {
+
+                    var acLyrTblRec = acTrans.GetObject(acObjIdColl[0], OpenMode.ForWrite) as LayerTableRecord;
+
+                    try
+                    {
+                        // Erase the unreferenced layer
+                        acLyrTblRec.Erase(true);
+
+                        // Save the changes and dispose of the transaction
+                        acTrans.Commit();
+                    }
+                    catch (System.Exception ex)
+                    {
+                        // Layer could not be deleted
+                        Application.ShowAlertDialog("Error:\n" + ex.Message);
+                    }
+                }
+
+
+            }
+        }
+
+        private static ObjectIdCollection GetEntitiesOnLayer(string layerName)
+        {
+            Document doc = Application.DocumentManager.MdiActiveDocument;
+            Editor ed = doc.Editor;
+
+            // Build a filter list so that only entities
+
+            // on the specified layer are selected
+
+            TypedValue[] tvs = new TypedValue[1] { new TypedValue((int)DxfCode.LayerName, layerName) };
+            SelectionFilter sf = new SelectionFilter(tvs);
+            PromptSelectionResult psr = ed.SelectAll(sf);
+
+            if (psr.Status == PromptStatus.OK)
+                return new ObjectIdCollection(psr.Value.GetObjectIds());
+            else
+                return new ObjectIdCollection();
         }
     }
 }

@@ -14,10 +14,23 @@
             set;
         }
 
-        public int[] Val
+        public RangeValue Val
         {
             get;
             set;
         }
+
+        //public int[] ValMin
+        //{
+        //    get;
+        //    set;
+        //}
+
+        //public int[] ValMax
+        //{
+        //    get;
+        //    set;
+        //}
+
     }
 }

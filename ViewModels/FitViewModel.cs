@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace GeoLib.ViewModels
     public class FitViewModel : INotifyPropertyChanged
     {
         private string filePath = @"c:\NetPrograms\Zwcad\PointsDataForCardsWithSemiColon.txt";
-        private int maxErrorFit;
+        private string maxErrorFit = string.Empty;
 
         public string FilePath
         {
@@ -30,7 +31,7 @@ namespace GeoLib.ViewModels
             }
         }
 
-        public int MaxErrorFit
+        public string MaxErrorFit
         {
             get => maxErrorFit;
             set
@@ -112,6 +113,9 @@ namespace GeoLib.ViewModels
 
         public ICommand ApplyCommand => new SimpleCommand(ApplyExecute);
 
+        public ICommand OkCommand => new SimpleCommand(OkExecute);
+        
+
         public bool IsRecentlyExported => CardsData.RecentlyExportedPoints != null && CardsData.RecentlyExportedPoints.Any();
 
         private void ApplyExecute()
@@ -121,11 +125,20 @@ namespace GeoLib.ViewModels
             Points.MaxErrorFit = this.MaxErrorFit;
         }
 
+        private void OkExecute()
+        {
+            ApplyExecute();
+            Close?.Invoke(this, new CloseEventArgs(DialogResult.OK));
+        }
+
+        public event EventHandler<CloseEventArgs> Close;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
     }
 }
