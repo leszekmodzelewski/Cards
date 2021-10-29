@@ -25,12 +25,12 @@ namespace GeoLib.Logic
             set => offsetToRealPointForDisplayPurposeOnly = value;
         }
 
-        private static List<ValueOffsetViewModel> valueOffset = new List<ValueOffsetViewModel>();
+        private static List<ValueOffsetViewModel> valueOffsetArray = new List<ValueOffsetViewModel>();
         private static List<RangeViewModel> rangeData;
         private static Ranges ranges;
 
 
-        public static List<ValueOffsetViewModel> ValueOffset => valueOffset;
+        public static List<ValueOffsetViewModel> ValueOffsetArray => valueOffsetArray;
         public static List<RangeViewModel> Range => rangeData;
         public static MyPoint3D[] RealPoints { get; set; }
         public static MyPoint3D[] TheoryPoints { get; set; }
@@ -44,8 +44,8 @@ namespace GeoLib.Logic
 
         public static void SetValueOffsetDataForTheoryPoints(IEnumerable<ValueOffsetViewModel> valueOffsetViewModel)
         {
-            valueOffset.Clear();
-            valueOffset.AddRange(valueOffsetViewModel);
+            valueOffsetArray.Clear();
+            valueOffsetArray.AddRange(valueOffsetViewModel);
 
             UpdateTheoryPointsAboutOffset();
         }
@@ -80,9 +80,9 @@ namespace GeoLib.Logic
         {
             foreach (var myPoint3D in TheoryPoints)
             {
-                myPoint3D.ReserveOffsetX = valueOffset.FirstOrDefault(m=> m.X == Convert.ToInt32(myPoint3D.X))?.OffsetX ?? 0;
-                myPoint3D.ReserveOffsetY = valueOffset.FirstOrDefault(m => m.Y == Convert.ToInt32(myPoint3D.Y))?.OffsetY ?? 0;
-                myPoint3D.ReserveOffsetZ = valueOffset.FirstOrDefault(m => m.Z == Convert.ToInt32(myPoint3D.Z))?.OffsetZ ?? 0;
+                myPoint3D.ReserveOffsetX = valueOffsetArray.FirstOrDefault(m=> m.X == Convert.ToInt32(myPoint3D.X))?.OffsetX ?? 0;
+                myPoint3D.ReserveOffsetY = valueOffsetArray.FirstOrDefault(m => m.Y == Convert.ToInt32(myPoint3D.Y))?.OffsetY ?? 0;
+                myPoint3D.ReserveOffsetZ = valueOffsetArray.FirstOrDefault(m => m.Z == Convert.ToInt32(myPoint3D.Z))?.OffsetZ ?? 0;
             }
         }
 

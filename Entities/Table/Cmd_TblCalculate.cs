@@ -291,7 +291,7 @@ namespace GeoLib.Entities.Table
                     }
                 }
 
-                UpdateRange(point.TheoryPoint, attRef);
+                //UpdateRange(point.TheoryPoint, attRef);
                 UpdateRealMinusTheory(point, attRef, extraOffset);
             }
         }

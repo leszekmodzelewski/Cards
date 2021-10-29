@@ -114,7 +114,9 @@ namespace GeoLib.ViewModels
         public ICommand ApplyCommand => new SimpleCommand(ApplyExecute);
 
         public ICommand OkCommand => new SimpleCommand(OkExecute);
-        
+
+        public ICommand ApplyRangeCommand => new SimpleCommand(RangeExecute);
+
 
         public bool IsRecentlyExported => CardsData.RecentlyExportedPoints != null && CardsData.RecentlyExportedPoints.Any();
 
@@ -131,7 +133,15 @@ namespace GeoLib.ViewModels
             Close?.Invoke(this, new CloseEventArgs(DialogResult.OK));
         }
 
+        private void RangeExecute()
+        {
+            Points.SetRangeData(this.Ranges);
+            RangeUpdate?.Invoke(this, EventArgs.Empty);
+        }
+
         public event EventHandler<CloseEventArgs> Close;
+
+        public event EventHandler<EventArgs> RangeUpdate;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

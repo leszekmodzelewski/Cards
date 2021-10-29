@@ -128,18 +128,19 @@ namespace GeoLib.Entities.RectBlanking
                     pointsToSave = TryMatchPointWithText(textForPoints, points, CardsData.VectorBetweenTextAndPoint.Value);
                 }
                 pointsToSave = pointsToSave ?? points.Select((m, i) => new Point3dWithId(m, i.ToString())).ToList();
+                CardsData.RecentlyExportedPoints = pointsToSave;
 
-                var saveDialog = new System.Windows.Forms.SaveFileDialog();
-
-                if (saveDialog.ShowDialog() == DialogResult.OK)
+                if (pointsToSave.Any())
                 {
-                    string[] textContent = pointsToSave.Select(m => m.ToString()).ToArray();
-                    File.WriteAllLines(saveDialog.FileName, textContent);
-                    CardsData.RecentlyExportedPoints = pointsToSave;
+                    Application.ShowAlertDialog($"{pointsToSave.Count} points has been saved.");
                 }
+                
+            }
+            else
+            {
+                Application.ShowAlertDialog($"Pleas select points before pressing the button.");
             }
 
-            return;
 
 
 

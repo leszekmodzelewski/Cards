@@ -16,7 +16,7 @@ namespace GeoLib.Winforms
         {
             InitializeComponent();
             this.textBoxFileToOpen.Text = @"D:\Temp\TestsFileWithCoords.txt";
-            this.textBoxScaleFactor.Text = "1000";
+            this.textBoxScaleFactor.Text = "1500";
         }
 
         private void LoadFile_Click(object sender, EventArgs e)

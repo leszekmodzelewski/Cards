@@ -29,9 +29,7 @@ namespace GeoLib.Commands
                 return;
             }
 
-            var matchedPoints = Points.MatchedPointsBestFit == null || Points.MatchedPointsBestFit.Count == 0
-                ? Points.MatchedPoints
-                : Points.MatchedPointsBestFit;
+            var matchedPoints = Points.MatchedPoints;
 
             var points = BestFitViewModel.GetPointsForBestFitDialog(matchedPoints);
 

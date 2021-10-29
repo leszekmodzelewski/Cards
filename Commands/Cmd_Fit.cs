@@ -25,9 +25,14 @@ namespace GeoLib.Commands
             {
                 Points.TheoryPoints = CalculationUtils.ReadTheoryPointsFromCad().ToArray();
                
-                var vm = new FitViewModel(Points.ValueOffset, Points.Range);
+                var vm = new FitViewModel(Points.ValueOffsetArray, Points.Range);
                 vm.MaxErrorFit = Points.MaxErrorFit;
                 var form = new GenericWinFormForWpf(new FitCtrl(vm));
+
+                vm.RangeUpdate += (o, a) =>
+                {
+                    CalculationUtils.UpdateCadRangeOnlyEntity(ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database, Points.TheoryPoints);
+                };
 
 
                 vm.Close += (o, a) =>
@@ -48,7 +53,7 @@ namespace GeoLib.Commands
                         }
                         else
                         {
-                            CalculationUtils.UpdateCadRangeOnlyEntity(ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database, Points.TheoryPoints);
+                            //CalculationUtils.UpdateCadRangeOnlyEntity(ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database, Points.TheoryPoints);
                         }
 
                         
