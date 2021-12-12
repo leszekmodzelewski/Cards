@@ -95,39 +95,18 @@ namespace GeoLib.Entities.RectBlanking
             }
 
 
-            //if (points.Any())
-            //{
-            //    List<Point3dWithId> pointsToSave = null;
-            //    if (textForPoints.Any())
-            //    {
-            //        pointsToSave = TryMatchPointWithText(textForPoints, points, CardsData.VectorBetweenTextAndPoint.Value);
-            //    }
-            //    pointsToSave = pointsToSave ?? points.Select((m, i) => new Point3dWithId(m, i.ToString())).ToList();
-            //    CardsData.RecentlyExportedPoints = pointsToSave;
-
-            //    if (pointsToSave.Any())
-            //    {
-            //        Application.ShowAlertDialog($"{pointsToSave.Count} points has been saved.");
-            //    }
-
-            //}
-            //else
-            //{
-            //    Application.ShowAlertDialog($"Pleas select points before pressing the button.");
-            //}
-
-
             if (points.Any())
             {
                 List<Point3dWithId> pointsToSave = null;
                 if (textForPoints.Any())
                 {
-                    pointsToSave = FindClosest(textForPoints, points);
+                    pointsToSave = TryMatchPointWithText(textForPoints, points, CardsData.VectorBetweenTextAndPoint.Value);
                 }
+                pointsToSave = pointsToSave ?? points.Select((m, i) => new Point3dWithId(m, i.ToString())).ToList();
+                CardsData.RecentlyExportedPoints = pointsToSave;
 
-                if (pointsToSave?.Any() ?? false)
+                if (pointsToSave.Any())
                 {
-                    SaveToFile(pointsToSave);
                     Application.ShowAlertDialog($"{pointsToSave.Count} points has been saved.");
                 }
 
@@ -136,6 +115,27 @@ namespace GeoLib.Entities.RectBlanking
             {
                 Application.ShowAlertDialog($"Pleas select points before pressing the button.");
             }
+
+
+            // if (points.Any())
+            // {
+            //     List<Point3dWithId> pointsToSave = null;
+            //     if (textForPoints.Any())
+            //     {
+            //         pointsToSave = FindClosest(textForPoints, points);
+            //     }
+            //
+            //     if (pointsToSave?.Any() ?? false)
+            //     {
+            //         SaveToFile(pointsToSave);
+            //         Application.ShowAlertDialog($"{pointsToSave.Count} points has been saved.");
+            //     }
+            //
+            // }
+            // else
+            // {
+            //     Application.ShowAlertDialog($"Pleas select points before pressing the button.");
+            // }
 
 
 

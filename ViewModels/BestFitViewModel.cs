@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using GeoLib.Entities.Table;
 using GeoLib.Wpf;
+using Newtonsoft.Json.Serialization;
 using PointCalc;
 
 namespace GeoLib.ViewModels
@@ -57,8 +58,25 @@ namespace GeoLib.ViewModels
         private void ApplyExecute()
         {
             applyExecuted = true;
+            ResetToDefaults();
 
             Calculate();
+        }
+
+        private void ResetToDefaults()
+        {
+            //var points = GetPointsForBestFitDialog(Logic.Points.MatchedPoints);
+            //Logic.Points.MatchedPoints.Clear();
+
+            foreach (var item in this.Points)
+            {
+                var res = Logic.Points.MatchedPoints.FirstOrDefault(m => item.RealPointId == (m.RealPoint?.Id ?? m.TheoryPoint.Id));
+                if (res == null)
+                {
+                    throw new ApplicationException("Unable to find point for reset");
+                }
+                item.MatchedPoint = res;
+            }
         }
 
         public bool applyExecuted = false;
@@ -68,6 +86,7 @@ namespace GeoLib.ViewModels
             if (applyExecuted)
             {
                 Logic.Points.SetValueOffsetDataForRealPoints(Points);
+                
 
                 Logic.Points.MaxErrorBestFit = this.MaxFitValue;
 
