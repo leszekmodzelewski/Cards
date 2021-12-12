@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using GeoLib.Entities.Table;
+using GeoLib.Entities.TableRef;
 using GeoLib.Wpf;
 using Newtonsoft.Json.Serialization;
 using PointCalc;
+using ZwSoft.ZwCAD.Colors;
 
 namespace GeoLib.ViewModels
 {
@@ -110,7 +112,9 @@ namespace GeoLib.ViewModels
             
 
             PointCalculator pc = new PointCalculator();
-            Logic.Points.MatchedPointsBestFit = pc.CalculateBestFit(t.ToArray(), r.ToArray(), Logic.Points.MaxErrorBestFit);
+            Logic.Points.MatchedPointsBestFit = pc.CalculateBestFit(t.ToArray(), r.ToArray(), Logic.Points.MaxErrorBestFit, out List<MyPoint3D> realPointsAfterInversions);
+            
+            CadDrawPoints.Draw(realPointsAfterInversions.ToArray(), "BestFittedPoints", Color.FromColor(System.Drawing.Color.PaleVioletRed));
 
             CalculationUtils.UpdateCadEntity(Logic.Points.MatchedPointsBestFit, ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database, Logic.Points.OffsetToRealPointForDisplayPurposeOnly);
             

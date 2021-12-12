@@ -21,25 +21,26 @@ namespace GeoLib.Entities.TableRef
     using GeoLib.XData;
     using System;
 
-    public class Cmd_DrawTheoryPoints
+
+    public static class CadDrawPoints
     {
-        // DKO: Find MTEXT and POINT vertex
-        [CommandMethod("DRAWTHEORYPOINTS", CommandFlags.UsePickSet)]
-        public void DrawTheoryPoints()
+        public static void Draw(MyPoint3D[] points, string layerName = null, Color color = null)
         {
-            var theoryPoints = CalculationUtils.ReadTheoryPointsFromCad().ToArray();
-
-            if (!theoryPoints.Any())
+            if (!points.Any())
                 return;
-
-
-
+            
+            
             Document mdiActiveDocument = Application.DocumentManager.MdiActiveDocument;
             Database database = mdiActiveDocument.Database;
 
-            DeleteExistingTheoryLayer(database);
+            DeleteExistingTheoryLayer(database, layerName);
 
-            string theoryLayer = GetOrCreateTheoryLayer(database);
+            string layerForPoint = null;
+            
+            if(!string.IsNullOrEmpty(layerName))
+            {
+                layerForPoint = GetOrCreateTheoryLayer(database, layerName);
+            }
 
             using (Transaction transaction = mdiActiveDocument.Database.TransactionManager.StartTransaction())
             {
@@ -49,7 +50,7 @@ namespace GeoLib.Entities.TableRef
                 var acBlkTblRec =
                     transaction.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
 
-                foreach (var point3D in theoryPoints)
+                foreach (var point3D in points)
                 {
 
                     var point = new DBPoint(new Point3d(point3D.Xo, point3D.Yo, point3D.Zo))
@@ -58,7 +59,16 @@ namespace GeoLib.Entities.TableRef
                     };
 
                     point.SetDatabaseDefaults();
-                    point.Layer = theoryLayer;
+                    if (color != null)
+                    {
+                        point.Color = color;
+                    }
+
+                    if(!string.IsNullOrEmpty(layerForPoint))
+                    {
+                        point.Layer = layerForPoint;
+                    }
+
                     acBlkTblRec.AppendEntity(point);
                     transaction.AddNewlyCreatedDBObject(point, true);
 
@@ -72,22 +82,20 @@ namespace GeoLib.Entities.TableRef
                 transaction.Commit();
             }
         }
-
-        private const string theoryLayerName = "TheoryPoints";
-
-        private string GetOrCreateTheoryLayer(Database database)
+        
+        private static string GetOrCreateTheoryLayer(Database database, string layerName)
         {
             using (Transaction acTrans = database.TransactionManager.StartTransaction())
             {
                 // Open the Layer table for read
                 var acLyrTbl = acTrans.GetObject(database.LayerTableId, OpenMode.ForRead) as LayerTable;
 
-                if (acLyrTbl.Has(theoryLayerName) == false)
+                if (acLyrTbl.Has(layerName) == false)
                 {
                     LayerTableRecord acLyrTblRec = new LayerTableRecord();
 
                     acLyrTblRec.Color = Color.FromColor(System.Drawing.Color.Yellow);
-                    acLyrTblRec.Name = theoryLayerName;
+                    acLyrTblRec.Name = layerName;
                     acLyrTblRec.IsHidden = false;
                     acLyrTblRec.IsLocked = true;
 
@@ -103,18 +111,18 @@ namespace GeoLib.Entities.TableRef
                 acTrans.Commit();
             }
 
-            return theoryLayerName;
+            return layerName;
         }
-
-        private void DeleteExistingTheoryLayer(Database database)
+        
+        private static void DeleteExistingTheoryLayer(Database database, string layerName)
         {
-            var objToRemove = GetEntitiesOnLayer(theoryLayerName);
+            var objToRemove = GetEntitiesOnLayer(layerName);
             if (objToRemove.Count > 0)
             {
                 using (Transaction acTrans = database.TransactionManager.StartTransaction())
                 {
                     var acLyrTbl = acTrans.GetObject(database.LayerTableId, OpenMode.ForRead) as LayerTable;
-                    var acLyrTblRec = acTrans.GetObject(acLyrTbl[theoryLayerName], OpenMode.ForWrite) as LayerTableRecord;
+                    var acLyrTblRec = acTrans.GetObject(acLyrTbl[layerName], OpenMode.ForWrite) as LayerTableRecord;
                     acLyrTblRec.IsLocked = false;
 
 
@@ -133,13 +141,13 @@ namespace GeoLib.Entities.TableRef
             {
                 // Open the Layer table for read
                 var acLyrTbl = acTrans.GetObject(database.LayerTableId, OpenMode.ForRead) as LayerTable;
-                if (acLyrTbl.Has(theoryLayerName) == false)
+                if (acLyrTbl.Has(layerName) == false)
                 {
                     return;
                 }
 
                 ObjectIdCollection acObjIdColl = new ObjectIdCollection();
-                acObjIdColl.Add(acLyrTbl[theoryLayerName]);
+                acObjIdColl.Add(acLyrTbl[layerName]);
                 //database.Purge(acObjIdColl);
 
                 if (acObjIdColl.Count > 0)
@@ -165,7 +173,7 @@ namespace GeoLib.Entities.TableRef
 
             }
         }
-
+        
         private static ObjectIdCollection GetEntitiesOnLayer(string layerName)
         {
             Document doc = Application.DocumentManager.MdiActiveDocument;
@@ -184,6 +192,20 @@ namespace GeoLib.Entities.TableRef
             else
                 return new ObjectIdCollection();
         }
+    }
+    
+    public class Cmd_DrawTheoryPoints
+    {
+        // DKO: Find MTEXT and POINT vertex
+        [CommandMethod("DRAWTHEORYPOINTS", CommandFlags.UsePickSet)]
+        public void DrawTheoryPoints()
+        {
+            var theoryPoints = CalculationUtils.ReadTheoryPointsFromCad().ToArray();
+            
+            CadDrawPoints.Draw(theoryPoints, theoryLayerName);
+        }
+
+        private const string theoryLayerName = "TheoryPoints";
     }
 }
 

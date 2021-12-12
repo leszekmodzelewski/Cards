@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Cmd_BestFit.cs" />
+    <Compile Include="Commands\Cmd_DrawNewPoint.cs" />
     <Compile Include="Commands\Cmd_Fit.cs" />
     <Compile Include="Commands\Cmd_Move.cs" />
     <Compile Include="Controls\BestFitCtrl.xaml.cs">
