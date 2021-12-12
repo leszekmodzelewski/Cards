@@ -1,8 +1,10 @@
 ﻿
 
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using PointCalc;
@@ -81,43 +83,38 @@ namespace GeoLib.Entities.RectBlanking
                                         points.Add(point.Position);
                                         break;
 
-                                }
-                            }
-                        }
-                    }
+                                    case DBText text:
+                                        textForPoints.Add(new Point3dWithId(text.Position, text.TextString));
+                                        break;
 
-
-                    if (points.Any() && CardsData.VectorBetweenTextAndPoint.HasValue)
-                    {
-                        PromptSelectionResult selRes = mdiActiveDocument.Editor.SelectAll(new SelectionFilter(new List<TypedValue>() {new TypedValue(0, "TEXT")}.ToArray()));
-
-                        if (selRes.Status == PromptStatus.OK)
-                        {
-                            acSSet = selRes.Value;
-                            foreach (SelectedObject acSSObj in acSSet)
-                            {
-                                // Check to make sure a valid SelectedObject object was returned
-                                if (acSSObj != null)
-                                {
-                                    // Open the selected object for write
-                                    Entity acEnt = transaction.GetObject(acSSObj.ObjectId, OpenMode.ForRead) as Entity;
-
-                                    if (acEnt != null)
-                                    {
-                                        switch (acEnt)
-                                        {
-                                            case DBText text:
-                                                textForPoints.Add(new Point3dWithId(text.Position, text.TextString));
-                                                break;
-
-                                        }
-                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+
+
+            //if (points.Any())
+            //{
+            //    List<Point3dWithId> pointsToSave = null;
+            //    if (textForPoints.Any())
+            //    {
+            //        pointsToSave = TryMatchPointWithText(textForPoints, points, CardsData.VectorBetweenTextAndPoint.Value);
+            //    }
+            //    pointsToSave = pointsToSave ?? points.Select((m, i) => new Point3dWithId(m, i.ToString())).ToList();
+            //    CardsData.RecentlyExportedPoints = pointsToSave;
+
+            //    if (pointsToSave.Any())
+            //    {
+            //        Application.ShowAlertDialog($"{pointsToSave.Count} points has been saved.");
+            //    }
+
+            //}
+            //else
+            //{
+            //    Application.ShowAlertDialog($"Pleas select points before pressing the button.");
+            //}
 
 
             if (points.Any())
@@ -125,24 +122,20 @@ namespace GeoLib.Entities.RectBlanking
                 List<Point3dWithId> pointsToSave = null;
                 if (textForPoints.Any())
                 {
-                    pointsToSave = TryMatchPointWithText(textForPoints, points, CardsData.VectorBetweenTextAndPoint.Value);
+                    pointsToSave = FindClosest(textForPoints, points);
                 }
-                pointsToSave = pointsToSave ?? points.Select((m, i) => new Point3dWithId(m, i.ToString())).ToList();
-                CardsData.RecentlyExportedPoints = pointsToSave;
 
-                if (pointsToSave.Any())
+                if (pointsToSave?.Any() ?? false)
                 {
+                    SaveToFile(pointsToSave);
                     Application.ShowAlertDialog($"{pointsToSave.Count} points has been saved.");
                 }
-                
+
             }
             else
             {
                 Application.ShowAlertDialog($"Pleas select points before pressing the button.");
             }
-
-
-
 
 
 
@@ -170,6 +163,75 @@ namespace GeoLib.Entities.RectBlanking
             //         RectBlankingUtils.CreateBlockReference(mdiActiveDocument.Database, blockId, start, num2 - x, Math.Max(point.Value.Y, result2.Value.Y) - y);
             //     }
             // }
+        }
+
+        private List<Point3dWithId> FindClosest(List<Point3dWithId> textForPoints, List<Point3d> points)
+        {
+            if (points.Count > textForPoints.Count)
+            {
+                Application.ShowAlertDialog($"Unable to match text with points because points number is greater than texts - Points:{points.Count}:Texts:{textForPoints.Count}");
+                return null;
+            }
+
+            var textForPointsForCalc = new List<Point3dWithId>();
+            textForPointsForCalc.AddRange(textForPoints);
+
+            var usedText = new Dictionary<string, int>();
+
+            List<Point3dWithId> pointsWithText = new List<Point3dWithId>();
+            foreach (var point in points)
+            {
+                int textPointIndex = MinIndex(point, textForPointsForCalc);
+                pointsWithText.Add(new Point3dWithId(point, textForPointsForCalc[textPointIndex].TextId));
+                //textForPointsForCalc.RemoveAt(textPointIndex);
+
+                if (usedText.ContainsKey(textForPointsForCalc[textPointIndex].TextId))
+                {
+                    usedText[textForPointsForCalc[textPointIndex].TextId] += 1;
+                }
+                else
+                {
+                    usedText[textForPointsForCalc[textPointIndex].TextId] = 1;
+                }
+            }
+
+
+            var moreThanOne = usedText.Where(m => m.Value > 1).ToList();
+            var unusedText = textForPointsForCalc.Select(m => m.TextId).Except(usedText.Keys).ToList();
+
+            if (moreThanOne.Any() || unusedText.Any())
+            {
+                string msg = "Exported but....";
+                if (moreThanOne.Any())
+                {
+                    msg += Environment.NewLine + "Some texts has been used more than one:" + Environment.NewLine;
+                    msg += string.Join(" | ", moreThanOne.Select(w => $"text:'{w.Key}' count:{w.Value}"));
+                }
+                if (unusedText.Any())
+                {
+                    msg += Environment.NewLine + "Also, there are texts that were not assigned to any points:" + Environment.NewLine;
+                    msg += string.Join(" | ", unusedText.Select(w => $"text:'{w}'"));
+                }
+
+                Application.ShowAlertDialog(msg);
+            }
+            return pointsWithText;
+        }
+
+        private int MinIndex(Point3d point, List<Point3dWithId> textForPoints)
+        {
+            int index = -1;
+            double minDistance = double.MaxValue;
+            for (int i = 0; i < textForPoints.Count; i++)
+            {
+                var distance = point.DistanceTo(textForPoints[i].Point);
+                if (distance < minDistance)
+                {
+                    index = i;
+                    minDistance = distance;
+                }
+            }
+            return index;
         }
 
         private List<Point3dWithId> TryMatchPointWithText(List<Point3dWithId> textForPoints, List<Point3d> points, Vector3d vector)
@@ -213,6 +275,22 @@ namespace GeoLib.Entities.RectBlanking
                 Application.ShowAlertDialog($"Unable to match text with points because matched texts has the same Id's, i.e. {r[0]}");
             }
             return null;
+        }
+
+
+        public void SaveToFile(List<Point3dWithId> data)
+        {
+            var path = @"c:\NetPrograms\_points.txt";
+
+            using (StreamWriter outputFile = new StreamWriter(path))
+            {
+                foreach (var d in data)
+                {
+                    outputFile.WriteLine($"{d.TextId};{d.Point.X};{d.Point.Y};{d.Point.Z}");
+                }
+
+            }
+
         }
     }
 }

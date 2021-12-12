@@ -14,7 +14,7 @@
         <TextBox HorizontalAlignment="Left" Height="23" Margin="4,69,0,0" TextWrapping="Wrap" Text="{Binding Path= Y}" VerticalAlignment="Top" Width="67"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="4,102,0,0" TextWrapping="Wrap" Text="{Binding Path= Z}" VerticalAlignment="Top" Width="67"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="77,33,0,0" TextWrapping="Wrap" Text="{Binding Path= OffsetX}" VerticalAlignment="Top" Width="67"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="77,69,0,0" TextWrapping="Wrap" Text="{Binding Path= OffsetZ}" VerticalAlignment="Top" Width="67"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="77,102,0,0" TextWrapping="Wrap" Text="{Binding Path= OffsetY}" VerticalAlignment="Top" Width="66"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="77,69,0,0" TextWrapping="Wrap" Text="{Binding Path= OffsetY}" VerticalAlignment="Top" Width="67"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="77,102,0,0" TextWrapping="Wrap" Text="{Binding Path= OffsetZ}" VerticalAlignment="Top" Width="66"/>
     </Grid>
 </UserControl>

@@ -57,6 +57,8 @@ namespace GeoLib.ViewModels
         private void ApplyExecute()
         {
             applyExecuted = true;
+
+            Calculate();
         }
 
         public bool applyExecuted = false;

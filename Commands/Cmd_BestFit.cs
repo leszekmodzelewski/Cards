@@ -35,19 +35,18 @@ namespace GeoLib.Commands
 
             var bf = new BestFitViewModel(points) {MaxFitValue = Points.MaxErrorBestFit};
 
-            var form = new GenericWinFormForWpf(new BestFitCtrl(bf));
-            
             bf.Close += (o, a) =>
             {
                 if (a.Result == DialogResult.OK)
                 {
-                    form.Close();
-                    form.Dispose();
-                    bf.Calculate();
+                    //bf.Calculate();
                 }
             };
-                
-            form.ShowDialog();
+
+            using (var form = new GenericWinFormForWpf(new BestFitCtrl(bf)))
+            {
+                form.ShowDialog();
+            }
         }
 
         private bool Verify(List<MatchedPoint> matchedPoints)

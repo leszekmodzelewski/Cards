@@ -300,17 +300,17 @@ namespace GeoLib.Entities.Table
         {
             if (attRef.Tag == "X_3")
             {
-                EntityBaseUtils.UpdateRangeAttribute(attRef, Points.GetRangeForX(theoryPoint.X));
+                EntityBaseUtils.UpdateRangeAttribute(attRef, Points.GetRangeForX(theoryPoint.Xo));
             }
 
             if (attRef.Tag == "Y_3")
             {
-                EntityBaseUtils.UpdateRangeAttribute(attRef, Points.GetRangeForY(theoryPoint.Y));
+                EntityBaseUtils.UpdateRangeAttribute(attRef, Points.GetRangeForY(theoryPoint.Yo));
             }
 
             if (attRef.Tag == "Z_3")
             {
-                EntityBaseUtils.UpdateRangeAttribute(attRef, Points.GetRangeForZ(theoryPoint.Z));
+                EntityBaseUtils.UpdateRangeAttribute(attRef, Points.GetRangeForZ(theoryPoint.Zo));
             }
         }
 

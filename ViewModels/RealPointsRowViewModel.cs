@@ -42,9 +42,9 @@ namespace GeoLib.ViewModels
         public string RealPointId { get; set; }
 
 
-        public int X => Convert.ToInt32(this.MatchedPoint.TheoryPoint.X);
-        public int Y => Convert.ToInt32(this.MatchedPoint.TheoryPoint.Y);
-        public int Z => Convert.ToInt32(this.MatchedPoint.TheoryPoint.Z);
+        public int X => Convert.ToInt32(this.MatchedPoint.TheoryPoint.Xo);
+        public int Y => Convert.ToInt32(this.MatchedPoint.TheoryPoint.Yo);
+        public int Z => Convert.ToInt32(this.MatchedPoint.TheoryPoint.Zo);
 
 
         public string Dx

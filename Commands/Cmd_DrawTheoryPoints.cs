@@ -52,7 +52,7 @@ namespace GeoLib.Entities.TableRef
                 foreach (var point3D in theoryPoints)
                 {
 
-                    var point = new DBPoint(new Point3d(point3D.X, point3D.Y, point3D.Z))
+                    var point = new DBPoint(new Point3d(point3D.Xo, point3D.Yo, point3D.Zo))
                     {
                         Color = Color.FromColor(System.Drawing.Color.Yellow)
                     };
