@@ -169,7 +169,6 @@ namespace GeoLib.Entities.Table
 
         public static void RegenerateAllTables(Database database)
         {
-            
             using (Transaction transaction = database.TransactionManager.StartTransaction())
             {
                 foreach (ObjectId id2 in transaction.GetObject(SymbolUtilityServices.GetBlockModelSpaceId(database), OpenMode.ForWrite) as BlockTableRecord)

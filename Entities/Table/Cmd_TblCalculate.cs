@@ -144,6 +144,38 @@ namespace GeoLib.Entities.Table
             return CalculationUtils.ReadFromCad(ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database);
         }
 
+        public static void Clean_X_4(Database database)
+        {
+            return;
+            using (Transaction transaction = database.TransactionManager.StartTransaction())
+            {
+                foreach (ObjectId id2 in transaction.GetObject(SymbolUtilityServices.GetBlockModelSpaceId(database), OpenMode.ForRead) as BlockTableRecord)
+                {
+                    EntityBase base2 = EntityFactory.Create(transaction.GetObject(id2, OpenMode.ForRead));
+                    if (base2 is EntityTable eTable)
+                    {
+                        foreach (ObjectId id in eTable.Entity.AttributeCollection)
+                        {
+                            AttributeReference attRef = (AttributeReference)transaction.GetObject(id, OpenMode.ForRead);
+                            if (attRef.Tag == "X_4")
+                            {
+                                attRef.TextString = string.Empty;
+                            }
+                            if (attRef.Tag == "Y_4")
+                            {
+                                attRef.TextString = string.Empty;
+                            }
+                            if (attRef.Tag == "Z_4")
+                            {
+                                attRef.TextString = string.Empty;
+                            }
+                        }
+                    }
+                }
+                transaction.Commit();
+            }
+        }
+
         private static List<MyPoint3D> ReadFromCad(Database database)
         {
             var coords = new List<long>();
@@ -214,6 +246,8 @@ namespace GeoLib.Entities.Table
         }
 
 
+       
+
         public static void UpdateCadEntity(List<MatchedPoint> res, Database database, int[] extraOffset)
         {
             int missingPointCounter = 0;
@@ -247,6 +281,7 @@ namespace GeoLib.Entities.Table
                 MessageBox.Show("No matched points.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
 
         private static void UpdateAboutRealValues(Database database, EntityTable eTable, MatchedPoint point, int[] extraOffset)
         {
@@ -323,18 +358,33 @@ namespace GeoLib.Entities.Table
 
             if (attRef.Tag == "X_4")
             {
-                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef,Math.Abs(matchedPoint.RealPoint.X + +extraOffset[0]) - Math.Abs(matchedPoint.TheoryPoint.X) );
+                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, ValueToSet(matchedPoint.RealPoint.X + +extraOffset[0], matchedPoint.TheoryPoint.X));
             }
 
             if (attRef.Tag == "Y_4")
             {
-                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, Math.Abs(matchedPoint.RealPoint.Y + extraOffset[1]) - Math.Abs(matchedPoint.TheoryPoint.Y));
+                EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, ValueToSet(matchedPoint.RealPoint.Y + extraOffset[1], matchedPoint.TheoryPoint.Y));
             }
 
             if (attRef.Tag == "Z_4")
             {
                 EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, matchedPoint.RealPoint.Z - matchedPoint.TheoryPoint.Z + extraOffset[2]);
             }
+        }
+
+        private static double ValueToSet(double real, double theory)
+        {
+            double res;
+            if (real < 0)
+            {
+                res = theory - real;
+            }
+            else
+            {
+                res = real - theory;
+            }
+            
+            return res;
         }
 
         private static string[] GetXYZ(Database database, EntityTable eTable)
@@ -372,5 +422,7 @@ namespace GeoLib.Entities.Table
 
             return xyz;
         }
+
+
     }
 }

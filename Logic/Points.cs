@@ -9,12 +9,35 @@ namespace GeoLib.Logic
 {
     public static class Points
     {
+
+
         static Points()
         {
-            MaxErrorBestFit = 10;
+            Initialize();
+        }
 
+        private static void Initialize()
+        {
+            MaxErrorBestFit = 10;
             rangeData = new List<RangeViewModel>();
-            rangeData.Add(new RangeViewModel() {Range = "All", X2 = 5, Y2 =5, Z2 = 5});
+            rangeData.Add(new RangeViewModel() { Range = "All", X2 = 5, Y2 = 5, Z2 = 5 });
+        }
+
+        internal static void Clear()
+        {
+            offsetToRealPointForDisplayPurposeOnly = null;
+            valueOffsetArray.Clear();
+            rangeData = null;
+            ranges = null;
+            RealPoints = null;
+            TheoryPoints = null;
+            MaxErrorFit = string.Empty;
+            BestFitPointOffsetDictionary.Clear();
+            MatchedPoints = null;
+            MatchedPointsBestFit = null;
+            MaxErrorBestFit = 0;
+
+            Initialize();
         }
 
         private static int[] offsetToRealPointForDisplayPurposeOnly;
@@ -28,7 +51,6 @@ namespace GeoLib.Logic
         private static List<ValueOffsetViewModel> valueOffsetArray = new List<ValueOffsetViewModel>();
         private static List<RangeViewModel> rangeData;
         private static Ranges ranges;
-
 
         public static List<ValueOffsetViewModel> ValueOffsetArray => valueOffsetArray;
         public static List<RangeViewModel> Range => rangeData;
@@ -97,7 +119,6 @@ namespace GeoLib.Logic
             }
         }
 
-
         public static void SetRangeData(IEnumerable<RangeViewModel> range)
         {
             rangeData.Clear();
@@ -130,7 +151,5 @@ namespace GeoLib.Logic
             var range = ranges.AllRanges.FirstOrDefault(m => m.From <= pointAsInt && pointAsInt < m.To)?.Val ?? ranges.DefaultRange;
             return new[] { range.Zmin, range.Zmax };
         }
-
-        
     }
 }

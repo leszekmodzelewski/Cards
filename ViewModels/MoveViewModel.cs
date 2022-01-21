@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Input;
+using GeoLib.Wpf;
 
 namespace GeoLib.ViewModels
 {
@@ -65,6 +64,23 @@ namespace GeoLib.ViewModels
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public event EventHandler<EventArgs> Apply;
+
+        public event EventHandler<EventArgs> Cancel;
+
+
+        public ICommand ExecuteApplyCommand => new SimpleCommand(ApplyClicked);
+        private void ApplyClicked()
+        {
+            Apply?.Invoke(this, EventArgs.Empty);
+        }
+
+        public ICommand ExecuteCancelCommand => new SimpleCommand(CancelClicked);
+        private void CancelClicked()
+        {
+            Cancel?.Invoke(this, EventArgs.Empty);
         }
     }
 }

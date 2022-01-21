@@ -6,9 +6,8 @@
              xmlns:local="clr-namespace:GeoLib.Controls"
              xmlns:viewModels="clr-namespace:GeoLib.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="142.27" d:DesignWidth="110.585" d:DataContext="{d:DesignInstance viewModels:MoveViewModel}">
+             d:DesignHeight="180.816" d:DesignWidth="185.224" d:DataContext="{d:DesignInstance viewModels:MoveViewModel}">
     <Grid>
-
         <TextBox Text="{Binding XOffset}" HorizontalAlignment="Left" Height="23" Margin="29,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="29,73,0,0" TextWrapping="Wrap" Text="{Binding YOffset}" VerticalAlignment="Top" Width="63"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="30,104,0,0" TextWrapping="Wrap" Text="{Binding ZOffset}" VerticalAlignment="Top" Width="62"/>
@@ -16,5 +15,7 @@
         <Label Content="Y" HorizontalAlignment="Left" Margin="8,70,0,0" VerticalAlignment="Top"/>
         <Label Content="Z" HorizontalAlignment="Left" Margin="8,101,0,0" VerticalAlignment="Top"/>
         <Label Content="Move by offset" HorizontalAlignment="Left" Margin="8,8,0,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding ExecuteApplyCommand}" Content="Ok" HorizontalAlignment="Left" Margin="8,156,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Command="{Binding ExecuteCancelCommand}" Content="Cancel" HorizontalAlignment="Left" Margin="100,156,0,0" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </UserControl>

@@ -45,6 +45,19 @@
                 {
                     EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, base.Data.Z2);
                 }
+
+                if (attRef.Tag == "X_4")
+                {
+                    EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, null);
+                }
+                if (attRef.Tag == "Y_4")
+                {
+                    EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, null);
+                }
+                if (attRef.Tag == "Z_4")
+                {
+                    EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, null);
+                }
             }
         }
     }

@@ -103,6 +103,7 @@
       <DependentUpon>ValueOffsetCtrl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commands\Cmd_EstablishTextVector.cs" />
+    <Compile Include="Commands\Cmd_Clear.cs" />
     <Compile Include="Entities\Table\Cmd_DwgCreate.cs" />
     <Compile Include="Entities\Table\Cmd_TblCalculate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
