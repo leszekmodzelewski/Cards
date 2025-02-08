@@ -1,9 +1,7 @@
 ﻿namespace GeoLib.Entities.Table
 {
-    using ZwSoft.ZwCAD.DatabaseServices;
     using GeoLib.Controls;
-    using System;
-    using System.Runtime.CompilerServices;
+    using ZwSoft.ZwCAD.DatabaseServices;
 
     public class TableWindowModel
     {

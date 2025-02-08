@@ -1,8 +1,7 @@
 ﻿namespace GeoLib.Entities.Table
 {
-    using ZwSoft.ZwCAD.DatabaseServices;
     using GeoLib.Entities;
-    using System;
+    using ZwSoft.ZwCAD.DatabaseServices;
 
     public class EntityTable : EntityBaseTyped<BlockReference, EntityTableData>
     {
@@ -20,7 +19,7 @@
             TableUtils.RecalculateTableContent(database, this, out nullable, out nullable2, out nullable3);
             foreach (ObjectId id in base.Entity.AttributeCollection)
             {
-                AttributeReference attRef = (AttributeReference) topTransaction.GetObject(id, OpenMode.ForRead);
+                AttributeReference attRef = (AttributeReference)topTransaction.GetObject(id, OpenMode.ForRead);
                 if (attRef.Tag == "X_1")
                 {
                     EntityBaseUtils.UpdateNullableDoubleAttribute(attRef, nullable);

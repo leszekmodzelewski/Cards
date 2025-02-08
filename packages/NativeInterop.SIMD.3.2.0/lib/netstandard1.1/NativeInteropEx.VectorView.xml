@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NativeInteropEx.VectorView</name>
+    </assembly>
+    <members>
+        <member name="T:NativeInteropEx.VectorIndexer`1">
+            <summary>
+            Wraps a raw memory address or a NativeArray with an indexer
+            providing vectorized access
+            </summary>
+        </member>
+        <member name="T:NativeInteropEx.VectorView">
+            <summary>
+            Helper class that provides access to memory in SIMD strides of 
+            size Vector&lt;T&gt;.Count * sizeof(T) chunks from F#
+            </summary>
+            <remarks>Simply forwards to NativeInteropEx.IntPtrEx, in turn forwarding to
+            NativeInterop.NativePtr, but strips off the unmanaged constraint, so that we 
+            can treat any T* as Vector&lt;T&gt;* even from F#</remarks>
+            <typeparam name="T">Underlying primitive type (must be supported by Vector&lt;T&gt;)</typeparam>
+        </member>
+    </members>
+</doc>

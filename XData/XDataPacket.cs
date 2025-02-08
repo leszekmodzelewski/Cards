@@ -3,8 +3,6 @@
 namespace GeoLib.XData
 {
     using ZwSoft.ZwCAD.DatabaseServices;
-    using System;
-    using System.Runtime.CompilerServices;
 
     public class XDataPacket
     {
@@ -12,11 +10,11 @@ namespace GeoLib.XData
         {
             TypedValue[] valueArray = buffer.AsArray();
             int num = 0;
-            string text1 = (string) valueArray[num++].Value;
+            string text1 = (string)valueArray[num++].Value;
             XDataPacket packet1 = new XDataPacket();
-            packet1.Name = (string) valueArray[num++].Value;
-            packet1.Version = (int) valueArray[num++].Value;
-            packet1.Data = (string) valueArray[num++].Value;
+            packet1.Name = (string)valueArray[num++].Value;
+            packet1.Version = (int)valueArray[num++].Value;
+            packet1.Data = (string)valueArray[num++].Value;
             return packet1;
         }
 

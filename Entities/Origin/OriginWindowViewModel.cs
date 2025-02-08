@@ -3,7 +3,6 @@
     using GeoLib;
     using GeoLib.Controls;
     using GeoLib.Entities.Table;
-    using System;
 
     public class OriginWindowViewModel : ViewModel<OriginWindowModel>
     {
@@ -41,7 +40,7 @@
 
         public string Name
         {
-            get => 
+            get =>
                 base.Model.Name;
             set
             {
@@ -58,7 +57,7 @@
 
         public SectionTypeItem SelectedItem
         {
-            get => 
+            get =>
                 this.GetItemFor(base.Model.SectionType);
             set
             {

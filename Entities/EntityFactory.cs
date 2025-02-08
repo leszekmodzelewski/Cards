@@ -2,9 +2,8 @@
 
 namespace GeoLib.Entities
 {
-    using ZwSoft.ZwCAD.DatabaseServices;
     using GeoLib.XData;
-    using System;
+    using ZwSoft.ZwCAD.DatabaseServices;
 
     public class EntityFactory
     {

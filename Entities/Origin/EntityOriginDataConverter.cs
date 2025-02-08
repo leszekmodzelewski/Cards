@@ -3,7 +3,6 @@
 namespace GeoLib.Entities.Origin
 {
     using GeoLib.Entities.Table;
-    using System;
 
     public static class EntityOriginDataConverter
     {
@@ -13,9 +12,10 @@ namespace GeoLib.Entities.Origin
             {
                 return null;
             }
-            EntityOriginData data = new EntityOriginData {
+            EntityOriginData data = new EntityOriginData
+            {
                 Name = model.Name,
-                SectionTypes = (int) model.SectionType
+                SectionTypes = (int)model.SectionType
             };
             if (model.Ship.X != null)
             {
@@ -40,7 +40,7 @@ namespace GeoLib.Entities.Origin
             }
             OriginWindowModel model1 = new OriginWindowModel();
             model1.Name = data.Name;
-            model1.SectionType = (TableSectionTypes) data.SectionTypes;
+            model1.SectionType = (TableSectionTypes)data.SectionTypes;
             model1.Ship = new DataXYZModel(data.X, data.Y, data.Z);
             // model1.Ship.X = new double?(data.X);
             // model1.Ship.Y = new double?(data.Y);

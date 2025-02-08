@@ -1,6 +1,5 @@
 ﻿namespace GeoLib.Entities.Table
 {
-    using System;
     using ZwSoft.ZwCAD.DatabaseServices;
 
     public static class EntityTableDataConverter

@@ -72,9 +72,11 @@
         <Button Command="{Binding ApplyCommand}" Content="Apply" HorizontalAlignment="Left" Margin="539,0,0,14" VerticalAlignment="Bottom" Width="75"/>
         <Button Content="Clear" HorizontalAlignment="Left" Margin="10,0,0,14" VerticalAlignment="Bottom" Width="75"/>
         <Button Command="{Binding OkCommand}" Content="OK" HorizontalAlignment="Left" Margin="631,0,0,14" VerticalAlignment="Bottom" Width="75"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,0,0,43" TextWrapping="Wrap" Text="{Binding MaxErrorFit, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Bottom" Width="55" RenderTransformOrigin="1.052,0.271"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,0,0,43" TextWrapping="Wrap" Text="{Binding MaxErrorFit, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Bottom" Width="55" RenderTransformOrigin="1.052,0.271" TextChanged="TextBox_TextChanged"/>
         <Label Content="Maximum fit error" HorizontalAlignment="Left" Margin="70,0,0,40" VerticalAlignment="Bottom" Width="180"/>
         <Button Command="{Binding ReadRecentlyExported}" IsEnabled="{Binding IsRecentlyExported}" Content="Use exported" HorizontalAlignment="Left" Margin="641,19,0,0" VerticalAlignment="Top" Width="75" Height="26"/>
+        <Label Content="Scale for all object" HorizontalAlignment="Left" Margin="70,0,0,66" VerticalAlignment="Bottom" Width="180"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,0,0,66" TextWrapping="Wrap" Text="{Binding Scale, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Bottom" Width="55" RenderTransformOrigin="1.052,0.271" TextChanged="TextBox_TextChanged"/>
 
     </Grid>
 </UserControl>

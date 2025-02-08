@@ -1,7 +1,9 @@
 ﻿
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows.Documents;
 using System.Windows.Forms;
 using GeoLib.Entities.RectBlanking;
@@ -24,31 +26,38 @@ namespace GeoLib.Entities.TableRef
 
     public static class CadDrawPoints
     {
-        public static void Draw(MyPoint3D[] points, string layerName = null, Color color = null)
+        public static void Draw(MyPoint3D[] points, string layerName = null, Color color = null, bool deleteLayerIfExist = true) //bool deleteLayerIfExist = warunek dla innego programu 
         {
+           
             if (!points.Any())
                 return;
-            
-            
+          
+
             Document mdiActiveDocument = Application.DocumentManager.MdiActiveDocument;
             Database database = mdiActiveDocument.Database;
 
+            if (deleteLayerIfExist == true)
+
+                SetLayerLock(database, layerName, false);
+
+            if (deleteLayerIfExist == true)
             DeleteExistingTheoryLayer(database, layerName);
 
             string layerForPoint = null;
-            
-            if(!string.IsNullOrEmpty(layerName))
+
+            if (!string.IsNullOrEmpty(layerName))
             {
                 layerForPoint = GetOrCreateTheoryLayer(database, layerName);
             }
+            
 
             using (Transaction transaction = mdiActiveDocument.Database.TransactionManager.StartTransaction())
             {
                 var acBlkTbl = transaction.GetObject(database.BlockTableId, OpenMode.ForRead) as BlockTable;
 
                 // Open the Block table record Model space for write
-                var acBlkTblRec =
-                    transaction.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+                var acBlkTblRec = transaction.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+
 
                 foreach (var point3D in points)
                 {
@@ -64,7 +73,7 @@ namespace GeoLib.Entities.TableRef
                         point.Color = color;
                     }
 
-                    if(!string.IsNullOrEmpty(layerForPoint))
+                    if (!string.IsNullOrEmpty(layerForPoint))
                     {
                         point.Layer = layerForPoint;
                     }
@@ -81,8 +90,12 @@ namespace GeoLib.Entities.TableRef
 
                 transaction.Commit();
             }
+
+            if (deleteLayerIfExist == true)
+
+                SetLayerLock(database, layerName, true);
         }
-        
+
         private static string GetOrCreateTheoryLayer(Database database, string layerName)
         {
             using (Transaction acTrans = database.TransactionManager.StartTransaction())
@@ -97,7 +110,7 @@ namespace GeoLib.Entities.TableRef
                     acLyrTblRec.Color = Color.FromColor(System.Drawing.Color.Yellow);
                     acLyrTblRec.Name = layerName;
                     acLyrTblRec.IsHidden = false;
-                    acLyrTblRec.IsLocked = true;
+                    //acLyrTblRec.IsLocked = true;
 
                     // Upgrade the Layer table for write
                     acLyrTbl.UpgradeOpen();
@@ -113,7 +126,20 @@ namespace GeoLib.Entities.TableRef
 
             return layerName;
         }
-        
+
+        private static void SetLayerLock(Database database, string layerName, bool lockLayer)
+        {
+            using (Transaction acTrans = database.TransactionManager.StartTransaction())
+            {
+                // Open the Layer table for read
+                var acLyrTbl = acTrans.GetObject(database.LayerTableId, OpenMode.ForRead) as LayerTable;
+               // var acLyrTblRec = acTrans.GetObject(acLyrTbl[layerName], OpenMode.ForWrite) as LayerTableRecord;
+               // acLyrTblRec.IsLocked = lockLayer;
+
+                acTrans.Commit();
+            }
+        }
+
         private static void DeleteExistingTheoryLayer(Database database, string layerName)
         {
             var objToRemove = GetEntitiesOnLayer(layerName);
@@ -173,7 +199,7 @@ namespace GeoLib.Entities.TableRef
 
             }
         }
-        
+
         private static ObjectIdCollection GetEntitiesOnLayer(string layerName)
         {
             Document doc = Application.DocumentManager.MdiActiveDocument;
@@ -193,7 +219,7 @@ namespace GeoLib.Entities.TableRef
                 return new ObjectIdCollection();
         }
     }
-    
+
     public class Cmd_DrawTheoryPoints
     {
         // DKO: Find MTEXT and POINT vertex
@@ -201,11 +227,41 @@ namespace GeoLib.Entities.TableRef
         public void DrawTheoryPoints()
         {
             var theoryPoints = CalculationUtils.ReadTheoryPointsFromCad().ToArray();
-            
-            CadDrawPoints.Draw(theoryPoints, theoryLayerName);
+
+            var res = theoryPoints.Distinct(new MyPoint3DComparer());
+
+            if (res.Count() != theoryPoints.Length)
+            {
+                var diff = theoryPoints.Except(res);
+
+                var sb = new StringBuilder();
+                sb.Append("If you want use BESTFIT delete duplicate points:");
+                foreach (var point3D in diff)
+                {
+                    sb.Append(System.Environment.NewLine).Append(point3D);
+                }
+
+                MessageBox.Show(sb.ToString());
+            }
+
+
+            CadDrawPoints.Draw(theoryPoints, theoryLayerName, Color.FromColor(System.Drawing.Color.YellowGreen));
+            CadDrawPoints.Draw(theoryPoints, theoryLayerName, Color.FromColor(System.Drawing.Color.YellowGreen));
         }
 
         private const string theoryLayerName = "TheoryPoints";
     }
-}
 
+    public class MyPoint3DComparer : IEqualityComparer<MyPoint3D>
+    {
+        public bool Equals(MyPoint3D x, MyPoint3D y)
+        {
+            return x?.HasTheSameCoordsAs(y) ?? false;
+        }
+
+        public int GetHashCode(MyPoint3D obj)
+        {
+            return Convert.ToInt32(obj.X + obj.Y + obj.Z);
+        }
+    }
+}

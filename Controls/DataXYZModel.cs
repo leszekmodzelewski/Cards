@@ -1,7 +1,5 @@
 ﻿namespace GeoLib.Controls
 {
-    using System;
-
     public class DataXYZModel
     {
         private double? x;
@@ -67,21 +65,21 @@
 
         public double? X
         {
-            get => 
+            get =>
                 this.x;
             set { this.x = value; }
         }
 
         public double? Y
         {
-            get => 
+            get =>
                 this.y;
             set { this.y = value; }
         }
 
         public double? Z
         {
-            get => 
+            get =>
                 this.z;
             set { this.z = value; }
         }

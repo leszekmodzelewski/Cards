@@ -1,8 +1,5 @@
 ﻿namespace GeoLib.Entities
 {
-    using ZwSoft.ZwCAD.DatabaseServices;
-    using System;
-
     public abstract class EntityBase
     {
         protected readonly ZwSoft.ZwCAD.DatabaseServices.Entity entity;
@@ -14,7 +11,7 @@
             this.data = data;
         }
 
-        public EntityBase Clone() => 
+        public EntityBase Clone() =>
             EntityFactory.Create(this.entity.Clone() as ZwSoft.ZwCAD.DatabaseServices.Entity);
 
         public abstract void Regen();

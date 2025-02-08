@@ -1,16 +1,14 @@
 ﻿namespace GeoLib.Entities.Origin
 {
-    using ZwSoft.ZwCAD.DatabaseServices;
     using GeoLib.Entities;
     using GeoLib.XData.Attributes;
-    using System;
-    using System.Runtime.CompilerServices;
+    using ZwSoft.ZwCAD.DatabaseServices;
 
     [XDataName("ORIGIN")]
     public class EntityOriginData : EntityData
     {
-        public override EntityBase CreateFrom(Entity entity) => 
-            new EntityOrigin((BlockReference) entity, this);
+        public override EntityBase CreateFrom(Entity entity) =>
+            new EntityOrigin((BlockReference)entity, this);
 
         public int SectionTypes { get; set; }
 

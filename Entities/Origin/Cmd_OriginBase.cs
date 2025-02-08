@@ -2,11 +2,10 @@
 
 namespace GeoLib.Entities.Origin
 {
-    using ZwSoft.ZwCAD.DatabaseServices;
-    using ZwSoft.ZwCAD.Geometry;
     using GeoLib.Entities;
     using GeoLib.XData;
-    using System;
+    using ZwSoft.ZwCAD.DatabaseServices;
+    using ZwSoft.ZwCAD.Geometry;
 
     public class Cmd_OriginBase
     {

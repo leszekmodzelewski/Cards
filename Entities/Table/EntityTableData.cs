@@ -1,16 +1,14 @@
 ﻿namespace GeoLib.Entities.Table
 {
-    using ZwSoft.ZwCAD.DatabaseServices;
     using GeoLib.Entities;
     using GeoLib.XData.Attributes;
-    using System;
-    using System.Runtime.CompilerServices;
+    using ZwSoft.ZwCAD.DatabaseServices;
 
     [XDataName("TABLE")]
     public class EntityTableData : EntityData
     {
-        public override EntityBase CreateFrom(Entity entity) => 
-            new EntityTable((BlockReference) entity, this);
+        public override EntityBase CreateFrom(Entity entity) =>
+            new EntityTable((BlockReference)entity, this);
 
         public long Handle { get; set; }
 

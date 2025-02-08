@@ -2,15 +2,14 @@
 
 namespace GeoLib.Entities.Origin.Create
 {
+    using GeoLib;
+    using GeoLib.Entities.Origin;
+    using System.Windows;
     using ZwSoft.ZwCAD.ApplicationServices;
     using ZwSoft.ZwCAD.DatabaseServices;
     using ZwSoft.ZwCAD.EditorInput;
     using ZwSoft.ZwCAD.Geometry;
     using ZwSoft.ZwCAD.Runtime;
-    using GeoLib;
-    using GeoLib.Entities.Origin;
-    using System;
-    using System.Windows;
 
     public class Cmd_CreateOrigin : Cmd_OriginBase
     {
@@ -26,7 +25,8 @@ namespace GeoLib.Entities.Origin.Create
                 OriginJig jig = new OriginJig(new BlockReference(Point3d.Origin, blockTableRecord));
                 if (editor.Drag(jig).Status == PromptStatus.OK)
                 {
-                    OriginWindowModel model = new OriginWindowModel {
+                    OriginWindowModel model = new OriginWindowModel
+                    {
                         Name = OriginUtils.GenerateUniqueOriginName(mdiActiveDocument.Database),
                         Ship = new Controls.DataXYZModel(null, null, null)
                     };

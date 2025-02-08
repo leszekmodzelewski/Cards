@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using GeoLib.Logic;
+﻿using GeoLib.Logic;
 using PointCalc;
+using System.Linq;
 
 namespace GeoLib.Entities.Table
 {
-    
-    using ZwSoft.ZwCAD.Runtime;
+
     using System;
+    using ZwSoft.ZwCAD.Runtime;
 
 
     public class Cmd_TableRegen : Cmd_TableBase

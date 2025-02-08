@@ -1,18 +1,15 @@
-﻿using System;
+﻿using GeoLib.Entities.RectBlanking;
+using GeoLib.Logic;
+using GeoLib.Wpf;
+using PointCalc;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
-using GeoLib.Entities.RectBlanking;
-using GeoLib.Logic;
-using GeoLib.Wpf;
-using PointCalc;
 
 namespace GeoLib.ViewModels
 {
@@ -20,6 +17,7 @@ namespace GeoLib.ViewModels
     {
         private string filePath = @"c:\NetPrograms\Zwcad\PointsDataForCardsWithSemiColon.txt";
         private string maxErrorFit = string.Empty;
+        private int scale = 3;
 
         public string FilePath
         {
@@ -40,7 +38,15 @@ namespace GeoLib.ViewModels
                 OnPropertyChanged();
             }
         }
-
+        public int Scale
+        {
+            get => scale;
+            set
+            {
+                scale = value;
+                OnPropertyChanged();
+            }
+        }
         public FitViewModel(IEnumerable<ValueOffsetViewModel> valueOffset, IEnumerable<RangeViewModel> ranges)
         {
             foreach (var rangeViewModel in ranges)
@@ -95,7 +101,7 @@ namespace GeoLib.ViewModels
 
         public ICommand ReadFromFileCommand => new SimpleCommand(ReadFromFileExecute);
 
-        
+
 
         private void ReadFromFileExecute()
         {
@@ -103,14 +109,20 @@ namespace GeoLib.ViewModels
             MessageBox.Show($@"Read {Points.RealPoints.Length} points from file.");
         }
 
-        public ICommand ReadRecentlyExported => new SimpleCommand(ImportRecentlyExported);
+        public ICommand ReadRecentlyExported => new SimpleCommand(ImportRecentlyExported); //przycisk działanie
 
         private void ImportRecentlyExported()
         {
             // disable when CardsData.RecentlyExportedPoints == null
             Points.RealPoints = CardsData.RecentlyExportedPoints?.Select(m => new MyPoint3D(m.Point.X, m.Point.Y, m.Point.Z, m.TextId)).ToArray();
+            
         }
-
+        private void ImportRecentlyExportedTheory()
+        {
+            // disable when CardsData.RecentlyExportedPoints == null
+            Points.TheoryPoints = CardsData2.RecentlyExportedPoints2?.Select(m => new MyPoint3D(m.Point.X, m.Point.Y, m.Point.Z, m.TextId)).ToArray();
+            
+        }
         public ICommand ApplyCommand => new SimpleCommand(ApplyExecute);
 
         public ICommand OkCommand => new SimpleCommand(OkExecute);

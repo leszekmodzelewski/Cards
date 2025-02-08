@@ -2,10 +2,10 @@
 
 namespace GeoLib.Entities.Table
 {
-    using ZwSoft.ZwCAD.DatabaseServices;
-    using ZwSoft.ZwCAD.Geometry;
     using GeoLib;
     using System;
+    using ZwSoft.ZwCAD.DatabaseServices;
+    using ZwSoft.ZwCAD.Geometry;
 
     public class BlockReferenceSelector : IDisposable
     {
@@ -15,14 +15,19 @@ namespace GeoLib.Entities.Table
         private BlockReference brBL;
         private BlockReference brBR;
 
-        public BlockReferenceSelector(TableResources tableResource, Func<ObjectId, BlockReference> blockReferenceBuilder)
+        public BlockReferenceSelector(TableResources tableResource, Func<ObjectId, BlockReference> blockReferenceBuilder, bool Tpoint = true)
         {
-            this.brTL = blockReferenceBuilder(tableResource.TopLeft);
-            this.brTR = blockReferenceBuilder(tableResource.TopRight);
-            this.brBL = blockReferenceBuilder(tableResource.BottomLeft);
-            this.brBR = blockReferenceBuilder(tableResource.BottomRight);
+            if (Tpoint == true)
+            {
+                this.brTL = blockReferenceBuilder(tableResource.TopLeft);
+                this.brTR = blockReferenceBuilder(tableResource.TopRight);
+                this.brBL = blockReferenceBuilder(tableResource.BottomLeft);
+                this.brBR = blockReferenceBuilder(tableResource.BottomRight);
+                this.selected = this.Default;
+            }
             this.selected = this.Default;
         }
+       
 
         public void Dispose()
         {

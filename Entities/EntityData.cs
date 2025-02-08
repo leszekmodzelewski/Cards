@@ -3,7 +3,6 @@
 namespace GeoLib.Entities
 {
     using ZwSoft.ZwCAD.DatabaseServices;
-    using System;
 
     public abstract class EntityData
     {

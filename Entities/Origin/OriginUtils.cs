@@ -2,11 +2,9 @@
 
 namespace GeoLib.Entities.Origin
 {
-    using ZwSoft.ZwCAD.DatabaseServices;
     using GeoLib.Entities;
-    using System;
     using System.Collections.Generic;
-    using System.Runtime.CompilerServices;
+    using ZwSoft.ZwCAD.DatabaseServices;
 
     public class OriginUtils
     {
@@ -30,7 +28,7 @@ namespace GeoLib.Entities.Origin
             return ((!database.TryGetObjectId(originHandle, out id) || (!id.IsValid || id.IsErased)) ? null : (EntityFactory.Create(topTransaction.GetObject(id, OpenMode.ForRead)) as EntityOrigin));
         }
 
-        public static EntityOrigin GetEntityOrigin(Database database, ObjectId originId) => 
+        public static EntityOrigin GetEntityOrigin(Database database, ObjectId originId) =>
             GetEntityOrigin(database, originId.Handle);
 
         public static OriginItem[] GetOriginItems(Database database)
@@ -43,7 +41,8 @@ namespace GeoLib.Entities.Origin
                     EntityOrigin origin = EntityFactory.Create(transaction.GetObject(id2, OpenMode.ForRead)) as EntityOrigin;
                     if (origin != null)
                     {
-                        OriginItem item = new OriginItem {
+                        OriginItem item = new OriginItem
+                        {
                             ObjectId = origin.Entity.ObjectId,
                             Position = origin.Entity.Position,
                             Data = origin.Data
@@ -60,7 +59,7 @@ namespace GeoLib.Entities.Origin
             Transaction topTransaction = database.TransactionManager.TopTransaction;
             foreach (ObjectId id in entityOrigin.Entity.AttributeCollection)
             {
-                AttributeReference attRef = (AttributeReference) topTransaction.GetObject(id, OpenMode.ForRead);
+                AttributeReference attRef = (AttributeReference)topTransaction.GetObject(id, OpenMode.ForRead);
                 if (attRef.Tag == "BASE")
                 {
                     UpdateStringAttribute(attRef, entityOrigin.Data.Name);

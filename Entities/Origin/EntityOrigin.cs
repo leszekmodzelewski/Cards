@@ -1,8 +1,7 @@
 ﻿namespace GeoLib.Entities.Origin
 {
-    using ZwSoft.ZwCAD.DatabaseServices;
     using GeoLib.Entities;
-    using System;
+    using ZwSoft.ZwCAD.DatabaseServices;
 
     public class EntityOrigin : EntityBaseTyped<BlockReference, EntityOriginData>
     {

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using GeoLib.ViewModels;
+using PointCalc;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using GeoLib.ViewModels;
-using PointCalc;
+using System.Windows.Forms;
 
 namespace GeoLib.Logic
 {
@@ -15,7 +16,7 @@ namespace GeoLib.Logic
         {
             Initialize();
         }
-
+        
         private static void Initialize()
         {
             MaxErrorBestFit = 10;
@@ -44,7 +45,7 @@ namespace GeoLib.Logic
 
         public static int[] OffsetToRealPointForDisplayPurposeOnly
         {
-            get => offsetToRealPointForDisplayPurposeOnly ?? new[] {0, 0, 0};
+            get => offsetToRealPointForDisplayPurposeOnly ?? new[] { 0, 0, 0 };
             set => offsetToRealPointForDisplayPurposeOnly = value;
         }
 
@@ -56,8 +57,9 @@ namespace GeoLib.Logic
         public static List<RangeViewModel> Range => rangeData;
         public static MyPoint3D[] RealPoints { get; set; }
         public static MyPoint3D[] TheoryPoints { get; set; }
+        public static DialogResult resultImport  { get; set; }
         public static string MaxErrorFit { get; set; }
-        
+
         public static Dictionary<string, int[]> BestFitPointOffsetDictionary { get; } = new Dictionary<string, int[]>();
 
         public static List<MatchedPoint> MatchedPoints { get; set; }
@@ -102,7 +104,7 @@ namespace GeoLib.Logic
         {
             foreach (var myPoint3D in TheoryPoints)
             {
-                myPoint3D.ReserveOffsetX = valueOffsetArray.FirstOrDefault(m=> m.X == Convert.ToInt32(myPoint3D.X))?.OffsetX ?? 0;
+                myPoint3D.ReserveOffsetX = valueOffsetArray.FirstOrDefault(m => m.X == Convert.ToInt32(myPoint3D.X))?.OffsetX ?? 0;
                 myPoint3D.ReserveOffsetY = valueOffsetArray.FirstOrDefault(m => m.Y == Convert.ToInt32(myPoint3D.Y))?.OffsetY ?? 0;
                 myPoint3D.ReserveOffsetZ = valueOffsetArray.FirstOrDefault(m => m.Z == Convert.ToInt32(myPoint3D.Z))?.OffsetZ ?? 0;
             }
@@ -112,7 +114,7 @@ namespace GeoLib.Logic
         {
             foreach (var myPoint3D in RealPoints)
             {
-                var offset = valuesToModifyRealPoints.FirstOrDefault(m => m.Key == myPoint3D.Id).Value ?? new [] {0, 0, 0};
+                var offset = valuesToModifyRealPoints.FirstOrDefault(m => m.Key == myPoint3D.Id).Value ?? new[] { 0, 0, 0 };
                 myPoint3D.X += offset[0];
                 myPoint3D.Y += offset[1];
                 myPoint3D.Z += offset[2];
@@ -133,7 +135,7 @@ namespace GeoLib.Logic
             int pointAsInt = Math.Abs(Convert.ToInt32(val));
 
             var range = ranges.AllRanges.FirstOrDefault(m => m.From <= pointAsInt && pointAsInt < m.To)?.Val ?? ranges.DefaultRange;
-            return new []{range.Xmin, range.Xmax};
+            return new[] { range.Xmin, range.Xmax };
         }
 
         public static int[] GetRangeForY(double val)

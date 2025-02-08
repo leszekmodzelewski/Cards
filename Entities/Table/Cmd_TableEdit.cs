@@ -2,16 +2,14 @@
 
 namespace GeoLib.Entities.Table
 {
+    using GeoLib.Entities;
+    using GeoLib.Entities.Origin;
+    using System.Windows;
     using ZwSoft.ZwCAD.ApplicationServices;
     using ZwSoft.ZwCAD.DatabaseServices;
     using ZwSoft.ZwCAD.EditorInput;
     using ZwSoft.ZwCAD.Geometry;
     using ZwSoft.ZwCAD.Runtime;
-    using GeoLib.Entities;
-    using GeoLib.Entities.Origin;
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Windows;
 
     public class Cmd_TableEdit : Cmd_TableBase
     {

@@ -1,25 +1,19 @@
 ﻿
 
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using PointCalc;
-using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
 namespace GeoLib.Entities.RectBlanking
 {
+    using System;
+    using SWF = System.Windows.Forms;
     using ZwSoft.ZwCAD.ApplicationServices;
     using ZwSoft.ZwCAD.DatabaseServices;
     using ZwSoft.ZwCAD.EditorInput;
     using ZwSoft.ZwCAD.Geometry;
     using ZwSoft.ZwCAD.Runtime;
-    using GeoLib;
-    using System;
-
+    
 
     public struct Point3dWithId
     {
@@ -27,6 +21,7 @@ namespace GeoLib.Entities.RectBlanking
         {
             Point = point;
             TextId = textId;
+            
         }
 
         public Point3d Point { get; }
@@ -43,7 +38,12 @@ namespace GeoLib.Entities.RectBlanking
         public static Vector3d? VectorBetweenTextAndPoint { get; set; }
         public static List<Point3dWithId> RecentlyExportedPoints { get; set; }
     }
-    
+    public static class CardsData2
+    {
+       public static List<Point3dWithId> RecentlyExportedPoints2 { get; set; }
+
+    }
+
     public class Cmd_ExportPointsToFile
     {
         // DKO: Export to file selected points
@@ -105,11 +105,19 @@ namespace GeoLib.Entities.RectBlanking
                 pointsToSave = pointsToSave ?? points.Select((m, i) => new Point3dWithId(m, i.ToString())).ToList();
                 CardsData.RecentlyExportedPoints = pointsToSave;
 
+                Logic.Points.RealPoints = CardsData.RecentlyExportedPoints?.Select(m => new PointCalc.MyPoint3D(m.Point.X, m.Point.Y, m.Point.Z, m.TextId)).ToArray();
+
                 if (pointsToSave.Any())
                 {
                     Application.ShowAlertDialog($"{pointsToSave.Count} points has been saved.");
                 }
+                var resultX = SWF.MessageBox.Show("save to file?", "Point save", SWF.MessageBoxButtons.YesNo);
 
+                if (resultX == SWF.DialogResult.Yes)
+
+                    SaveToFile(pointsToSave);
+                var mc = new Commands.Cmd_Fit(); // Błąd kompilatora CS0120
+                mc.Execute();
             }
             else
             {
@@ -165,6 +173,7 @@ namespace GeoLib.Entities.RectBlanking
             // }
         }
 
+        
         private List<Point3dWithId> FindClosest(List<Point3dWithId> textForPoints, List<Point3d> points)
         {
             if (points.Count > textForPoints.Count)
@@ -237,22 +246,22 @@ namespace GeoLib.Entities.RectBlanking
         private List<Point3dWithId> TryMatchPointWithText(List<Point3dWithId> textForPoints, List<Point3d> points, Vector3d vector)
         {
             double tolerance = 0.001;
-            
+
             if (points.Count > textForPoints.Count)
             {
                 Application.ShowAlertDialog($"Unable to match text with points because points number is greater than texts - Points:{points.Count}:Texts:{textForPoints.Count}");
                 return null;
             }
-            
+
             List<Point3dWithId> pointsWithText = new List<Point3dWithId>();
 
             var textForPointsForCalc = new List<Point3dWithId>();
             textForPointsForCalc.AddRange(textForPoints);
-            
+
             foreach (var point in points)
             {
                 var textPointIndex = textForPointsForCalc.FindIndex(m => (point.GetVectorTo(m.Point) - vector).Length < tolerance);
-                if (textPointIndex >=0 )
+                if (textPointIndex >= 0)
                 {
                     pointsWithText.Add(new Point3dWithId(point, textForPointsForCalc[textPointIndex].TextId));
                     textForPointsForCalc.RemoveAt(textPointIndex);
@@ -280,13 +289,13 @@ namespace GeoLib.Entities.RectBlanking
 
         public void SaveToFile(List<Point3dWithId> data)
         {
-            var path = @"c:\NetPrograms\_points.txt";
+            var path = @"c:\Users\lmodzelewski\Documents\points.txt";
 
             using (StreamWriter outputFile = new StreamWriter(path))
             {
                 foreach (var d in data)
                 {
-                    outputFile.WriteLine($"{d.TextId};{d.Point.X};{d.Point.Y};{d.Point.Z}");
+                    outputFile.WriteLine($"{d.TextId};{string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:0.0}", d.Point.X)};{string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:0.0}", d.Point.Y)};{string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:0.0}", d.Point.Z)}");
                 }
 
             }

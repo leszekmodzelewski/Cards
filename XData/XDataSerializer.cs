@@ -2,14 +2,13 @@
 
 namespace GeoLib.XData
 {
-    using ZwSoft.ZwCAD.DatabaseServices;
     using GeoLib.XData.Attributes;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using System.Runtime.CompilerServices;
+    using ZwSoft.ZwCAD.DatabaseServices;
 
     public static class XDataSerializer
     {
@@ -29,7 +28,8 @@ namespace GeoLib.XData
                     }
                     string name = (customAttributes.FirstOrDefault<object>() as XDataNameAttribute).Name;
                     XDataVersionAttribute attribute = type.GetCustomAttributes(typeof(XDataVersionAttribute), true).FirstOrDefault<object>() as XDataVersionAttribute;
-                    SerializableTypeData data = new SerializableTypeData {
+                    SerializableTypeData data = new SerializableTypeData
+                    {
                         Type = type,
                         Name = name,
                         Version = (attribute != null) ? attribute.Version : 0

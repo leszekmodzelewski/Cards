@@ -1,9 +1,8 @@
-﻿using System;
+﻿using GeoLib.Wpf;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Forms;
 using System.Windows.Input;
-using GeoLib.Wpf;
 
 namespace GeoLib.ViewModels
 {
@@ -54,7 +53,7 @@ namespace GeoLib.ViewModels
         {
             get
             {
-                return new[] {XOffset, YOffset, ZOffset};
+                return new[] { XOffset, YOffset, ZOffset };
             }
 
         }

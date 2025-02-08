@@ -2,15 +2,14 @@
 
 namespace GeoLib.Entities.Origin.Edit
 {
+    using GeoLib;
+    using GeoLib.Entities.Origin;
+    using GeoLib.Entities.Table;
+    using System.Windows;
     using ZwSoft.ZwCAD.ApplicationServices;
     using ZwSoft.ZwCAD.DatabaseServices;
     using ZwSoft.ZwCAD.EditorInput;
     using ZwSoft.ZwCAD.Runtime;
-    using GeoLib;
-    using GeoLib.Entities.Origin;
-    using GeoLib.Entities.Table;
-    using System;
-    using System.Windows;
 
     public class Cmd_OriginEdit : Cmd_OriginBase
     {

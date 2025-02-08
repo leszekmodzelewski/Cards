@@ -4,7 +4,6 @@ namespace GeoLib.Entities.RectBlanking
 {
     using ZwSoft.ZwCAD.DatabaseServices;
     using ZwSoft.ZwCAD.Geometry;
-    using System;
 
     public static class RectBlankingUtils
     {

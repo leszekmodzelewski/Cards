@@ -2,9 +2,8 @@
 
 namespace GeoLib
 {
-    using ZwSoft.ZwCAD.DatabaseServices;
-    using System;
     using System.Runtime.InteropServices;
+    using ZwSoft.ZwCAD.DatabaseServices;
 
     [StructLayout(LayoutKind.Sequential)]
     public struct TableResources
@@ -14,6 +13,11 @@ namespace GeoLib
         public ObjectId BottomLeft;
         public ObjectId BottomRight;
         public ObjectId Frame;
+        public ObjectId Point;
+    }
+    public struct TableResources2
+    {
+        public ObjectId Point;
     }
 }
 

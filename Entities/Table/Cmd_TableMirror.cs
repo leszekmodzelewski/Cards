@@ -2,14 +2,14 @@
 
 namespace GeoLib.Entities.Table
 {
+    using GeoLib;
+    using GeoLib.Controls;
+    using System;
     using ZwSoft.ZwCAD.ApplicationServices;
     using ZwSoft.ZwCAD.DatabaseServices;
     using ZwSoft.ZwCAD.EditorInput;
     using ZwSoft.ZwCAD.Geometry;
     using ZwSoft.ZwCAD.Runtime;
-    using GeoLib;
-    using GeoLib.Controls;
-    using System;
 
     public class Cmd_TableMirror
     {
@@ -55,7 +55,7 @@ namespace GeoLib.Entities.Table
                                 {
                                     Point3d? nullable;
                                     double? nullable2;
-                                    Vector3d vectord2 = (Vector3d) (2.0 * blockReference.Position.GetVectorTo(flag ? new Point3d(point.Value.X, blockReference.Position.Y, blockReference.Position.Z) : new Point3d(blockReference.Position.X, point.Value.Y, blockReference.Position.Z)));
+                                    Vector3d vectord2 = (Vector3d)(2.0 * blockReference.Position.GetVectorTo(flag ? new Point3d(point.Value.X, blockReference.Position.Y, blockReference.Position.Z) : new Point3d(blockReference.Position.X, point.Value.Y, blockReference.Position.Z)));
                                     ObjectId blockId = flag ? AppUtils.GetXMirror(resources, blockReference.DynamicBlockTableRecord) : AppUtils.GetYMirror(resources, blockReference.DynamicBlockTableRecord);
                                     BlockReference reference2 = TableUtils.CreateBlockReference(transaction, modelspace, blockReference.Position + vectord2, blockId, true);
                                     TableUtils.GetTableParameters(blockReference, out nullable, out nullable2);

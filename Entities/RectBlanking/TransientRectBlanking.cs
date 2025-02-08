@@ -2,11 +2,10 @@
 
 namespace GeoLib.Entities.RectBlanking
 {
+    using GeoLib.Transient;
     using ZwSoft.ZwCAD.DatabaseServices;
     using ZwSoft.ZwCAD.EditorInput;
     using ZwSoft.ZwCAD.Geometry;
-    using GeoLib.Transient;
-    using System;
 
     public class TransientRectBlanking : TransientUpdater
     {
@@ -22,7 +21,7 @@ namespace GeoLib.Entities.RectBlanking
         private static Polyline3d CreatePolyline(Point3d start, Point3d end)
         {
             Vector3d vectorTo = start.GetVectorTo(end);
-            return new Polyline3d(Poly3dType.SimplePoly, new Point3dCollection { 
+            return new Polyline3d(Poly3dType.SimplePoly, new Point3dCollection {
                 start,
                 start + (vectorTo.Y * Vector3d.YAxis),
                 end,
@@ -30,7 +29,7 @@ namespace GeoLib.Entities.RectBlanking
             }, true);
         }
 
-        public override Entity GetTransientEntity() => 
+        public override Entity GetTransientEntity() =>
             this.polyline;
 
         public override void OnMonitorPoint(PointMonitorEventArgs e)

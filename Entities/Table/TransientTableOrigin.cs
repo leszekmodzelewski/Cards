@@ -2,10 +2,9 @@
 
 namespace GeoLib.Entities.Table
 {
+    using GeoLib.Transient;
     using ZwSoft.ZwCAD.DatabaseServices;
     using ZwSoft.ZwCAD.EditorInput;
-    using GeoLib.Transient;
-    using System;
 
     public class TransientTableOrigin : TransientUpdater
     {
@@ -16,7 +15,7 @@ namespace GeoLib.Entities.Table
             this.current = current;
         }
 
-        public override Entity GetTransientEntity() => 
+        public override Entity GetTransientEntity() =>
             this.current;
 
         public override void OnMonitorPoint(PointMonitorEventArgs e)

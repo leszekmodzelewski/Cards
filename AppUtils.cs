@@ -2,13 +2,12 @@
 
 namespace GeoLib
 {
-    using ZwSoft.ZwCAD.ApplicationServices;
-    using ZwSoft.ZwCAD.DatabaseServices;
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using ZwSoft.ZwCAD.ApplicationServices;
+    using ZwSoft.ZwCAD.DatabaseServices;
 
     public static class AppUtils
     {
@@ -17,9 +16,10 @@ namespace GeoLib
         private const string TABLE_BL = "TableBL";
         private const string TABLE_BR = "TableBR";
         private const string TABLE_FRAME = "TableFrame";
-        private static readonly string[] TABLES_ALL = new string[] { "TableTR", "TableTL", "TableBR", "TableBL", "TableFrame" };
+        private const string Point = "Point";
+        private static readonly string[] TABLES_ALL = new string[] { "TableTR", "TableTL", "TableBR", "TableBL", "TableFrame", "Point" };
         private const string ORIGIN = "Origin";
-        private const string RECT_BLANKING = "RectBlanking";
+        private const string H = "H";
 
         private static void CopyResources(Database database, string[] blockNames)
         {
@@ -67,12 +67,23 @@ namespace GeoLib
         public static TableResources EnsureTableBlocks(Database database)
         {
             Dictionary<string, ObjectId> dictionary = EnsureBlocks(database, TABLES_ALL);
-            return new TableResources { 
+            return new TableResources
+            {
                 TopLeft = dictionary["TableTL"],
                 TopRight = dictionary["TableTR"],
                 BottomLeft = dictionary["TableBL"],
                 BottomRight = dictionary["TableBR"],
-                Frame = dictionary["TableFrame"]
+                Frame = dictionary["TableFrame"],
+                Point = dictionary["Point"]
+            };
+        }
+        public static TableResources EnsureTableBlocksPoint(Database database)
+        {
+            Dictionary<string, ObjectId> dictionary = EnsureBlocks(database, TABLES_ALL);
+            return new TableResources
+            {
+                Point = dictionary["Point"]
+             
             };
         }
 
@@ -115,13 +126,13 @@ namespace GeoLib
             return dictionary;
         }
 
-        private static string GetPluginFolder() => 
+        private static string GetPluginFolder() =>
             Path.GetDirectoryName(Assembly.GetAssembly(typeof(AppUtils)).Location);
 
-        public static ObjectId GetXMirror(TableResources resources, ObjectId id) => 
+        public static ObjectId GetXMirror(TableResources resources, ObjectId id) =>
             (!(id == resources.BottomLeft) ? (!(id == resources.BottomRight) ? (!(id == resources.TopLeft) ? (!(id == resources.TopRight) ? ObjectId.Null : resources.TopLeft) : resources.TopRight) : resources.BottomLeft) : resources.BottomRight);
 
-        public static ObjectId GetYMirror(TableResources resources, ObjectId id) => 
+        public static ObjectId GetYMirror(TableResources resources, ObjectId id) =>
             (!(id == resources.BottomLeft) ? (!(id == resources.TopLeft) ? (!(id == resources.BottomRight) ? (!(id == resources.TopRight) ? ObjectId.Null : resources.BottomRight) : resources.TopRight) : resources.BottomLeft) : resources.TopLeft);
 
         public static bool HasAllDefinitions(Dictionary<string, ObjectId> map)
@@ -134,7 +145,7 @@ namespace GeoLib
             return flag;
         }
 
-        public static bool HasAllTableDefinitions(TableResources resources) => 
+        public static bool HasAllTableDefinitions(TableResources resources) =>
             (((((true | (resources.BottomLeft != ObjectId.Null)) | (resources.BottomRight != ObjectId.Null)) | (resources.TopLeft != ObjectId.Null)) | (resources.TopRight != ObjectId.Null)) | (resources.Frame != ObjectId.Null));
     }
 }

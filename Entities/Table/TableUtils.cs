@@ -1,20 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Windows.Documents;
-using PointCalc;
-
-
-namespace GeoLib.Entities.Table
+﻿namespace GeoLib.Entities.Table
 {
-    using ZwSoft.ZwCAD.DatabaseServices;
-    using ZwSoft.ZwCAD.Geometry;
     using GeoLib.Controls;
     using GeoLib.Entities;
     using GeoLib.Entities.Origin;
     using System;
     using System.Globalization;
-    using System.Runtime.InteropServices;
+    using ZwSoft.ZwCAD.DatabaseServices;
+    using ZwSoft.ZwCAD.Geometry;
 
     public static class TableUtils
     {
@@ -25,7 +17,8 @@ namespace GeoLib.Entities.Table
 
         public static BlockReference CreateBlockReference(Transaction transaction, BlockTableRecord modelspace, Point3d position, ObjectId blockId, bool visible)
         {
-            BlockReference entity = new BlockReference(position, blockId) {
+            BlockReference entity = new BlockReference(position, blockId)
+            {
                 Visible = visible
             };
             modelspace.AppendEntity(entity);
@@ -53,7 +46,7 @@ namespace GeoLib.Entities.Table
             Transaction topTransaction = database.TransactionManager.TopTransaction;
             if (database.TryGetObjectId(originHandle, out id))
             {
-                if((!id.IsValid || id.IsErased))
+                if ((!id.IsValid || id.IsErased))
                 {
                     return null;
                 }
@@ -65,7 +58,7 @@ namespace GeoLib.Entities.Table
             //return ((!database.TryGetObjectId(originHandle, out id) || (!id.IsValid || id.IsErased)) ? null : (EntityFactory.Create(topTransaction.GetObject(id, OpenMode.ForRead)) as EntityTable));
         }
 
-        public static EntityTable GetEntityTable(Database database, ObjectId objectId) => 
+        public static EntityTable GetEntityTable(Database database, ObjectId objectId) =>
             GetEntityTable(database, objectId.Handle);
 
         private static double GetT(double a, double b, double distance)
@@ -88,15 +81,15 @@ namespace GeoLib.Entities.Table
             {
                 if (property.PropertyName == "Position1 X")
                 {
-                    nullable = new double?((double) property.Value);
+                    nullable = new double?((double)property.Value);
                 }
                 if (property.PropertyName == "Position1 Y")
                 {
-                    nullable2 = new double?((double) property.Value);
+                    nullable2 = new double?((double)property.Value);
                 }
                 if (property.PropertyName == "Distance1")
                 {
-                    distance = new double?((double) property.Value);
+                    distance = new double?((double)property.Value);
                 }
             }
             if ((nullable != null) && (nullable2 != null))
@@ -113,7 +106,7 @@ namespace GeoLib.Entities.Table
             foreach (ObjectId id in blockReference.AttributeCollection)
             {
                 double num;
-                AttributeReference reference = (AttributeReference) transaction.GetObject(id, OpenMode.ForRead);
+                AttributeReference reference = (AttributeReference)transaction.GetObject(id, OpenMode.ForRead);
                 if ((reference.Tag == "X_1") && double.TryParse(reference.TextString, NumberStyles.Any, CultureInfo.InvariantCulture, out num))
                 {
                     x = new double?(num);
@@ -130,7 +123,7 @@ namespace GeoLib.Entities.Table
             return new DataXYZModel(x, y, z);
         }
 
-        private static double Lerp(double a, double b, double t) => 
+        private static double Lerp(double a, double b, double t) =>
             ((a * (1.0 - t)) + (b * t));
 
         public static void RecalculateTableContent(Database database, EntityTable entityTable, out double? x, out double? y, out double? z)
@@ -143,7 +136,7 @@ namespace GeoLib.Entities.Table
             EntityOrigin entityOrigin = OriginUtils.GetEntityOrigin(database, originHandle);
             if (entityOrigin != null)
             {
-                TableSectionTypes sectionTypes = (TableSectionTypes) entityOrigin.Data.SectionTypes;
+                TableSectionTypes sectionTypes = (TableSectionTypes)entityOrigin.Data.SectionTypes;
                 Point3d pointd = Transform(entityOrigin.Entity.Position, sectionTypes, entityTable.Entity.Position) + new Vector3d(entityOrigin.Data.X, entityOrigin.Data.Y, entityOrigin.Data.Z);
                 nullable = new double?(pointd.X);
                 nullable2 = new double?(pointd.Y);
@@ -270,7 +263,7 @@ namespace GeoLib.Entities.Table
         {
             foreach (ObjectId id in blockReference.AttributeCollection)
             {
-                AttributeReference reference = (AttributeReference) transaction.GetObject(id, OpenMode.ForRead);
+                AttributeReference reference = (AttributeReference)transaction.GetObject(id, OpenMode.ForRead);
                 if ((reference.Tag == "X_1") && (data.X != null))
                 {
                     reference.UpgradeOpen();
@@ -302,7 +295,7 @@ namespace GeoLib.Entities.Table
             {
                 return ((sectionType != TableSectionTypes.SIDE) ? Point3d.Origin : new Point3d(tablePosition.X - originPosition.X, tablePosition.Z - originPosition.Z, tablePosition.Y - originPosition.Y));
             }
-            return new Point3d((tablePosition.Z - originPosition.Z), originPosition.X - tablePosition.X , tablePosition.Y - originPosition.Y);
+            return new Point3d((tablePosition.Z - originPosition.Z), originPosition.X - tablePosition.X, tablePosition.Y - originPosition.Y);
         }
 
         private static void UpdateNullableDoubleAttribute(AttributeReference attRef, double? value)

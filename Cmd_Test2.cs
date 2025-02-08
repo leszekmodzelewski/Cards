@@ -2,12 +2,11 @@
 
 namespace GeoLib
 {
+    using GeoLib.XData;
     using ZwSoft.ZwCAD.ApplicationServices;
     using ZwSoft.ZwCAD.DatabaseServices;
     using ZwSoft.ZwCAD.Geometry;
     using ZwSoft.ZwCAD.Runtime;
-    using GeoLib.XData;
-    using System;
 
     public class Cmd_Test2
     {
@@ -19,7 +18,8 @@ namespace GeoLib
             ObjectId @null = ObjectId.Null;
             using (Transaction transaction = mdiActiveDocument.Database.TransactionManager.StartTransaction())
             {
-                Line entity = new Line {
+                Line entity = new Line
+                {
                     StartPoint = new Point3d(0.0, 0.0, 0.0),
                     EndPoint = new Point3d(100.0, 100.0, 0.0)
                 };

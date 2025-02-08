@@ -2,9 +2,9 @@
 
 namespace GeoLib.Entities
 {
-    using ZwSoft.ZwCAD.DatabaseServices;
     using System;
     using System.Globalization;
+    using ZwSoft.ZwCAD.DatabaseServices;
 
     public static class EntityBaseUtils
     {
@@ -37,7 +37,7 @@ namespace GeoLib.Entities
             attRef.TextString = text1;
         }
 
-        public static void UpdateRangeAttribute(AttributeReference attRef, int [] value)
+        public static void UpdateRangeAttribute(AttributeReference attRef, int[] value)
         {
             string text1;
             attRef.UpgradeOpen();
@@ -58,10 +58,17 @@ namespace GeoLib.Entities
                     // slash
                     text1 = $"{value[0]}/{value[1]}";
                 }
-                
-                
+
+
             }
             attRef.TextString = text1;
+        }
+
+        public static void UpdateStringAttribute(AttributeReference attRef, string value)
+        {
+            attRef.UpgradeOpen();
+
+            attRef.TextString = value;
         }
     }
 }

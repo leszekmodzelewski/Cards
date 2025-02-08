@@ -4,10 +4,10 @@ using ZwSoft.ZwCAD.Geometry;
 
 namespace GeoLib.Transient
 {
+    using System;
     using ZwSoft.ZwCAD.DatabaseServices;
     using ZwSoft.ZwCAD.EditorInput;
     using ZwSoft.ZwCAD.GraphicsInterface;
-    using System;
 
     public abstract class TransientUpdater : IDisposable
     {

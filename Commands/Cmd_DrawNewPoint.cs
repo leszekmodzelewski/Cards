@@ -1,17 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Windows;
-using GeoLib.Entities;
-using GeoLib.Entities.Origin;
-using GeoLib.Entities.Table;
+﻿using GeoLib.Entities.Table;
 using GeoLib.Entities.TableRef;
 using PointCalc;
+using System.Collections.Generic;
 using ZwSoft.ZwCAD.ApplicationServices;
 using ZwSoft.ZwCAD.Colors;
 using ZwSoft.ZwCAD.DatabaseServices;
 using ZwSoft.ZwCAD.EditorInput;
 using ZwSoft.ZwCAD.Geometry;
-using ZwSoft.ZwCAD.GraphicsInterface;
 using ZwSoft.ZwCAD.Runtime;
 using Application = ZwSoft.ZwCAD.ApplicationServices.Application;
 
@@ -37,8 +32,8 @@ namespace GeoLib.Commands
             string searchFor = "xyz";
             int index = 0;
 
-            var coord = new List<Point3d>(); 
-            
+            var coord = new List<Point3d>();
+
             while (index < 3)
             {
                 PromptEntityResult entity = editor.GetEntity($"Specify point for {searchFor[index]} value");
@@ -47,8 +42,8 @@ namespace GeoLib.Commands
                     return;
                 }
                 objectId = entity.ObjectId;
-                
-                
+
+
                 var point = TryGetPoint(mdiActiveDocument.Database, objectId);
 
                 if (point.HasValue)
@@ -61,7 +56,7 @@ namespace GeoLib.Commands
             if (coord.Count == 3)
             {
                 var pointToDraw = new MyPoint3D(coord[0].X, coord[1].Y, coord[2].Z, "d");
-                CadDrawPoints.Draw(new []{pointToDraw}, color:Color.FromColor(System.Drawing.Color.Orange));
+                CadDrawPoints.Draw(new[] { pointToDraw }, color: Color.FromColor(System.Drawing.Color.Orange), deleteLayerIfExist: false);
             }
         }
 
@@ -79,6 +74,6 @@ namespace GeoLib.Commands
             return null;
         }
 
-        
+
     }
 }

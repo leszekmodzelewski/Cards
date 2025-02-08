@@ -5,12 +5,13 @@ namespace GeoLib.Wpf
 {
     public class SimpleCommand : ICommand
     {
+
         private readonly Action execute;
-        
+
         public SimpleCommand(Action execute)
         {
             this.execute = execute;
-            
+
         }
 
         public bool CanExecute(object parameter)

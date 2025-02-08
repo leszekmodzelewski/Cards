@@ -1,7 +1,6 @@
 ﻿namespace GeoLib.Controls
 {
     using GeoLib;
-    using System;
 
     public class DataXYZViewModel : ViewModel<DataXYZModel>
     {
@@ -11,7 +10,7 @@
 
         public string X
         {
-            get => 
+            get =>
                 ParsingUtils.FormatNullableDouble(() => base.Model.X);
             set
             {
@@ -22,7 +21,7 @@
 
         public string Y
         {
-            get => 
+            get =>
                 ParsingUtils.FormatNullableDouble(() => base.Model.Y);
             set
             {
@@ -33,7 +32,7 @@
 
         public string Z
         {
-            get => 
+            get =>
                 ParsingUtils.FormatNullableDouble(() => base.Model.Z);
             set
             {

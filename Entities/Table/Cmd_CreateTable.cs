@@ -1,16 +1,15 @@
 ﻿namespace GeoLib.Entities.Table
 {
+    using GeoLib;
+    using GeoLib.Entities;
+    using GeoLib.Entities.Origin;
+    using GeoLib.XData;
+    using System.Windows;
     using ZwSoft.ZwCAD.ApplicationServices;
     using ZwSoft.ZwCAD.DatabaseServices;
     using ZwSoft.ZwCAD.EditorInput;
     using ZwSoft.ZwCAD.Geometry;
     using ZwSoft.ZwCAD.Runtime;
-    using GeoLib;
-    using GeoLib.Entities;
-    using GeoLib.Entities.Origin;
-    using GeoLib.XData;
-    using System;
-    using System.Windows;
 
     public class Cmd_CreateTable : Cmd_TableBase
     {
@@ -92,13 +91,14 @@
                         pointd = point.Value;
                         using (new TransientTableDistance(blockReference, pointd))
                         {
-                            PromptDistanceOptions options = new PromptDistanceOptions("Specify size") {
+                            PromptDistanceOptions options = new PromptDistanceOptions("Specify size")
+                            {
                                 BasePoint = pointd,
                                 UseBasePoint = true,
                                 DefaultValue = defaultTableSize
                             };
                             //var scale = editor.GetInteger("Podaj skale");
-                            PromptDoubleResult distance = editor.GetDistance(options);
+                           PromptDoubleResult distance = editor.GetDistance(options);
                             if (distance.Status == PromptStatus.OK)
                             {
                                 defaultTableSize = distance.Value;

@@ -1,7 +1,6 @@
-﻿using System;
+﻿using GeoLib.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
-using GeoLib.ViewModels;
 
 namespace GeoLib.Logic
 {
@@ -65,7 +64,7 @@ namespace GeoLib.Logic
                 rv.Xmin = GetValMin(rangeViewModel.X1, rangeViewModel.X2);
                 rv.Ymin = GetValMin(rangeViewModel.Y1, rangeViewModel.Y2);
                 rv.Zmin = GetValMin(rangeViewModel.Z1, rangeViewModel.Z2);
-                
+
                 this.AllRanges.Add(singleRange);
             }
         }

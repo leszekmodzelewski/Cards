@@ -59,7 +59,7 @@ namespace GeoLib.Entities.TableRef
                 }
             }
 
-            if(!textLocation.HasValue || !pointLocation.HasValue)
+            if (!textLocation.HasValue || !pointLocation.HasValue)
             {
                 Application.ShowAlertDialog("Please select point and related text");
             }

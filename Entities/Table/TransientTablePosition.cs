@@ -1,10 +1,9 @@
 ﻿namespace GeoLib.Entities.Table
 {
+    using GeoLib.Transient;
     using ZwSoft.ZwCAD.DatabaseServices;
     using ZwSoft.ZwCAD.EditorInput;
     using ZwSoft.ZwCAD.Geometry;
-    using GeoLib.Transient;
-    using System;
 
     public class TransientTablePosition : TransientUpdater
     {
@@ -17,7 +16,7 @@
             this.defaultSize = defaultSize;
         }
 
-        public override Entity GetTransientEntity() => 
+        public override Entity GetTransientEntity() =>
             this.selector.Selected;
 
         public override void OnMonitorPoint(PointMonitorEventArgs e)

@@ -4,7 +4,6 @@ namespace GeoLib
 {
     using ZwSoft.ZwCAD.ApplicationServices;
     using ZwSoft.ZwCAD.Runtime;
-    using System;
 
     public class AppInitializer : IExtensionApplication
     {

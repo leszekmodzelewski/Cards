@@ -1,25 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using GeoLib.Logic;
+using GeoLib.Winforms;
+using PointCalc;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Media.Media3D;
-using GeoLib.Logic;
-using GeoLib.ViewModels;
-using GeoLib.Winforms;
-using PointCalc;
-
 using MessageBox = System.Windows.MessageBox;
 
 namespace GeoLib.Entities.Table
 {
+    using System;
     using ZwSoft.ZwCAD.DatabaseServices;
     using ZwSoft.ZwCAD.Runtime;
-    using System;
+    
 
     public class Cmd_TblCalculate
     {
@@ -67,7 +63,7 @@ namespace GeoLib.Entities.Table
             foreach (var lineWithPoints in lines)
             {
                 var lineValues = lineWithPoints.Split(',');
-                if(lineValues.Length != 4)
+                if (lineValues.Length != 4)
                     continue;
 
                 var x = double.Parse(lineValues[1].Trim(), CultureInfo.InvariantCulture) * scaleFactor;
@@ -99,7 +95,7 @@ namespace GeoLib.Entities.Table
                 Console.WriteLine(e);
                 throw;
             }
-
+            
         }
 
 
@@ -135,13 +131,16 @@ namespace GeoLib.Entities.Table
             //Debug.Assert(res.Count == coords.Count);
 
             // UpdateCadEntity(coords, res, database);
-            
+
 
         }
 
         public static List<MyPoint3D> ReadTheoryPointsFromCad()
         {
-            return CalculationUtils.ReadFromCad(ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database);
+            
+          
+                return CalculationUtils.ReadFromCad(ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database);
+            
         }
 
         public static void Clean_X_4(Database database)
@@ -181,7 +180,7 @@ namespace GeoLib.Entities.Table
             var coords = new List<long>();
             List<MyPoint3D> cadPoints = new List<MyPoint3D>();
 
-            
+
             using (Transaction transaction = database.TransactionManager.StartTransaction())
             {
                 foreach (ObjectId id2 in transaction.GetObject(SymbolUtilityServices.GetBlockModelSpaceId(database), OpenMode.ForRead) as BlockTableRecord)
@@ -217,8 +216,22 @@ namespace GeoLib.Entities.Table
 
 
         }
+        private static List<MyPoint3D> ReadFromA()
+        {
+            
+            List<MyPoint3D> cadPoints = new List<MyPoint3D>();
+            int a = Points.TheoryPoints.ToArray().Length;
 
-        public static void UpdateCadRangeOnlyEntity(Database database, MyPoint3D[] theoryPoints)
+            for (int i = 0; i < a; i++)
+            {
+                cadPoints.Add(new MyPoint3D(new Point3D(Points.TheoryPoints.ElementAt(i).X, Points.TheoryPoints.ElementAt(i).Y, Points.TheoryPoints.ElementAt(i).Z),i.ToString()));
+            }
+
+            //MessageBox.Show(cadPoints.ElementAt(0).ToString(), "Do wyjebania");
+
+            return cadPoints;
+        }
+            public static void UpdateCadRangeOnlyEntity(Database database, MyPoint3D[] theoryPoints)
         {
             using (Transaction transaction = database.TransactionManager.StartTransaction())
             {
@@ -246,7 +259,7 @@ namespace GeoLib.Entities.Table
         }
 
 
-       
+
 
         public static void UpdateCadEntity(List<MatchedPoint> res, Database database, int[] extraOffset)
         {
@@ -271,7 +284,7 @@ namespace GeoLib.Entities.Table
 
                     }
 
-                    
+
                 }
                 transaction.Commit();
             }
@@ -351,7 +364,7 @@ namespace GeoLib.Entities.Table
 
 
 
-        private static void UpdateRealMinusTheory(MatchedPoint matchedPoint, AttributeReference attRef, int [] extraOffset)
+        private static void UpdateRealMinusTheory(MatchedPoint matchedPoint, AttributeReference attRef, int[] extraOffset)
         {
             if (matchedPoint.RealPoint == null)
                 return;
@@ -383,7 +396,7 @@ namespace GeoLib.Entities.Table
             {
                 res = real - theory;
             }
-            
+
             return res;
         }
 

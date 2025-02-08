@@ -1,28 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Windows.Input;
-using GeoLib.Controls;
+﻿using GeoLib.Controls;
 using GeoLib.Winforms;
 using GeoLib.Wpf;
 using PointCalc;
+using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Forms;
+using System.Windows.Input;
+
 
 namespace GeoLib.ViewModels
 {
     public class RealPointsRowViewModel : INotifyPropertyChanged
     {
-        //private int x;
-        //private int y;
-        //private int z;
-        //private int dx;
-        //private int dy;
-        //private int dz;
         private int dxFactor;
         private int dyFactor;
         private int dzFactor;
@@ -36,12 +26,13 @@ namespace GeoLib.ViewModels
             {
                 id = value;
                 OnPropertyChanged();
+                
             }
         }
 
         public string RealPointId { get; set; }
 
-
+        
         public int X => Convert.ToInt32(this.MatchedPoint.TheoryPoint.Xo);
         public int Y => Convert.ToInt32(this.MatchedPoint.TheoryPoint.Yo);
         public int Z => Convert.ToInt32(this.MatchedPoint.TheoryPoint.Zo);
@@ -112,6 +103,7 @@ namespace GeoLib.ViewModels
                 dzFactor = value;
                 OnPropertyChanged("Dz");
                 OnPropertyChanged("DzFactorText");
+                
             }
         }
 
@@ -126,6 +118,7 @@ namespace GeoLib.ViewModels
             {
                 dxModifiedFactor = value;
                 OnPropertyChanged();
+                
             }
         }
         public int DyModifiedFactor
@@ -170,7 +163,7 @@ namespace GeoLib.ViewModels
         public ICommand DxExecuteCommand => new SimpleCommand(DxExecute);
         private void DxExecute()
         {
-            var vm = new BoxWithTextViewModel {IntegerValue = this.DxFactor};
+            var vm = new BoxWithTextViewModel { IntegerValue = this.DxFactor };
             ShowDialog(vm);
             if (vm.DialogResult == DialogResult.OK)
             {
@@ -181,7 +174,7 @@ namespace GeoLib.ViewModels
         public ICommand DyExecuteCommand => new SimpleCommand(DyExecute);
         private void DyExecute()
         {
-            var vm = new BoxWithTextViewModel {IntegerValue = this.DyFactor};
+            var vm = new BoxWithTextViewModel { IntegerValue = this.DyFactor };
             ShowDialog(vm);
             if (vm.DialogResult == DialogResult.OK)
             {
@@ -192,7 +185,7 @@ namespace GeoLib.ViewModels
         public ICommand DzExecuteCommand => new SimpleCommand(DzExecute);
         private void DzExecute()
         {
-            var vm = new BoxWithTextViewModel {IntegerValue = this.DzFactor};
+            var vm = new BoxWithTextViewModel { IntegerValue = this.DzFactor };
             ShowDialog(vm);
             if (vm.DialogResult == DialogResult.OK)
             {
@@ -215,5 +208,5 @@ namespace GeoLib.ViewModels
         }
     }
 
-    
+
 }

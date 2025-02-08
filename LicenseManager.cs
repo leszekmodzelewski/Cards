@@ -23,7 +23,7 @@
             {
                 if (enumerator.MoveNext())
                 {
-                    string s = ((ManagementObject) enumerator.Current)["ProcessorId"].ToString();
+                    string s = ((ManagementObject)enumerator.Current)["ProcessorId"].ToString();
                     byte[] bytes = Encoding.UTF8.GetBytes(s);
                     buffer2 = SHA256.Create().ComputeHash(bytes);
                 }

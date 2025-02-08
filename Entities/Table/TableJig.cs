@@ -5,7 +5,6 @@ namespace GeoLib.Entities.Table
     using ZwSoft.ZwCAD.DatabaseServices;
     using ZwSoft.ZwCAD.EditorInput;
     using ZwSoft.ZwCAD.Geometry;
-    using System;
 
     public class TableJig : EntityJig
     {

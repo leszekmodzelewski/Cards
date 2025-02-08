@@ -3,8 +3,6 @@
 namespace GeoLib.Entities.Origin
 {
     using ZwSoft.ZwCAD.Geometry;
-    using System;
-    using System.Runtime.CompilerServices;
 
     public class OriginItem
     {

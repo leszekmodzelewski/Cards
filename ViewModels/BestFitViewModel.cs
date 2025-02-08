@@ -15,15 +15,19 @@ using Newtonsoft.Json.Serialization;
 using PointCalc;
 using ZwSoft.ZwCAD.Colors;
 
+
+
 namespace GeoLib.ViewModels
 {
+    
     public class BestFitViewModel : INotifyPropertyChanged
     {
         public BestFitViewModel(IEnumerable<RealPointsRowViewModel> points)
         {
             Points = new ObservableCollection<RealPointsRowViewModel>(points);
+            
         }
-
+        
         private int maxFitValue;
 
         public int MaxFitValue
@@ -31,12 +35,17 @@ namespace GeoLib.ViewModels
             get => maxFitValue;
             set { maxFitValue = value; OnPropertyChanged(); }
         }
+        public int Scale
+        {
+            get => Scale;
+            set { Scale = value; OnPropertyChanged(); }
+        }
 
         public ObservableCollection<RealPointsRowViewModel> Points
         {
             get;
         }
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -51,6 +60,7 @@ namespace GeoLib.ViewModels
 
         private void OkExecute()
         {
+            
             ApplyExecute();
             Close?.Invoke(this, new CloseEventArgs(DialogResult.OK));
         }
@@ -61,15 +71,15 @@ namespace GeoLib.ViewModels
         {
             applyExecuted = true;
             ResetToDefaults();
-
+            
             Calculate();
         }
-
+       
         private void ResetToDefaults()
         {
             //var points = GetPointsForBestFitDialog(Logic.Points.MatchedPoints);
             //Logic.Points.MatchedPoints.Clear();
-
+            
             foreach (var item in this.Points)
             {
                 var res = Logic.Points.MatchedPoints.FirstOrDefault(m => item.RealPointId == (m.RealPoint?.Id ?? m.TheoryPoint.Id));
@@ -88,10 +98,10 @@ namespace GeoLib.ViewModels
             if (applyExecuted)
             {
                 Logic.Points.SetValueOffsetDataForRealPoints(Points);
-                
-
+               
                 Logic.Points.MaxErrorBestFit = this.MaxFitValue;
 
+                
                 CalculateUsingBestFit();
             }
         }
@@ -100,6 +110,7 @@ namespace GeoLib.ViewModels
         {
             var r = new List<MyPoint3D>();
             var t = new List<MyPoint3D>();
+
             foreach (RealPointsRowViewModel pointsRowViewModel in Points)
             {
                 if (pointsRowViewModel.MatchedPoint.RealPoint != null &&
@@ -110,21 +121,22 @@ namespace GeoLib.ViewModels
                 }
             }
             
-
-            PointCalculator pc = new PointCalculator();
+                PointCalculator pc = new PointCalculator();
             Logic.Points.MatchedPointsBestFit = pc.CalculateBestFit(t.ToArray(), r.ToArray(), Logic.Points.MaxErrorBestFit, out List<MyPoint3D> realPointsAfterInversions);
             
-            CadDrawPoints.Draw(realPointsAfterInversions.ToArray(), "BestFittedPoints", Color.FromColor(System.Drawing.Color.PaleVioletRed));
+            CadDrawPoints.Draw(realPointsAfterInversions.ToArray(), "bestfit", Color.FromColor(System.Drawing.Color.PaleVioletRed));
 
-            CalculationUtils.UpdateCadEntity(Logic.Points.MatchedPointsBestFit, ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database, Logic.Points.OffsetToRealPointForDisplayPurposeOnly);
-            
+            if (Logic.Points.resultImport == DialogResult.No)
+            {
+                CalculationUtils.UpdateCadEntity(Logic.Points.MatchedPointsBestFit, ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database, Logic.Points.OffsetToRealPointForDisplayPurposeOnly);
+            }
             this.Points.Clear();
 
             foreach (var realPointsRowViewModel in GetPointsForBestFitDialog(Logic.Points.MatchedPointsBestFit))
             {
                 this.Points.Add(realPointsRowViewModel);
             }
-            
+
         }
 
 
@@ -135,10 +147,10 @@ namespace GeoLib.ViewModels
             for (int i = 0; i < matchedPoints.Count; ++i)
             {
                 points.Add(new RealPointsRowViewModel
-                    {
-                        MatchedPoint = matchedPoints[i],
-                        Id = i + 1,
-                        RealPointId = matchedPoints[i].RealPoint?.Id ?? matchedPoints[i].TheoryPoint.Id
+                {
+                    MatchedPoint = matchedPoints[i],
+                    Id = i + 1,
+                    RealPointId = matchedPoints[i].RealPoint?.Id ?? matchedPoints[i].TheoryPoint.Id
                 }
                 );
 

@@ -21,6 +21,7 @@
     <ErrorReport>prompt</ErrorReport>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -32,6 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -41,6 +43,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <NoStdLib>true</NoStdLib>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -50,37 +53,72 @@
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <NoStdLib>true</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="FSharp.Core, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\FSharp.Core.7.0.200\lib\netstandard2.0\FSharp.Core.dll</HintPath>
     </Reference>
-    <Reference Include="System.Core" />
+    <Reference Include="MathNet.Numerics, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MathNet.Numerics.5.0.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="NativeInteropEx, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\NativeInterop.3.2.0\lib\portable-net45+win8\NativeInteropEx.dll</HintPath>
+    </Reference>
+    <Reference Include="NativeInteropEx.SIMD, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\NativeInterop.SIMD.3.2.0\lib\portable-net45+win8\NativeInteropEx.SIMD.dll</HintPath>
+    </Reference>
+    <Reference Include="NativeInteropEx.VectorView, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\NativeInterop.SIMD.3.2.0\lib\portable-net45+win8\NativeInteropEx.VectorView.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core"
+    <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
-    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
-    <Reference Include="PresentationCore" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UnityEngine.1.0.0\lib\UnityEngine.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
-    <Reference Include="ZwDatabaseMgd">
-      <HintPath>C:\Program Files\ZWSOFT\ZWCAD 2021\ZwDatabaseMgd.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="ZwDatabaseMgd, Version=20.20.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\ZWSOFT\ZWCAD 2024\ZwDatabaseMgd.dll</HintPath>
     </Reference>
-    <Reference Include="ZwManaged">
-      <HintPath>C:\Program Files\ZWSOFT\ZWCAD 2021\ZwManaged.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="ZwManaged, Version=20.20.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\ZWSOFT\ZWCAD 2024\ZwManaged.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\test.cs" />
+    <Compile Include="Commands\Get_ObjectsZWCAD.cs" />
+    <Compile Include="Commands\Cmd_FitCylinder.cs" />
+    <Compile Include="Commands\Cmd_FitRails.cs" />
+    <Compile Include="Commands\Cmd_FitLine.cs" />
+    <Compile Include="Commands\Cmd_DrawDistance.cs" />
+    <Compile Include="Commands\Cmd_DrawAngle.cs" />
+    <Compile Include="Commands\Cmd_ArrowReadReal.cs" />
     <Compile Include="Commands\Cmd_BestFit.cs" />
     <Compile Include="Commands\Cmd_DrawNewPoint.cs" />
     <Compile Include="Commands\Cmd_Fit.cs" />
     <Compile Include="Commands\Cmd_Move.cs" />
+    <Compile Include="Commands\line unity.cs" />
     <Compile Include="Controls\BestFitCtrl.xaml.cs">
       <DependentUpon>BestFitCtrl.xaml</DependentUpon>
     </Compile>
@@ -104,6 +142,7 @@
     </Compile>
     <Compile Include="Commands\Cmd_EstablishTextVector.cs" />
     <Compile Include="Commands\Cmd_Clear.cs" />
+    <Compile Include="Entities\Table\Cmd_CreatePoint.cs" />
     <Compile Include="Entities\Table\Cmd_DwgCreate.cs" />
     <Compile Include="Entities\Table\Cmd_TblCalculate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -122,21 +161,15 @@
     <Compile Include="Logic\SingleRange.cs" />
     <Compile Include="Wpf\SimpleCommand.cs" />
     <Compile Include="ViewModels\ValueOffsetViewModel.cs" />
-    <Compile Include="Winforms\CalculateDataWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Winforms\CalculateDataWindow.cs" />
     <Compile Include="Winforms\CalculateDataWindow.Designer.cs">
       <DependentUpon>CalculateDataWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Winforms\GenericWinFormForWpf.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Winforms\GenericWinFormForWpf.cs" />
     <Compile Include="Winforms\GenericWinFormForWpf.Designer.cs">
       <DependentUpon>GenericWinFormForWpf.cs</DependentUpon>
     </Compile>
-    <Compile Include="Winforms\ImportedFilesWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Winforms\ImportedFilesWindow.cs" />
     <Compile Include="Winforms\ImportedFilesWindow.Designer.cs">
       <DependentUpon>ImportedFilesWindow.cs</DependentUpon>
     </Compile>
@@ -491,6 +524,7 @@
     <Resource Include="icons\testres.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

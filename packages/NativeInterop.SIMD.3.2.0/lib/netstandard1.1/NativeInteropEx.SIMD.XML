@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>NativeInteropEx.SIMD</name></assembly>
+<members>
+<member name="M:NativeInteropEx.NativeArraySIMD.ZeroCreate``1(System.Int64)">
+ <summary>
+ Creates a new array with all elements initialized to their default value
+ </summary>
+ <param name="length">Number of items in the new array</param>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.ZeroCreate``1(System.Int32)">
+ <summary>
+ Creates a new array with all elements initialized to their default value
+ </summary>
+ <param name="length">Number of items in the new array</param>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.ToScalar``1(NativeInteropEx.NativeArraySIMD{``0})">
+ <summary>
+ Switch to scalar processing of the given array
+ </summary>
+ <param name="array">Array to be processed in a scalar fashion (i.e. de-vectorized)</param>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Sum(NativeInteropEx.NativeArraySIMD{System.UInt16})">
+ <summary>
+ Sums up the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative add operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Sum(NativeInteropEx.NativeArraySIMD{System.Int16})">
+ <summary>
+ Sums up the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative add operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Sum(NativeInteropEx.NativeArraySIMD{System.SByte})">
+ <summary>
+ Sums up the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative add operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Sum(NativeInteropEx.NativeArraySIMD{System.Byte})">
+ <summary>
+ Sums up the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative add operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Sum(NativeInteropEx.NativeArraySIMD{System.UInt64})">
+ <summary>
+ Sums up the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative add operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Sum(NativeInteropEx.NativeArraySIMD{System.UInt32})">
+ <summary>
+ Sums up the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative add operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Sum(NativeInteropEx.NativeArraySIMD{System.Int64})">
+ <summary>
+ Sums up the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative add operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Sum(NativeInteropEx.NativeArraySIMD{System.Int32})">
+ <summary>
+ Sums up the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative add operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Sum(NativeInteropEx.NativeArraySIMD{System.Single})">
+ <summary>
+ Sums up the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative add operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Sum(NativeInteropEx.NativeArraySIMD{System.Double})">
+ <summary>
+ Sums up the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative add operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.SIMD``1(NativeInteropEx.NativeArray{``0})">
+ <summary>
+ Switch to SIMD processing of the given array
+ </summary>
+ <param name="array">Array to be processed in SIMD chunks (i.e. vectorized)</param>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Replicate``1(System.Int64,``0)">
+ <summary>
+ Creates a new array with all elements initialized to a given value
+ </summary>
+ <param name="length">Number of items in the new array</param>
+ <param name="value">Initial value of all elements</param>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Replicate``1(System.Int32,``0)">
+ <summary>
+ Creates a new array with all elements initialized to a given value
+ </summary>
+ <param name="length">Number of items in the new array</param>
+ <param name="value">Initial value of all elements</param>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Reduce``1(NativeInteropEx.NativeArraySIMD{``0},System.Func{System.Numerics.Vector{``0},System.Numerics.Vector{``0},System.Numerics.Vector{``0}},System.Func{``0,``0,``0})">
+ <summary>
+ Reduces an array to a single value
+ </summary>
+ <param name="this">Array to be reduced</param>
+ <param name="fvec">Function to combine two vectors of n values into one vector of n values</param>
+ <param name="f">Function to combine two scalar values into one</param>
+ <remarks>Assumes that both fvec and f are commutative operations</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Product(NativeInteropEx.NativeArraySIMD{System.UInt16})">
+ <summary>
+ Computes the product of the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative multiply operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Product(NativeInteropEx.NativeArraySIMD{System.Int16})">
+ <summary>
+ Computes the product of the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative multiply operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Product(NativeInteropEx.NativeArraySIMD{System.SByte})">
+ <summary>
+ Computes the product of the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative multiply operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Product(NativeInteropEx.NativeArraySIMD{System.Byte})">
+ <summary>
+ Computes the product of the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative multiply operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Product(NativeInteropEx.NativeArraySIMD{System.UInt64})">
+ <summary>
+ Computes the product of the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative multiply operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Product(NativeInteropEx.NativeArraySIMD{System.UInt32})">
+ <summary>
+ Computes the product of the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative multiply operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Product(NativeInteropEx.NativeArraySIMD{System.Int64})">
+ <summary>
+ Computes the product of the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative multiply operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Product(NativeInteropEx.NativeArraySIMD{System.Int32})">
+ <summary>
+ Computes the product of the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative multiply operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Product(NativeInteropEx.NativeArraySIMD{System.Single})">
+ <summary>
+ Computes the product of the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative multiply operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Product(NativeInteropEx.NativeArraySIMD{System.Double})">
+ <summary>
+ Computes the product of the elements of an array
+ </summary>
+ <param name="this">Array to be summed</param>
+ <remarks>Assumes commutative multiply operator</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.MapInplace``2(NativeInteropEx.NativeArraySIMD{``0},NativeInteropEx.NativeArray{``1},System.Func{System.Numerics.Vector{``0},System.Numerics.Vector{``1},System.Numerics.Vector{``0}},System.Func{``0,``1,``0})">
+ <summary>
+ Maps the paired elements of an array to new values, overriding the first array
+ </summary>
+ <param name="this">First operand</param>
+ <param name="other">Second operand</param>
+ <param name="fvec">Function mapping two vectors of n values each to a vector of n output values</param>
+ <param name="f">Function mapping two input values to an output value</param>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.MapInplace``1(NativeInteropEx.NativeArraySIMD{``0},System.Func{System.Int64,System.Numerics.Vector{``0},System.Numerics.Vector{``0}},System.Func{System.Int64,``0,``0})">
+ <summary>
+ Maps the elements of an array to new values, overriding the original values of the array
+ </summary>
+ <param name="this">Array containing the elements to be mapped</param>
+ <param name="fvec">Function mapping a vector of n values and the index of the first of those elements to a vector of n output values</param>
+ <param name="f">Function mapping a value and its corresponding index to an output value</param>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.MapInplace``1(NativeInteropEx.NativeArraySIMD{``0},System.Func{System.Numerics.Vector{``0},System.Numerics.Vector{``0}},System.Func{``0,``0})">
+ <summary>
+ Maps the elements of an array to new values, overriding the original values of the array
+ </summary>
+ <param name="this">Array containing the elements to be mapped</param>
+ <param name="fvec">Function mapping a vector of n values to a vector of n output values</param>
+ <param name="f">Function mapping a value to an output value</param>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Map``3(NativeInteropEx.NativeArraySIMD{``0},NativeInteropEx.NativeArray{``1},System.Func{System.Numerics.Vector{``0},System.Numerics.Vector{``1},System.Numerics.Vector{``2}},System.Func{``0,``1,``2},NativeInteropEx.NativeArray{``2})">
+ <summary>
+ Maps the paired elements of an array to new values
+ </summary>
+ <param name="this">First operand</param>
+ <param name="other">Second operand</param>
+ <param name="fvec">Function mapping two vectors of n values each to a vector of n output values</param>
+ <param name="f">Function mapping two input values to an output value</param>
+ <param name="out">Array to store the results in</param>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Map``3(NativeInteropEx.NativeArraySIMD{``0},NativeInteropEx.NativeArray{``1},System.Func{System.Numerics.Vector{``0},System.Numerics.Vector{``1},System.Numerics.Vector{``2}},System.Func{``0,``1,``2})">
+ <summary>
+ Maps the paired elements of an array to new values
+ </summary>
+ <param name="this">First operand</param>
+ <param name="other">Second operand</param>
+ <param name="fvec">Function mapping two vectors of n values each to a vector of n output values</param>
+ <param name="f">Function mapping two input values to an output value</param>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Map``2(NativeInteropEx.NativeArraySIMD{``0},System.Func{System.Int64,System.Numerics.Vector{``0},System.Numerics.Vector{``1}},System.Func{System.Int64,``0,``1},NativeInteropEx.NativeArray{``1})">
+ <summary>
+ Maps the elements of an array to new values
+ </summary>
+ <param name="this">Array containing the elements to be mapped</param>
+ <param name="fvec">Function mapping a vector of n values and the index of the first of those elements to a vector of n output values</param>
+ <param name="f">Function mapping a value and its corresponding index to an output value</param>
+ <param name="out">Output array where to store the mapped values</param>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Map``2(NativeInteropEx.NativeArraySIMD{``0},System.Func{System.Int64,System.Numerics.Vector{``0},System.Numerics.Vector{``1}},System.Func{System.Int64,``0,``1})">
+ <summary>
+ Maps the elements of an array to new values
+ </summary>
+ <param name="this">Array containing the elements to be mapped</param>
+ <param name="fvec">Function mapping a vector of n values and the index of the first of those elements to a vector of n output values</param>
+ <param name="f">Function mapping a value and its corresponding index to an output value</param>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Map``2(NativeInteropEx.NativeArraySIMD{``0},System.Func{System.Numerics.Vector{``0},System.Numerics.Vector{``1}},System.Func{``0,``1},NativeInteropEx.NativeArray{``1})">
+ <summary>
+ Maps the elements of an array to new values
+ </summary>
+ <param name="this">Array containing the elements to be mapped</param>
+ <param name="fvec">Function mapping a vector of n values to a vector of n output values</param>
+ <param name="f">Function mapping a value to an output value</param>
+ <param name="out">Output array where to store the mapped values</param>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Map``2(NativeInteropEx.NativeArraySIMD{``0},System.Func{System.Numerics.Vector{``0},System.Numerics.Vector{``1}},System.Func{``0,``1})">
+ <summary>
+ Maps the elements of an array to new values
+ </summary>
+ <param name="this">Array containing the elements to be mapped</param>
+ <param name="fvec">Function mapping a vector of n values to a vector of n output values</param>
+ <param name="f">Function mapping a value to an output value</param>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Initialize``1(System.Int64,System.Func{System.Int64,System.Numerics.Vector{``0}},System.Func{System.Int64,``0})">
+ <summary>
+ Initializes a new array by mapping indices to initial values
+ </summary>
+ <param name="length">Number of items in the new array</param>
+ <param name="fvec">Function mapping each n-th index to a vector of initial values</param>
+ <param name="f">Function mapping the remaining length &#37; n indices to initial values</param>
+ <remarks>n is the number of elements of type T in a SIMD vector</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Initialize``1(System.Int32,System.Func{System.Int32,System.Numerics.Vector{``0}},System.Func{System.Int32,``0})">
+ <summary>
+ Initializes a new array by mapping indices to initial values
+ </summary>
+ <param name="length">Number of items in the new array</param>
+ <param name="fvec">Function mapping each n-th index to a vector of initial values</param>
+ <param name="f">Function mapping the remaining length &#37; n indices to initial values</param>
+ <remarks>n is the number of elements of type T in a SIMD vector</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Fold``3(NativeInteropEx.NativeArraySIMD{``0},NativeInteropEx.NativeArray{``1},System.Func{System.Numerics.Vector{``2},System.Numerics.Vector{``0},System.Numerics.Vector{``1},System.Numerics.Vector{``2}},System.Func{``2,``0,``1,``2},System.Func{``2,``2,``2},``2)">
+ <summary>
+ Applies a function to each pair of elements of two arrays, threading a accumulator
+ element through the computation
+ </summary>
+ <param name="fvec">Function to combine the current vectorized state and two vectors of n values into one vector of n values</param>
+ <param name="f">Function to combine the current scalar state and two scalar values into one</param>
+ <param name="accumulate">Function to accumulate the vectorized state created by fvec</param>
+ <param name="state">Initial value of the accumulator</param>
+ <remarks>Assumes that both fvec and f are commutative operations</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Fold``2(NativeInteropEx.NativeArraySIMD{``0},System.Func{System.Numerics.Vector{``1},System.Numerics.Vector{``0},System.Numerics.Vector{``1}},System.Func{``1,``0,``1},System.Func{``1,``1,``1},``1)">
+ <summary>
+ Applies a function to each element of the array, threading a accumulator
+ element through the computation
+ </summary>
+ <param name="fvec">Function to combine two vectors of n values into one vector of n values</param>
+ <param name="f">Function to combine two scalar values into one</param>
+ <param name="accumulate">Function to accumulate the vectorized state created by fvec</param>
+ <param name="state">Initial value of the accumulator</param>
+ <remarks>Assumes that both fvec and f are commutative operations</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Dot(NativeInteropEx.NativeArraySIMD{System.UInt16},NativeInteropEx.NativeArray{System.UInt16})">
+ <summary>
+ Computes the dot product of two arrays
+ </summary>
+ <param name="this">First operand</param>
+ <param name="other">Second operand</param>
+ <remarks>Assumes commutative multiply and add operators</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Dot(NativeInteropEx.NativeArraySIMD{System.Int16},NativeInteropEx.NativeArray{System.Int16})">
+ <summary>
+ Computes the dot product of two arrays
+ </summary>
+ <param name="this">First operand</param>
+ <param name="other">Second operand</param>
+ <remarks>Assumes commutative multiply and add operators</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Dot(NativeInteropEx.NativeArraySIMD{System.SByte},NativeInteropEx.NativeArray{System.SByte})">
+ <summary>
+ Computes the dot product of two arrays
+ </summary>
+ <param name="this">First operand</param>
+ <param name="other">Second operand</param>
+ <remarks>Assumes commutative multiply and add operators</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Dot(NativeInteropEx.NativeArraySIMD{System.Byte},NativeInteropEx.NativeArray{System.Byte})">
+ <summary>
+ Computes the dot product of two arrays
+ </summary>
+ <param name="this">First operand</param>
+ <param name="other">Second operand</param>
+ <remarks>Assumes commutative multiply and add operators</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Dot(NativeInteropEx.NativeArraySIMD{System.UInt64},NativeInteropEx.NativeArray{System.UInt64})">
+ <summary>
+ Computes the dot product of two arrays
+ </summary>
+ <param name="this">First operand</param>
+ <param name="other">Second operand</param>
+ <remarks>Assumes commutative multiply and add operators</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Dot(NativeInteropEx.NativeArraySIMD{System.UInt32},NativeInteropEx.NativeArray{System.UInt32})">
+ <summary>
+ Computes the dot product of two arrays
+ </summary>
+ <param name="this">First operand</param>
+ <param name="other">Second operand</param>
+ <remarks>Assumes commutative multiply and add operators</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Dot(NativeInteropEx.NativeArraySIMD{System.Int64},NativeInteropEx.NativeArray{System.Int64})">
+ <summary>
+ Computes the dot product of two arrays
+ </summary>
+ <param name="this">First operand</param>
+ <param name="other">Second operand</param>
+ <remarks>Assumes commutative multiply and add operators</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Dot(NativeInteropEx.NativeArraySIMD{System.Int32},NativeInteropEx.NativeArray{System.Int32})">
+ <summary>
+ Computes the dot product of two arrays
+ </summary>
+ <param name="this">First operand</param>
+ <param name="other">Second operand</param>
+ <remarks>Assumes commutative multiply and add operators</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Dot(NativeInteropEx.NativeArraySIMD{System.Single},NativeInteropEx.NativeArray{System.Single})">
+ <summary>
+ Computes the dot product of two arrays
+ </summary>
+ <param name="this">First operand</param>
+ <param name="other">Second operand</param>
+ <remarks>Assumes commutative multiply and add operators</remarks>
+</member>
+<member name="M:NativeInteropEx.NativeArraySIMD.Dot(NativeInteropEx.NativeArraySIMD{System.Double},NativeInteropEx.NativeArray{System.Double})">
+ <summary>
+ Computes the dot product of two arrays
+ </summary>
+ <param name="this">First operand</param>
+ <param name="other">Second operand</param>
+ <remarks>Assumes commutative multiply and add operators</remarks>
+</member>
+<member name="T:NativeInteropEx.NativeArraySIMD`1">
+<summary>
+ Helper struct to disambiguate extension method calls on NativeArray&lt;T&gt;
+ between the scalar or the vectorized implementations
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.dot``2(NativeInteropEx.NativeArray{``0},NativeInteropEx.NativeArray{``0})">
+<summary>
+ Computes the dot product of two arrays
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.fold2``3(Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``0},Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``1},Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``2},System.Numerics.Vector{``0}}}},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``1,Microsoft.FSharp.Core.FSharpFunc{``2,``0}}},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``0,``0}},``0,NativeInteropEx.NativeArray{``1},NativeInteropEx.NativeArray{``2})">
+<summary>
+ Applies a function to each paired elements of the two input arrays, threading a accumulator
+ element through the computation
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.prod``1(NativeInteropEx.NativeArray{``0})">
+<summary>
+ Computes the product of elements in the array
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.sum``1(NativeInteropEx.NativeArray{``0})">
+<summary>
+ Sums the elements of a NativeArray
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.replicate``1(System.Int32,``0)">
+<summary>
+ Creates a NativeArray&lt;&apos;T&gt; with all elements set to a given value    
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.replicate64``1(System.Int64,``0)">
+<summary>
+ Creates a NativeArray&lt;&apos;T&gt; with all elements set to a given value    
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.init``1(System.Int32,Microsoft.FSharp.Core.FSharpFunc{System.Int32,System.Numerics.Vector{``0}},Microsoft.FSharp.Core.FSharpFunc{System.Int32,``0})">
+<summary>
+ Initializes a new NativeArray&lt;_&gt; of the given length (item count)
+ by calling a generator function on each index [0 .. count]
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.init64``1(System.Int64,Microsoft.FSharp.Core.FSharpFunc{System.Int64,System.Numerics.Vector{``0}},Microsoft.FSharp.Core.FSharpFunc{System.Int64,``0})">
+<summary>
+ Initializes a new NativeArray&lt;_&gt; of the given length (item count)
+ by calling a generator function on each index [0 .. count]
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.reduce``1(Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``0},Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``0},System.Numerics.Vector{``0}}},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``0,``0}},NativeInteropEx.NativeArray{``0})">
+<summary>
+ Combines all elements of the input array into an accumulated value
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.fold``2(Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``0},Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``1},System.Numerics.Vector{``0}}},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``1,``0}},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``0,``0}},``0,NativeInteropEx.NativeArray{``1})">
+<summary>
+ Applies a function to each element of the array, threading a accumulator
+ element through the computation
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.map3``4(Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``0},Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``1},Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``2},System.Numerics.Vector{``3}}}},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``1,Microsoft.FSharp.Core.FSharpFunc{``2,``3}}},NativeInteropEx.NativeArray{``0},NativeInteropEx.NativeArray{``1},NativeInteropEx.NativeArray{``2})">
+<summary>
+ Map triple-wise elements of three NativeArrays
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.map3Inplace``3(Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``0},Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``1},Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``2},System.Numerics.Vector{``0}}}},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``1,Microsoft.FSharp.Core.FSharpFunc{``2,``0}}},NativeInteropEx.NativeArray{``0},NativeInteropEx.NativeArray{``1},NativeInteropEx.NativeArray{``2})">
+<summary>
+ Map triple-wise elements of three NativeArrays into the first array
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.map3Into``4(Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``0},Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``1},Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``2},System.Numerics.Vector{``3}}}},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``1,Microsoft.FSharp.Core.FSharpFunc{``2,``3}}},NativeInteropEx.NativeArray{``3},NativeInteropEx.NativeArray{``0},NativeInteropEx.NativeArray{``1},NativeInteropEx.NativeArray{``2})">
+<summary>
+ Map triple-wise elements of three NativeArrays into an existing output array
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.map2``3(Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``0},Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``1},System.Numerics.Vector{``2}}},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``1,``2}},NativeInteropEx.NativeArray{``0},NativeInteropEx.NativeArray{``1})">
+<summary>
+ Map pairwise elements of two NativeArrays
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.map2Inplace``2(Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``0},Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``1},System.Numerics.Vector{``0}}},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``1,``0}},NativeInteropEx.NativeArray{``0},NativeInteropEx.NativeArray{``1})">
+<summary>
+ Map pairwise elements of two NativeArrays into an the first input array
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.map2Into``3(Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``0},Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``1},System.Numerics.Vector{``2}}},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``1,``2}},NativeInteropEx.NativeArray{``2},NativeInteropEx.NativeArray{``0},NativeInteropEx.NativeArray{``1})">
+<summary>
+ Map pairwise elements of two NativeArrays into an existing output array
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.map``2(Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``0},System.Numerics.Vector{``1}},Microsoft.FSharp.Core.FSharpFunc{``0,``1},NativeInteropEx.NativeArray{``0})">
+<summary>
+ Map the elements into a new array
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.mapInplace``1(Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``0},System.Numerics.Vector{``0}},Microsoft.FSharp.Core.FSharpFunc{``0,``0},NativeInteropEx.NativeArray{``0})">
+<summary>
+ Map the elements of a NativeArray into itself
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.mapInto``2(Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``0},System.Numerics.Vector{``1}},Microsoft.FSharp.Core.FSharpFunc{``0,``1},NativeInteropEx.NativeArray{``1},NativeInteropEx.NativeArray{``0})">
+<summary>
+ Map the elements of a NativeArray into an existing array
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.mapi``2(Microsoft.FSharp.Core.FSharpFunc{System.Int64,Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``0},System.Numerics.Vector{``1}}},Microsoft.FSharp.Core.FSharpFunc{System.Int64,Microsoft.FSharp.Core.FSharpFunc{``0,``1}},NativeInteropEx.NativeArray{``0})">
+<summary>
+ Map the elements into a new array
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.mapiInplace``1(Microsoft.FSharp.Core.FSharpFunc{System.Int64,Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``0},System.Numerics.Vector{``0}}},Microsoft.FSharp.Core.FSharpFunc{System.Int64,Microsoft.FSharp.Core.FSharpFunc{``0,``0}},NativeInteropEx.NativeArray{``0})">
+<summary>
+ Map the elements of a NativeArray into itself
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.SIMD.mapiInto``2(Microsoft.FSharp.Core.FSharpFunc{System.Int64,Microsoft.FSharp.Core.FSharpFunc{System.Numerics.Vector{``0},System.Numerics.Vector{``1}}},Microsoft.FSharp.Core.FSharpFunc{System.Int64,Microsoft.FSharp.Core.FSharpFunc{``0,``1}},NativeInteropEx.NativeArray{``1},NativeInteropEx.NativeArray{``0})">
+<summary>
+ Map the elements of a NativeArray into an existing array
+</summary>
+</member>
+</members>
+</doc>

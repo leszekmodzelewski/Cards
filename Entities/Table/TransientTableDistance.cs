@@ -2,11 +2,10 @@
 
 namespace GeoLib.Entities.Table
 {
+    using GeoLib.Transient;
     using ZwSoft.ZwCAD.DatabaseServices;
     using ZwSoft.ZwCAD.EditorInput;
     using ZwSoft.ZwCAD.Geometry;
-    using GeoLib.Transient;
-    using System;
 
     public class TransientTableDistance : TransientUpdater
     {
@@ -19,7 +18,7 @@ namespace GeoLib.Entities.Table
             this.basePoint = basePoint;
         }
 
-        public override Entity GetTransientEntity() => 
+        public override Entity GetTransientEntity() =>
             this.current;
 
         public override void OnMonitorPoint(PointMonitorEventArgs e)

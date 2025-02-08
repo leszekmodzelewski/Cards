@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>NativeInteropEx</name></assembly>
+<members>
+<member name="M:NativeInteropEx.IntPtrEx.Write``1(``0*,``0)">
+ <summary>Write to a memory location</summary>
+ <param name="ptr">Pointer to target location</param>
+ <param name="value">Value to be written</param>
+ <typeparam name="T">Type of value to be written; must be unmanged (blittable)</typeparam>
+</member>
+<member name="M:NativeInteropEx.IntPtrEx.Set``1(``0*,System.IntPtr,``0)">
+ <summary>Write to a pointer with offset</summary>
+ <param name="pBase">Base address</param>
+ <param name="offset">Offset to be added to pBase</param>
+ <param name="value">Value to be written</param>
+ <typeparam name="T">Type of value to write; must be unmanged (blittable)</typeparam>
+</member>
+<member name="M:NativeInteropEx.IntPtrEx.Set``1(``0*,System.Int32,``0)">
+ <summary>Write to a pointer with offset</summary>
+ <param name="pBase">Base address</param>
+ <param name="offset">Offset to be added to pBase</param>
+ <param name="value">Value to be written</param>
+ <typeparam name="T">Type of value to write; must be unmanged (blittable)</typeparam>
+</member>
+<member name="M:NativeInteropEx.IntPtrEx.Set``1(``0*,System.Int64,``0)">
+ <summary>Write to a pointer with offset</summary>
+ <param name="pBase">Base address</param>
+ <param name="offset">Offset to be added to pBase</param>
+ <param name="value">Value to be written</param>
+ <typeparam name="T">Type of value to write; must be unmanged (blittable)</typeparam>
+</member>
+<member name="M:NativeInteropEx.IntPtrEx.Read``1(``0*)">
+ <summary>Dereference a pointer</summary>
+ <param name="ptr">Pointer to memory, interpreted as type T</param>
+ <typeparam name="T">Type of value to be read; must be unmanged (blittable)</typeparam>
+ <returns>*((T*)ptr))</returns>
+</member>
+<member name="M:NativeInteropEx.IntPtrEx.Increment``1(``0*)">
+ <summary>Increment a pointer</summary>
+ <param name="ptr">Pointer to be incremented</param>
+ <typeparam name="T">Type of value ptr is pointing to; must be unmanged (blittable)</typeparam>
+ <returns>(T*)ptr + 1</returns>
+</member>
+<member name="M:NativeInteropEx.IntPtrEx.Get``1(``0*,System.IntPtr)">
+ <summary>Read from a pointer with offset</summary>
+ <param name="pBase">Base address</param>
+ <param name="offset">Offset to be added to pBase</param>
+ <typeparam name="T">Type of value to be read; must be unmanged (blittable)</typeparam>
+ <returns>*((T*)pBase + offset)</returns>    
+</member>
+<member name="M:NativeInteropEx.IntPtrEx.Get``1(``0*,System.Int32)">
+ <summary>Read from a pointer with offset</summary>
+ <param name="pBase">Base address</param>
+ <param name="offset">Offset to be added to pBase</param>
+ <typeparam name="T">Type of value to be read; must be unmanged (blittable)</typeparam>
+ <returns>*((T*)pBase + offset)</returns>    
+</member>
+<member name="M:NativeInteropEx.IntPtrEx.Get``1(``0*,System.Int64)">
+ <summary>Read from a pointer with offset</summary>
+ <param name="pBase">Base address</param>
+ <param name="offset">Offset to be added to pBase</param>
+ <typeparam name="T">Type of value to be read; must be unmanged (blittable)</typeparam>
+ <returns>*((T*)pBase + offset)</returns>    
+</member>
+<member name="M:NativeInteropEx.IntPtrEx.Decrement``1(``0*)">
+ <summary>Decrement a pointer value</summary>
+ <param name="ptr">Pointer to be decremented</param>
+ <typeparam name="T">Type of value ptr is pointing to; must be unmanged (blittable)</typeparam>
+ <returns>(T*)ptr - 1</returns>
+</member>
+<member name="M:NativeInteropEx.IntPtrEx.AddOffset``1(``0*,System.IntPtr)">
+ <summary>Add an offset to a pointer</summary>
+ <param name="ptr">Base address</param>
+ <param name="offset">Offset to be added to ptr</param>
+ <typeparam name="T">Type of value ptr is pointing to; must be unmanged (blittable)</typeparam>
+ <returns>(T*)ptr + offset</returns>
+</member>
+<member name="M:NativeInteropEx.IntPtrEx.AddOffset``1(``0*,System.Int64)">
+ <summary>Add an offset to a pointer</summary>
+ <param name="ptr">Base address</param>
+ <param name="offset">Offset to be added to ptr</param>
+ <typeparam name="T">Type of value ptr is pointing to; must be unmanged (blittable)</typeparam>
+ <returns>(T*)ptr + offset</returns>
+</member>
+<member name="M:NativeInteropEx.IntPtrEx.AddOffset``1(``0*,System.Int32)">
+ <summary>Add an offset to a pointer</summary>
+ <param name="ptr">Base address</param>
+ <param name="offset">Offset to be added to ptr</param>
+ <typeparam name="T">Type of value ptr is pointing to; must be unmanged (blittable)</typeparam>
+ <returns>(T*)ptr + offset</returns>
+</member>
+<member name="T:NativeInteropEx.IntPtrEx">
+<summary>
+ Extension methods for System.IntPtr (nativeint)
+ (in F# the methods&apos; this parameter is actually a typed nativeptr&lt;&apos;T&gt; which however 
+ is represented as a nativeint/IntPtr outside of F#)
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.ZeroCreate``1(System.Int64)">
+ <summary>
+ Creates a new array with all elements initialized to their default value
+ </summary>
+ <param name="length">Number of items in the new array</param>
+</member>
+<member name="M:NativeInteropEx.NativeArray.ZeroCreate``1(System.Int32)">
+ <summary>
+ Creates a new array with all elements initialized to their default value
+ </summary>
+ <param name="length">Number of items in the new array</param>
+</member>
+<member name="M:NativeInteropEx.NativeArray.ToNativeArray``1(System.Collections.Generic.IEnumerable{``0})">
+ <summary>
+ Applies a function to each pair of elements of two arrays, threading a accumulator
+ element through the computation
+ </summary>
+ <param name="f">Folding function</param>
+ <param name="state">Initial value of the accumulator</param>
+ <param name="other">Second array</param>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Sum(NativeInteropEx.NativeArray{System.Decimal})">
+ <summary>
+ Sums the elements of a numeric array
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Sum(NativeInteropEx.NativeArray{System.UInt64})">
+ <summary>
+ Sums the elements of a numeric array
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Sum(NativeInteropEx.NativeArray{System.UInt32})">
+ <summary>
+ Sums the elements of a numeric array
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Sum(NativeInteropEx.NativeArray{System.Int64})">
+ <summary>
+ Sums the elements of a numeric array
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Sum(NativeInteropEx.NativeArray{System.Int32})">
+ <summary>
+ Sums the elements of a numeric array
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Sum(NativeInteropEx.NativeArray{System.Single})">
+ <summary>
+ Sums the elements of a numeric array
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Sum(NativeInteropEx.NativeArray{System.Double})">
+ <summary>
+ Sums the elements of a numeric array
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Resize``1(NativeInteropEx.NativeArray{``0},System.Int32)">
+ <summary>
+ Resizes a NativeArray instance
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Resize``1(NativeInteropEx.NativeArray{``0},System.Int64)">
+ <summary>
+ Resizes a NativeArray instance
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Reduce``1(NativeInteropEx.NativeArray{``0},System.Func{``0,``0,``0})">
+ <summary>
+ Reduces the elements of a NativeArray to an accumulated value
+ </summary>
+ <param name="f">Element accumulation function</param>    
+</member>
+<member name="M:NativeInteropEx.NativeArray.Product(NativeInteropEx.NativeArray{System.Decimal})">
+ <summary>
+ Computes the product of the elements of a numeric array
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Product(NativeInteropEx.NativeArray{System.UInt64})">
+ <summary>
+ Computes the product of the elements of a numeric array
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Product(NativeInteropEx.NativeArray{System.UInt32})">
+ <summary>
+ Computes the product of the elements of a numeric array
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Product(NativeInteropEx.NativeArray{System.Int64})">
+ <summary>
+ Computes the product of the elements of a numeric array
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Product(NativeInteropEx.NativeArray{System.Int32})">
+ <summary>
+ Computes the product of the elements of a numeric array
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Product(NativeInteropEx.NativeArray{System.Single})">
+ <summary>
+ Computes the product of the elements of a numeric array
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Product(NativeInteropEx.NativeArray{System.Double})">
+ <summary>
+ Computes the product of the elements of a numeric array
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.MapInplace``1(NativeInteropEx.NativeArray{``0},System.Func{System.Int64,``0,``0})">
+ <summary>
+ Transforms the elements of an array in-place, modifying the current instance
+ </summary>
+ <param name="f">Element mapping</param>    
+</member>
+<member name="M:NativeInteropEx.NativeArray.MapInplace``1(NativeInteropEx.NativeArray{``0},System.Func{``0,``0})">
+ <summary>
+ Transforms the elements of an array in-place, modifying the current instance
+ </summary>
+ <param name="f">Element mapping</param>    
+</member>
+<member name="M:NativeInteropEx.NativeArray.Map2``3(NativeInteropEx.NativeArray{``0},NativeInteropEx.NativeArray{``1},System.Func{``0,``1,``2})">
+ <summary>
+ Transforms the paired elements of two arrays
+ </summary>
+ <param name="other">Second array to map over</param>    
+ <param name="f">Element mapping</param>    
+</member>
+<member name="M:NativeInteropEx.NativeArray.Map``1(NativeInteropEx.NativeArray{``0},System.Func{System.Int64,``0,``0})">
+ <summary>
+ Transforms the elements of an array using a given mapping
+ </summary>
+ <param name="f">Element mapping</param>    
+</member>
+<member name="M:NativeInteropEx.NativeArray.Map``2(NativeInteropEx.NativeArray{``0},System.Func{``0,``1})">
+ <summary>
+ Transforms the elements of an array using a given mapping
+ </summary>
+ <param name="f">Element mapping</param>    
+</member>
+<member name="M:NativeInteropEx.NativeArray.Initialize``1(System.Int64,System.Func{System.Int64,``0})">
+ <summary>
+ Initializes a new array mapping each index i to a value f(i)
+ </summary>
+ <param name="length">Number of items in the new array</param>
+ <param name="f">Function mapping indices to initial values</param>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Initialize``1(System.Int32,System.Func{System.Int32,``0})">
+ <summary>
+ Initializes a new array mapping each index i to a value f(i)
+ </summary>
+ <param name="length">Number of items in the new array</param>
+ <param name="f">Function mapping indices to initial values</param>
+</member>
+<member name="M:NativeInteropEx.NativeArray.From``1(System.Collections.Generic.IEnumerable{``0})">
+ <summary>
+ Creates a new array from an enumerable sequence
+ </summary>
+ <param name="seq">Sequence from which to generate the array's elements</param>
+</member>
+<member name="M:NativeInteropEx.NativeArray.From``1(``0[])">
+ <summary>
+ Creates a new NativeArray by copying the elements of a managed array
+ </summary>
+ <param name="array">Managed array to copy</param>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Fold2``3(NativeInteropEx.NativeArray{``0},NativeInteropEx.NativeArray{``1},System.Func{``2,``0,``1,``2},``2)">
+ <summary>
+ Applies a function to each pair of elements of two arrays, threading a accumulator
+ element through the computation
+ </summary>
+ <param name="f">Folding function</param>
+ <param name="state">Initial value of the accumulator</param>
+ <param name="other">Second array</param>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Fold``2(NativeInteropEx.NativeArray{``0},System.Func{``1,``0,``1},``1)">
+ <summary>
+ Applies a function to each element of the array, threading a accumulator
+ element through the computation
+ </summary>
+ <param name="f">Folding function</param>
+ <param name="state">Initial value of the accumulator</param>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Dot(NativeInteropEx.NativeArray{System.Decimal},NativeInteropEx.NativeArray{System.Decimal})">
+ <summary>
+ Computes the dot product of two numeric arrays
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Dot(NativeInteropEx.NativeArray{System.UInt64},NativeInteropEx.NativeArray{System.UInt64})">
+ <summary>
+ Computes the dot product of two numeric arrays
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Dot(NativeInteropEx.NativeArray{System.UInt32},NativeInteropEx.NativeArray{System.UInt32})">
+ <summary>
+ Computes the dot product of two numeric arrays
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Dot(NativeInteropEx.NativeArray{System.Int64},NativeInteropEx.NativeArray{System.Int64})">
+ <summary>
+ Computes the dot product of two numeric arrays
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Dot(NativeInteropEx.NativeArray{System.Int32},NativeInteropEx.NativeArray{System.Int32})">
+ <summary>
+ Computes the dot product of two numeric arrays
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Dot(NativeInteropEx.NativeArray{System.Single},NativeInteropEx.NativeArray{System.Single})">
+ <summary>
+ Computes the dot product of two numeric arrays
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Dot(NativeInteropEx.NativeArray{System.Double},NativeInteropEx.NativeArray{System.Double})">
+ <summary>
+ Computes the dot product of two numeric arrays
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Copy``1(NativeInteropEx.NativeArray{``0})">
+ <summary>
+ Copies a NativeArray instance
+ </summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray.Convert``2(NativeInteropEx.NativeArray{``0})">
+ <summary>
+ Copies the contents of a NativeArray to a NativeArray of a different type
+ </summary>
+</member>
+<member name="T:NativeInteropEx.NativeArray">
+<summary>
+ Static and extension methods for creating and transforming NativeArrays
+</summary>
+</member>
+<member name="T:NativeInteropEx.NativeArrayEnumerator`1">
+<summary>
+ Specialized enumerator for NativeArray
+</summary>
+</member>
+<member name="P:NativeInteropEx.NativeArray`1.Item(System.Int32,`0)">
+<summary>
+ Get/set element value
+</summary>
+</member>
+<member name="P:NativeInteropEx.NativeArray`1.Item(System.Int64,`0)">
+<summary>
+ Get/set element value
+</summary>
+</member>
+<member name="P:NativeInteropEx.NativeArray`1.At(System.Int32,`0)">
+<summary>
+ Get/set element value with bounds check
+</summary>
+</member>
+<member name="P:NativeInteropEx.NativeArray`1.At(System.Int64,`0)">
+<summary>
+ Get/set element value with bounds check
+</summary>
+</member>
+<member name="P:NativeInteropEx.NativeArray`1.Length">
+<summary>
+ Number of elements in the array
+</summary>
+</member>
+<member name="P:NativeInteropEx.NativeArray`1.ItemSize">
+<summary>
+ Number of bytes per element (stride)
+</summary>
+</member>
+<member name="P:NativeInteropEx.NativeArray`1.Item(System.Int32)">
+<summary>
+ Get/set element value
+</summary>
+</member>
+<member name="P:NativeInteropEx.NativeArray`1.Item(System.Int64)">
+<summary>
+ Get/set element value
+</summary>
+</member>
+<member name="P:NativeInteropEx.NativeArray`1.BaseAddress">
+<summary>
+ Address of the first element of the array
+</summary>
+</member>
+<member name="P:NativeInteropEx.NativeArray`1.At(System.Int32)">
+<summary>
+ Get/set element value with bounds check
+</summary>
+</member>
+<member name="P:NativeInteropEx.NativeArray`1.At(System.Int64)">
+<summary>
+ Get/set element value with bounds check
+</summary>
+</member>
+<member name="P:NativeInteropEx.NativeArray`1.AllocatedBytes">
+<summary>
+ Total number of bytes allocated
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray`1.Set(System.Int64,`0)">
+<summary>
+ Set element value with bounds check
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray`1.Set(System.Int32,`0)">
+<summary>
+ Set element value with bounds check
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray`1.Get(System.Int64)">
+<summary>
+ Get element value with bounds check
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray`1.Get(System.Int32)">
+<summary>
+ Get element value with bounds check
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArray`1.Dispose">
+<summary>
+ Free allocated memory
+</summary>
+</member>
+<member name="T:NativeInteropEx.NativeArray`1">
+<summary>
+ Array allocated on the unmanaged heap; supports up to 2^63 elements
+ on 64 bit machines
+</summary>
+</member>
+<member name="T:NativeInteropEx.NativePtr`1">
+<summary>
+ OO interface for C# and VB
+</summary>
+</member>
+<member name="P:NativeInteropEx.ReinterpretCast`2.Pointer">
+<summary>
+ Get pointer to pinned object
+</summary>
+</member>
+<member name="T:NativeInteropEx.ReinterpretCast`2">
+<summary>
+ Access object of type T through a U pointer
+</summary>
+</member>
+<member name="M:NativeInteropEx.Buffer.Copy``2(``0[])">
+ <summary>Copies the bytes of an array of type T to a new array of type U</summary>
+ <param name="src">Source array</param>
+ <typeparam name="T">Type of source array</typeparam>
+ <typeparam name="U">Type of destination arrayr</typeparam>    
+ <returns>New array with the contents of src, interpreted as type U</returns>
+</member>
+<member name="M:NativeInteropEx.Buffer.Copy``2(``0[],``1[])">
+ <summary>Copies the bytes of an array of type T to an existing array of type U</summary>
+ <param name="src">Source array</param>
+ <param name="dst">Destination array</param>    
+ <typeparam name="T">Type of source array</typeparam>
+ <typeparam name="U">Type of destination arrayr</typeparam>    
+ <remarks>assumes that (src.Length * sizeof(T)) &#37; sizeof(U) == 0</remarks>
+</member>
+<member name="M:NativeInteropEx.Buffer.memcpyTyped``2(``0*,``1*,System.Int64)">
+<summary>
+ Copies length bytes from pSrc to pDst (memcpy)
+</summary>
+</member>
+<member name="M:NativeInteropEx.Buffer.Copy(System.IntPtr,System.IntPtr,System.IntPtr)">
+ <summary>Copies bytes between memory locations (memcpy)</summary>
+ <param name="pSrc">Pointer to source</param>
+ <param name="pDst">Pointer to destination</param>
+ <param name="length">Number of bytes to copy</param>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.filter``1(Microsoft.FSharp.Core.FSharpFunc{``0,System.Boolean},NativeInteropEx.NativeArray{``0})">
+<summary>
+ Returns a new NativeArray&lt;_&gt; for which all
+ elements satisfy the provided predicate
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.dot``3(NativeInteropEx.NativeArray{``0},NativeInteropEx.NativeArray{``0})">
+<summary>
+ Dot-product of two numeric arrays
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.prod``1(NativeInteropEx.NativeArray{``0})">
+<summary>
+ Product of the elements of a numeric array
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.sum``1(NativeInteropEx.NativeArray{``0})">
+<summary>
+ Sum of the elements of a numeric array
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.fold2``3(Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``1,Microsoft.FSharp.Core.FSharpFunc{``2,``0}}},``0,NativeInteropEx.NativeArray{``1},NativeInteropEx.NativeArray{``2})">
+<summary>
+ Applies a function to each pair of elements of two arrays, threading a accumulator
+ element through the computation
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.reduce``1(Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``0,``0}},NativeInteropEx.NativeArray{``0})">
+<summary>
+ Combines all elements of the input array into an accumulated value
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.fold``2(Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``1,``0}},``0,NativeInteropEx.NativeArray{``1})">
+<summary>
+ Applies a function to each element of the array, threading a accumulator
+ element through the computation
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.map2``3(Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``1,``2}},NativeInteropEx.NativeArray{``0},NativeInteropEx.NativeArray{``1})">
+<summary>
+ Maps the elements of two input arrays onto a new array
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.mapiInplace``1(Microsoft.FSharp.Core.FSharpFunc{System.Int64,Microsoft.FSharp.Core.FSharpFunc{``0,``0}},NativeInteropEx.NativeArray{``0})">
+<summary>
+ Applies a given transformation, which depends on the element index,
+ to all elements of a NativeArray&lt;_&gt;
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.mapInplace``1(Microsoft.FSharp.Core.FSharpFunc{``0,``0},NativeInteropEx.NativeArray{``0})">
+<summary>
+ Applies a given transformation to all elements of a NativeArray&lt;_&gt;
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.mapi``2(Microsoft.FSharp.Core.FSharpFunc{System.Int64,Microsoft.FSharp.Core.FSharpFunc{``0,``1}},NativeInteropEx.NativeArray{``0})">
+<summary>
+ Maps a NativeArray&lt;_&gt; to a new NativeArray&lt;_&gt; by applying
+ a given transformation that depends on the index of an element to all elements
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.map``2(Microsoft.FSharp.Core.FSharpFunc{``0,``1},NativeInteropEx.NativeArray{``0})">
+<summary>
+ Maps a NativeArray&lt;_&gt; to a new NativeArray&lt;_&gt; by applying
+ a given transformation to all elements
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.resize64``1(System.Int64,NativeInteropEx.NativeArray{``0})">
+<summary>
+ Get a view on an existing array of &apos;T items as an array of items of type &apos;U
+ Resizes an array by copying the contents to a new array of length newSize
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.convert``2(NativeInteropEx.NativeArray{``0})">
+<summary>
+ Copies the contents of on NativeArray&lt;&apos;a&gt; to a new NativeArray&lt;&apos;b&gt;
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.copy``1(NativeInteropEx.NativeArray{``0})">
+<summary>
+ Copies the contents of on NativeArray&lt;_&gt; to a new instance
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.init``1(System.Int32,Microsoft.FSharp.Core.FSharpFunc{System.Int32,``0})">
+<summary>
+ Initializes a new NativeArray&lt;_&gt; of the given length (item count)
+ by calling a generator function on each index [0 .. count]
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.init64``1(System.Int64,Microsoft.FSharp.Core.FSharpFunc{System.Int64,``0})">
+<summary>
+ Initializes a new NativeArray&lt;_&gt; of the given length (item count)
+ by calling a generator function on each index [0 .. count]
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.length``1(NativeInteropEx.NativeArray{``0})">
+<summary>
+ Returns the length (number of items) of a NativeArray&lt;_&gt;    
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.ofArray``1(``0[])">
+<summary>
+ Creates a new NativeArray&lt;_&gt; by copying the elements of the supplied CLI array
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativeArrayModule.ofSeq``1(System.Collections.Generic.IEnumerable{``0})">
+<summary>
+ Creates a new NativeArray&lt;_&gt; from a sequence expression
+</summary>
+</member>
+<member name="T:NativeInteropEx.NativeArrayModule">
+<summary>
+ F# module for creating and transforming NativeArrays
+</summary>
+</member>
+<member name="M:NativeInteropEx.NativePtr.stackalloc``1(System.Int32)">
+ <summary>Allocates memory on the stack</summary>
+ <param name="n">number of items to allocate</param>
+ <typeparam name="T">Type of the allocated values; must be unmanged (blittable)</typeparam>
+ <remarks>*Must* be inlined to work, must not be called from outside F#!</remarks>
+ <returns>Pointer to location on stack</returns>
+</member>
+<member name="M:NativeInteropEx.NativePtr.toNativeInt``1(``0*)">
+ <summary>Convert a typed nativeptr&lt;'T&gt; to a nativeint</summary>
+ <param name="p">value to be converted</param>
+ <typeparam name="T">Type of value the input pointer is considered 
+ pointing to; must be unmanged (blittable)</typeparam>
+ <remarks>This is a no-op in C#, as F#'s nativeptr&lt;'T&gt; is represented as IntPtr (nativeint) in CIL</remarks>
+</member>
+<member name="M:NativeInteropEx.NativePtr.ofNativeInt``1(System.IntPtr)">
+ <summary>Convert nativeint to a typed nativeptr&lt;'T&gt;</summary>
+ <param name="n">value to be converted</param>
+ <typeparam name="T">Type of value the resulting pointer is considered 
+ pointing to; must be unmanged (blittable)</typeparam>
+ <remarks>This is a no-op in C#, as F#'s nativeptr&lt;'T&gt; is represented as IntPtr (nativeint) in CIL</remarks>
+</member>
+<member name="M:NativeInteropEx.NativePtr.set``2(``0*,``1,``0)">
+ <summary>Write to a pointer with offset</summary>
+ <param name="ptr">Base address</param>
+ <param name="offset">Offset to be added to ptr</param>
+ <param name="value">Value to be written</param>
+ <typeparam name="T">Type of value to write; must be unmanged (blittable)</typeparam>
+</member>
+<member name="M:NativeInteropEx.NativePtr.get``2(``0,``1*)">
+ <summary>Read from a pointer with offset</summary>
+ <param name="ptr">Base address</param>
+ <param name="offset">Offset to be added to ptr</param>
+ <typeparam name="T">Type of value to read; must be unmanged (blittable)</typeparam>
+ <returns>*((T*)ptr + offset)</returns>
+</member>
+<member name="M:NativeInteropEx.NativePtr.write``1(``0*,``0)">
+ <summary>Write to a memory location</summary>
+ <param name="ptr">Pointer to target location</param>
+ <param name="value">Value to be written</param>
+ <typeparam name="T">Type of value to be written; must be unmanged (blittable)</typeparam>
+</member>
+<member name="M:NativeInteropEx.NativePtr.read``1(``0*)">
+ <summary>Dereference a pointer</summary>
+ <param name="ptr">Pointer to memory, interpreted as type T</param>
+ <typeparam name="T">Type of value to read; must be unmanged (blittable)</typeparam>
+ <returns>*((T*)ptr))</returns>
+</member>
+<member name="M:NativeInteropEx.NativePtr.dec``1(``0*)">
+ <summary>Decrement a pointer value</summary>
+ <param name="ptr">Pointer to be decremented</param>
+ <returns>(T*)ptr - 1</returns>
+</member>
+<member name="M:NativeInteropEx.NativePtr.inc``1(``0*)">
+ <summary>Increment a pointer</summary>
+ <param name="ptr">Pointer to be incremented</param>
+ <returns>(T*)ptr + 1</returns>
+</member>
+<member name="M:NativeInteropEx.NativePtr.add``2(``0,``1*)">
+ <summary>Add an offset to a pointer</summary>
+ <param name="ptr">Base address</param>
+ <param name="offset">Offset to be added to ptr</param>
+ <returns>(T*)ptr + offset</returns>
+</member>
+<member name="M:NativeInteropEx.NativePtr.cast``2(``0*)">
+ <summary>Reinterpret a pointer of type nativeptr&lt;'T&gt; as nativeptr&lt;'U&gt;</summary>
+ <param name="ptr">Pointer to be casted</param>
+</member>
+<member name="T:NativeInteropEx.NativePtr">
+<summary>
+ Extended version of Microsoft.FSharp.NativeInterop from FSharp.Core.dll.
+ Usable from F# codebases only (requires inline methods), non-F#
+ users should use IntPtrEx and/or NativePtr&lt;&apos;T&gt; instead
+</summary>
+</member>
+<member name="M:NativeInteropEx.Stream.ReadUnmanagedStructRange``1(System.IO.Stream,System.Int32)">
+ <summary>Read an array of structs of unmanaged type T from a Stream</summary>
+ <remarks>ReadUnmanagedStructRange is more efficient then calling ReadUnmanagedStruct 
+ for each individual struct
+ </remarks>
+ <typeparam name="T">Specifies the type as which the read data is interpreted as</typeparam>
+ <param name="stream"><cref see="System.IO.Stream"/> object to read from</param>
+ <param name="count">Number of structs to be read</param>
+</member>
+<member name="M:NativeInteropEx.Stream.ReadUnmanagedStruct``1(System.IO.Stream)">
+<summary>
+ Read a single struct value of unmanaged type T from a Stream         
+</summary>
+</member>
+<member name="M:NativeInteropEx.Stream.WriteUnmanagedStructRange``1(System.IO.Stream,``0[])">
+ <summary>Write an array of unmanaged structs to a Stream</summary>
+ <param name="stream">Stream to be written to</param>    
+ <param name="structure">Array of struct values to write to stream</param>    
+ <typeparam name="T">Type of structures</typeparam>
+ <remarks>Allocates a temporary write byte buffer of the same size as structs</remarks>
+</member>
+<member name="M:NativeInteropEx.Stream.WriteUnmanagedStruct``1(System.IO.Stream,``0)">
+ <summary>Write a single unmanaged struct to a Stream</summary>
+ <param name="stream">Stream to be written to</param>    
+ <param name="structure">Struct value to write to stream</param>    
+ <typeparam name="T">Type of structure</typeparam>
+ <remarks>Allocates a temporary write buffer</remarks>    
+</member>
+<member name="M:NativeInteropEx.Structure.FromBuffer``2(``0[],System.Int32)">
+ <summary>Read a U value from an array of type T[]</summary>
+ <param name="buffer">Array to be read from</param>
+ <param name="offset">Offset to be added to buffer's base address in units of sizeof(T)</param>
+ <typeparam name="T">Type of buffer</typeparam>
+ <typeparam name="U">Type of value to be read</typeparam>
+ <remarks>performs *((U*)(buffer + offset)); requires (buffer.Length - offset) * sizeof(T) >= sizeof(U)</remarks>
+ <returns>The contents of (buffer + offset) as a struct value of type U</returns>
+</member>
+<member name="M:NativeInteropEx.Structure.FromBuffer``2(``0[])">
+ <summary>Read the contents of a T[] buffer as a single unmanaged value of type U</summary>
+ <param name="structure">Reference to struct to be copied</param>
+ <typeparam name="T">Type of buffer</typeparam>
+ <typeparam name="U">Type of value to be read</typeparam>
+ <remarks>performs *((U*)buffer); requires buffer.Length * sizeof(T) == sizeof(U)</remarks>
+ <returns>The contents of buffer as a struct value of type U</returns>
+</member>
+<member name="M:NativeInteropEx.Structure.ToBuffer``2(``0)">
+ <summary>Create a new array of type U containing the bytes of an object of unmanaged type T</summary>
+ <param name="structure">Struct value to be copied</param>
+ <typeparam name="T">Type of structure</typeparam>
+ <typeparam name="U">Type of buffer</typeparam>
+ <remarks>performs *((T*)buffer) = structure; requires sizeof(U) &lt;= sizeof(T) and sizeof(T) &#37; sizeof(U) = 0</remarks>    
+ <returns>The contents of structure as an array of type U</returns>
+</member>
+<member name="M:NativeInteropEx.Structure.ToBuffer``2(``0,``1[])">
+ <summary>Copy an object of unmanaged type T to an existing array of type U</summary>
+ <param name="structure">Struct value to be copied</param>
+ <param name="buffer">Array structure is to be copied to</param>
+ <typeparam name="T">Type of structure</typeparam>
+ <typeparam name="U">Type of buffer</typeparam>
+ <remarks>performs *((T*)buffer) = structure; requires buffer.Length * sizeof(U) == sizeof(T)</remarks>    
+</member>
+<member name="M:NativeInteropEx.Structure.Set``2(``0@,System.Int32,``1)">
+ <summary>Write to a structure of type T by interpreting it as a pointer to values of type U</summary>
+ <param name="structure">Reference to struct to be written to</param>
+ <param name="offset">Offset from the start of structure in units of sizeof(U)</param>
+ <typeparam name="T">Type of structure</typeparam>
+ <typeparam name="U">Type of value to be written to structure</typeparam>
+ <remarks>performs *((U*)structure + offset) = value; requires (offset + 1) * sizeof(U) &lt;= sizeof(T)</remarks>    
+</member>
+<member name="M:NativeInteropEx.Structure.Get``2(``0@,System.Int32)">
+ <summary>Read from a structure of type T by interpreting it as a pointer to values of type U</summary>
+ <param name="structure">Reference to struct to be read from</param>
+ <param name="offset">Offset from the start of structure in units of sizeof(U)</param>
+ <typeparam name="T">Type of structure</typeparam>
+ <typeparam name="U">Type of value to be read from structure</typeparam>
+ <remarks>performs *((U*)structure + offset); requires (offset + 1) * sizeof(U) &lt;= sizeof(T)</remarks>
+</member>
+<member name="M:NativeInteropEx.Structure.Write``2(``0@,``1)">
+ <summary>Writes a value of unmanaged type U to a struct of unmanaged type T</summary>
+ <param name="target">Reference to target memory location</param>
+ <param name="value">Value to be written to target</param>
+ <typeparam name="T">Type of the target struct</typeparam>
+ <typeparam name="U">Type of the source struct</typeparam>
+ <remarks>performs *((U*)target) = value; requires sizeof(T) == sizeof(U)</remarks>
+</member>
+<member name="M:NativeInteropEx.Structure.Read``2(``0@)">
+ <summary>Creates a struct of unmanaged type U from the bytes of a struct of unmanaged type T</summary>
+ <param name="src">Reference to source struct</param>
+ <typeparam name="T">Type of the source struct</typeparam>
+ <typeparam name="U">Type of the result struct</typeparam>
+ <returns>src copied to a struct of type U, i.e. var res = *((U*)&amp;src)</returns>
+ <remarks>performs *((U*)src); requires sizeof(T) == sizeof(U)</remarks>
+</member>
+</members>
+</doc>

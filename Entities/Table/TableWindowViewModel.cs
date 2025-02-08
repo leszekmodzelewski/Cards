@@ -2,13 +2,12 @@
 
 namespace GeoLib.Entities.Table
 {
-    using ZwSoft.ZwCAD.DatabaseServices;
-    using ZwSoft.ZwCAD.Geometry;
     using GeoLib;
     using GeoLib.Controls;
     using GeoLib.Entities.Origin;
-    using System;
     using System.Collections.Generic;
+    using ZwSoft.ZwCAD.DatabaseServices;
+    using ZwSoft.ZwCAD.Geometry;
 
     public class TableWindowViewModel : ViewModel<TableWindowModel>
     {
@@ -51,7 +50,7 @@ namespace GeoLib.Entities.Table
 
         public OriginItem FirstOrigin
         {
-            get => 
+            get =>
                 this.FindItem(base.Model.FirstOrigin);
             set
             {

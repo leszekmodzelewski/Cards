@@ -2,9 +2,8 @@
 
 namespace GeoLib
 {
-    using ZwSoft.ZwCAD.DatabaseServices;
     using GeoLib.XData;
-    using System;
+    using ZwSoft.ZwCAD.DatabaseServices;
 
     public static class XDataUtils
     {
@@ -19,7 +18,8 @@ namespace GeoLib
                 if (!table.Has("GEOLIB"))
                 {
                     table.UpgradeOpen();
-                    RegAppTableRecord record = new RegAppTableRecord {
+                    RegAppTableRecord record = new RegAppTableRecord
+                    {
                         Name = "GEOLIB"
                     };
                     @null = table.Add(record);

@@ -1,5 +1,4 @@
-﻿using System.Windows.Forms;
-using GeoLib.Controls;
+﻿using GeoLib.Controls;
 using GeoLib.Entities.Table;
 using GeoLib.Logic;
 using GeoLib.ViewModels;
@@ -8,6 +7,7 @@ using ZwSoft.ZwCAD.Runtime;
 
 namespace GeoLib.Commands
 {
+    
     public class Cmd_Move
     {
         [CommandMethod("MOVEPOINTS", CommandFlags.UsePickSet)]
