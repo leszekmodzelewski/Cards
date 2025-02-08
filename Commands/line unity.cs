@@ -11,8 +11,8 @@ using Application = ZwSoft.ZwCAD.ApplicationServices.Application;
 using PointCalc;
 using System.Globalization;
 using GeoLib.Logic;
-using GeoLib.Geometry;
-using GeoLib.Solvers;
+//using GeoLib.Geometry;
+//using GeoLib.Solvers;
 
 
 namespace GeoLib.Entities.RectBlanking
@@ -25,104 +25,104 @@ namespace GeoLib.Entities.RectBlanking
         public void ExportToFile()
         {
             
-            FitCylinder();
+            //FitCylinder();
 
         }
       
-        public void FitCylinder()
-        {
-            //pobierz punkty
+        //public void FitCylinder()
+        //{
+        //    //pobierz punkty
 
-            Document doc = Application.DocumentManager.MdiActiveDocument;
-            Database db = doc.Database;
+        //    Document doc = Application.DocumentManager.MdiActiveDocument;
+        //    Database db = doc.Database;
 
-            List<Point3d> pointList = new List<Point3d>(); // lista punktów
+        //    List<Point3d> pointList = new List<Point3d>(); // lista punktów
 
-            using (Transaction trans = db.TransactionManager.StartTransaction())
-            {
-                BlockTable bt = trans.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+        //    using (Transaction trans = db.TransactionManager.StartTransaction())
+        //    {
+        //        BlockTable bt = trans.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
 
-                foreach (ObjectId btrId in bt)
-                {
-                    BlockTableRecord btr = trans.GetObject(btrId, OpenMode.ForRead) as BlockTableRecord;
+        //        foreach (ObjectId btrId in bt)
+        //        {
+        //            BlockTableRecord btr = trans.GetObject(btrId, OpenMode.ForRead) as BlockTableRecord;
 
-                    foreach (ObjectId entId in btr)
-                    {
-                        Entity ent = trans.GetObject(entId, OpenMode.ForRead) as Entity;
+        //            foreach (ObjectId entId in btr)
+        //            {
+        //                Entity ent = trans.GetObject(entId, OpenMode.ForRead) as Entity;
 
-                        if (ent is DBPoint)
-                        {
-                            DBPoint point = ent as DBPoint;
+        //                if (ent is DBPoint)
+        //                {
+        //                    DBPoint point = ent as DBPoint;
 
-                            // Add point coordinates to the pointList
-                            pointList.Add(point.Position);
-                        }
-                    }
-                }
-            }
+        //                    // Add point coordinates to the pointList
+        //                    pointList.Add(point.Position);
+        //                }
+        //            }
+        //        }
+        //    }
                         
-            string v = "\nWybierz linie cylindra:";
+        //    string v = "\nWybierz linie cylindra:";
 
-            // Pobranie linii od użytkownika
-            PromptEntityResult lineSelectionResult = GetEntity(v);
+        //    // Pobranie linii od użytkownika
+        //    PromptEntityResult lineSelectionResult = GetEntity(v);
            
-            Line line = new Line();
+        //    Line line = new Line();
 
-            using (Transaction trans = db.TransactionManager.StartTransaction())
-            {
-                BlockTable bt = trans.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+        //    using (Transaction trans = db.TransactionManager.StartTransaction())
+        //    {
+        //        BlockTable bt = trans.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
 
-                foreach (ObjectId btrId in bt)
-                {
-                    BlockTableRecord btr = trans.GetObject(btrId, OpenMode.ForRead) as BlockTableRecord;
+        //        foreach (ObjectId btrId in bt)
+        //        {
+        //            BlockTableRecord btr = trans.GetObject(btrId, OpenMode.ForRead) as BlockTableRecord;
 
-                    foreach (ObjectId entId in btr)
-                    {
-                        Entity ent = trans.GetObject(entId, OpenMode.ForRead) as Entity;
+        //            foreach (ObjectId entId in btr)
+        //            {
+        //                Entity ent = trans.GetObject(entId, OpenMode.ForRead) as Entity;
 
-                        if (ent is Line)
-                        {
-                            line = ent as Line;
+        //                if (ent is Line)
+        //                {
+        //                    line = ent as Line;
 
-                            // Do something with the line
-                            // For example, get the start and end point coordinates
-                            Point3d startPt = line.StartPoint;
-                            Point3d endPt = line.EndPoint;
-                        }
-                    }
-                }
-            }
-            if (lineSelectionResult.Status != PromptStatus.OK) return;
+        //                    // Do something with the line
+        //                    // For example, get the start and end point coordinates
+        //                    Point3d startPt = line.StartPoint;
+        //                    Point3d endPt = line.EndPoint;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    if (lineSelectionResult.Status != PromptStatus.OK) return;
 
-            // Przygotowanie linii
+        //    // Przygotowanie linii
             
-            // Dopasowanie cylindra
+        //    // Dopasowanie cylindra
                       
-            Vector<double> cylinderCenter = FitCylinderToPoints(pointList.ToArray());
+        //    Vector<double> cylinderCenter = FitCylinderToPoints(pointList.ToArray());
             
-            // Obliczenie wektora kierunku osi cylindra
+        //    // Obliczenie wektora kierunku osi cylindra
 
-            Vector3d axisDirection = new Vector3d(cylinderCenter[3], cylinderCenter[4], cylinderCenter[5]);
+        //    Vector3d axisDirection = new Vector3d(cylinderCenter[3], cylinderCenter[4], cylinderCenter[5]);
 
 
-            // Obliczenie punktu na linii osi cylindra, najbliższego do środka
-            Point3d closestPointOnLine = GetClosestPointOnLine(line, cylinderCenter[0], cylinderCenter[1], cylinderCenter[2], axisDirection);
+        //    // Obliczenie punktu na linii osi cylindra, najbliższego do środka
+        //    Point3d closestPointOnLine = GetClosestPointOnLine(line, cylinderCenter[0], cylinderCenter[1], cylinderCenter[2], axisDirection);
 
-            MessageBox.Show(axisDirection.X.ToString()+ axisDirection.Y.ToString()+ axisDirection.Z.ToString());
+        //    MessageBox.Show(axisDirection.X.ToString()+ axisDirection.Y.ToString()+ axisDirection.Z.ToString());
 
-            // Rysowanie linii osi cylindra
-            using (Transaction tr = HostApplicationServices.WorkingDatabase.TransactionManager.StartTransaction())
-            {
-                BlockTableRecord btr = (BlockTableRecord)tr.GetObject(SymbolUtilityServices.GetBlockModelSpaceId(HostApplicationServices.WorkingDatabase), OpenMode.ForWrite);
+        //    // Rysowanie linii osi cylindra
+        //    using (Transaction tr = HostApplicationServices.WorkingDatabase.TransactionManager.StartTransaction())
+        //    {
+        //        BlockTableRecord btr = (BlockTableRecord)tr.GetObject(SymbolUtilityServices.GetBlockModelSpaceId(HostApplicationServices.WorkingDatabase), OpenMode.ForWrite);
 
-                Vector3d axisDirectionVector = new Vector3d(axisDirection.X, axisDirection.Y, axisDirection.Z);
-                Line cylinderAxis = new Line(closestPointOnLine, closestPointOnLine + axisDirectionVector);
-                btr.AppendEntity(cylinderAxis);
-                tr.AddNewlyCreatedDBObject(cylinderAxis, true);
+        //        Vector3d axisDirectionVector = new Vector3d(axisDirection.X, axisDirection.Y, axisDirection.Z);
+        //        Line cylinderAxis = new Line(closestPointOnLine, closestPointOnLine + axisDirectionVector);
+        //        btr.AppendEntity(cylinderAxis);
+        //        tr.AddNewlyCreatedDBObject(cylinderAxis, true);
 
-                tr.Commit();
-            }
-        }
+        //        tr.Commit();
+        //    }
+        //}
                 
 
         private PromptEntityResult GetEntity(string message)
@@ -132,44 +132,10 @@ namespace GeoLib.Entities.RectBlanking
             return Application.DocumentManager.MdiActiveDocument.Editor.GetEntity(entityOptions);
         }
 
-        private Vector<double> FitCylinderToPoints(Point3d[] points)
-        {
-            int n = points.Length;
-
-            // Convert points to MathNet matrix
-            Matrix<double> pointsMatrix = DenseMatrix.OfArray(new double[,]
-            {
-        { points[0].X, points[0].Y, points[0].Z },
-        { points[1].X, points[1].Y, points[1].Z },
-        // ...
-        { points[n-1].X, points[n-1].Y, points[n-1].Z }
-            });
-
-            // Center of the cylinder
-            Vector<double> cylinderCenter = DenseVector.OfArray(new double[] { 0, 0, 0, 1 });
-
-            // Find the best fitting cylinder using the RANSAC algorithm
-            // Use MathNet and the GeoLib library
-            var ransac = new Ransac<Point3d>(new CylinderModel(), new CylinderDistanceMeasure(), 0.01, 0.99, 50);
-
-            ransac.Compute(points);
-            var cylinder = (Cylinder)ransac.Model;
-
-            // Update the cylinder center with the new values
-            cylinderCenter[0] = cylinder.Center.X;
-            cylinderCenter[1] = cylinder.Center.Y;
-            cylinderCenter[2] = cylinder.Center.Z;
-
-            // Compute the axis direction of the cylinder
-            Vector3d axisDirection = cylinder.Axis.Direction;
-
-            // Update the cylinder center with the axis direction
-            cylinderCenter[3] = axisDirection.X;
-            cylinderCenter[4] = axisDirection.Y;
-            cylinderCenter[5] = axisDirection.Z;
-
-            return cylinderCenter;
-        }
+        //private Vector<double> FitCylinderToPoints(Point3d[] points)
+        //{
+           
+        //}
 
         private Point3d GetClosestPointOnLine(Line line, double x, double y, double z, Vector3d direction)
         {
@@ -194,86 +160,86 @@ namespace GeoLib.Entities.RectBlanking
 
             return closestPointOnLine;
         }
-        public class Ransac<T>
-        {
-            private IModel<T> model;
-            private IDistanceMeasure<T> distanceMeasure;
-            private double inlierThreshold;
-            private double confidence;
-            private int maxIterations;
+        //public class Ransac<T>
+        //{
+        //    private IModel<T> model;
+        //    private IDistanceMeasure<T> distanceMeasure;
+        //    private double inlierThreshold;
+        //    private double confidence;
+        //    private int maxIterations;
 
-            public Ransac(IModel<T> model, IDistanceMeasure<T> distanceMeasure, double inlierThreshold, double confidence, int maxIterations)
-            {
-                this.model = model;
-                this.distanceMeasure = distanceMeasure;
-                this.inlierThreshold = inlierThreshold;
-                this.confidence = confidence;
-                this.maxIterations = maxIterations;
-            }
+        //    public Ransac(IModel<T> model, IDistanceMeasure<T> distanceMeasure, double inlierThreshold, double confidence, int maxIterations)
+        //    {
+        //        this.model = model;
+        //        this.distanceMeasure = distanceMeasure;
+        //        this.inlierThreshold = inlierThreshold;
+        //        this.confidence = confidence;
+        //        this.maxIterations = maxIterations;
+        //    }
 
-            public T FindBestFit(List<T> data)
-            {
-                T bestFit = default(T);
-                int numInliers = 0;
+        //    public T FindBestFit(List<T> data)
+        //    {
+        //        T bestFit = default(T);
+        //        int numInliers = 0;
 
-                for (int i = 0; i < maxIterations; i++)
-                {
-                    var sample = GetRandomSample(data);
-                    var fit = model.Fit(sample);
-                    var inliers = GetInliers(data, fit);
+        //        for (int i = 0; i < maxIterations; i++)
+        //        {
+        //            var sample = GetRandomSample(data);
+        //            var fit = model.Fit(sample);
+        //            var inliers = GetInliers(data, fit);
 
-                    if (inliers.Count > numInliers)
-                    {
-                        numInliers = inliers.Count;
-                        bestFit = fit;
-                    }
+        //            if (inliers.Count > numInliers)
+        //            {
+        //                numInliers = inliers.Count;
+        //                bestFit = fit;
+        //            }
 
-                    var inlierRatio = (double)inliers.Count / data.Count;
+        //            var inlierRatio = (double)inliers.Count / data.Count;
 
-                    if (inlierRatio >= confidence)
-                    {
-                        break;
-                    }
-                }
+        //            if (inlierRatio >= confidence)
+        //            {
+        //                break;
+        //            }
+        //        }
 
-                return bestFit;
-            }
+        //        return bestFit;
+        //    }
 
-            private List<T> GetRandomSample(List<T> data)
-            {
-                var sample = new List<T>();
+        //    //private List<T> GetRandomSample(List<T> data)
+        //    //{
+        //    //    var sample = new List<T>();
 
-                while (sample.Count < model.NumSamples)
-                {
-                    var randomIndex = new Random().Next(data.Count);
-                    var randomPoint = data[randomIndex];
+        //    //    while (sample.Count < model.NumSamples)
+        //    //    {
+        //    //        var randomIndex = new Random().Next(data.Count);
+        //    //        var randomPoint = data[randomIndex];
 
-                    if (!sample.Contains(randomPoint))
-                    {
-                        sample.Add(randomPoint);
-                    }
-                }
+        //    //        if (!sample.Contains(randomPoint))
+        //    //        {
+        //    //            sample.Add(randomPoint);
+        //    //        }
+        //    //    }
 
-                return sample;
-            }
+        //    //    return sample;
+        //    //}
 
-            private List<T> GetInliers(List<T> data, T fit)
-            {
-                var inliers = new List<T>();
+        //    private List<T> GetInliers(List<T> data, T fit)
+        //    {
+        //        var inliers = new List<T>();
 
-                foreach (var point in data)
-                {
-                    var distance = distanceMeasure.GetDistance(point, fit);
+        //        foreach (var point in data)
+        //        {
+        //            var distance = distanceMeasure.GetDistance(point, fit);
 
-                    if (distance < inlierThreshold)
-                    {
-                        inliers.Add(point);
-                    }
-                }
+        //            if (distance < inlierThreshold)
+        //            {
+        //                inliers.Add(point);
+        //            }
+        //        }
 
-                return inliers;
-            }
-        }
+        //        return inliers;
+        //    }
+        //}
 
         public interface IModel<T>
         {

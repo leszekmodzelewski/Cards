@@ -111,11 +111,11 @@ namespace GeoLib.Entities.RectBlanking
                 {
                     Application.ShowAlertDialog($"{pointsToSave.Count} points has been saved.");
                 }
-                var resultX = SWF.MessageBox.Show("save to file?", "Point save", SWF.MessageBoxButtons.YesNo);
+               // var resultX = SWF.MessageBox.Show("save to file?", "Point save", SWF.MessageBoxButtons.YesNo);
 
-                if (resultX == SWF.DialogResult.Yes)
+                //if (resultX == SWF.DialogResult.Yes)
 
-                    SaveToFile(pointsToSave);
+               //     SaveToFile(pointsToSave);
                 var mc = new Commands.Cmd_Fit(); // Błąd kompilatora CS0120
                 mc.Execute();
             }

@@ -74,7 +74,9 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System.Core"
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Core" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
@@ -161,15 +163,21 @@
     <Compile Include="Logic\SingleRange.cs" />
     <Compile Include="Wpf\SimpleCommand.cs" />
     <Compile Include="ViewModels\ValueOffsetViewModel.cs" />
-    <Compile Include="Winforms\CalculateDataWindow.cs" />
+    <Compile Include="Winforms\CalculateDataWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Winforms\CalculateDataWindow.Designer.cs">
       <DependentUpon>CalculateDataWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Winforms\GenericWinFormForWpf.cs" />
+    <Compile Include="Winforms\GenericWinFormForWpf.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Winforms\GenericWinFormForWpf.Designer.cs">
       <DependentUpon>GenericWinFormForWpf.cs</DependentUpon>
     </Compile>
-    <Compile Include="Winforms\ImportedFilesWindow.cs" />
+    <Compile Include="Winforms\ImportedFilesWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Winforms\ImportedFilesWindow.Designer.cs">
       <DependentUpon>ImportedFilesWindow.cs</DependentUpon>
     </Compile>

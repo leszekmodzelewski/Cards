@@ -17,26 +17,26 @@ namespace GeoLib.Commands
         [CommandMethod("FIT", CommandFlags.UsePickSet)]
         public void Execute()
         {
-            Points.resultImport = MessageBox.Show("Iport Coordinates from cad points? ", "Iport", MessageBoxButtons.YesNo);
+            //Points.resultImport = MessageBox.Show("Iport Coordinates from cad points? ", "Iport", MessageBoxButtons.YesNo);
 
-            if (Points.resultImport == DialogResult.Yes)
-            {
-                if (Points.RealPoints != null && Points.RealPoints.Length > 0)
-                {
-                    PointCalculator pc = new PointCalculator();
-                    Points.MatchedPoints = pc.Calculate(Points.TheoryPoints, Points.RealPoints,
-                        string.IsNullOrEmpty(Points.MaxErrorFit)
-                            ? Double.MaxValue
-                            : int.Parse(Points.MaxErrorFit));
+            //if (Points.resultImport == DialogResult.Yes)
+            //{
+            //    if (Points.RealPoints != null && Points.RealPoints.Length > 0)
+            //    {
+            //        PointCalculator pc = new PointCalculator();
+            //        Points.MatchedPoints = pc.Calculate(Points.TheoryPoints, Points.RealPoints,
+            //            string.IsNullOrEmpty(Points.MaxErrorFit)
+            //                ? Double.MaxValue
+            //                : int.Parse(Points.MaxErrorFit));
 
-                    //CalculationUtils.UpdateCadEntity(Points.MatchedPoints, ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database, Points.OffsetToRealPointForDisplayPurposeOnly);
-                }
-                else
-                {
-                    //CalculationUtils.UpdateCadRangeOnlyEntity(ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database, Points.TheoryPoints);
-                }
-            }
-            else
+            //        //CalculationUtils.UpdateCadEntity(Points.MatchedPoints, ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database, Points.OffsetToRealPointForDisplayPurposeOnly);
+            //    }
+            //    else
+            //    {
+            //        //CalculationUtils.UpdateCadRangeOnlyEntity(ZwSoft.ZwCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database, Points.TheoryPoints);
+            //    }
+            //}
+           // else
             {
                 using (Winforms.CalculateDataWindow dlg = new CalculateDataWindow())
                 {

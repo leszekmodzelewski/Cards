@@ -104,7 +104,7 @@ namespace GeoLib.Entities.RectBlanking
     public class Cmd_FitCircle : Cmd_ArrowReadPoints
     {
 
-        [CommandMethod("FITCIRCLE", CommandFlags.UsePickSet)]
+        [CommandMethod("FITCIRCLE2", CommandFlags.UsePickSet)]
         public void ExportToFile()
         {
             ArrowData.AddTheoryPoints(ReadPoints(countPoints: false));
@@ -164,7 +164,7 @@ namespace GeoLib.Entities.RectBlanking
     public class Cmd_EXPORTPOINTSTOFILE2 : Cmd_ArrowReadPoints
     {
 
-        [CommandMethod("EXPORTPOINTSTOFILE2", CommandFlags.UsePickSet)]
+        [CommandMethod("/*/*EXPORTPOINTSTOFILE*/*/2", CommandFlags.UsePickSet)]
         public void ExportToFile()
         {
             ArrowData.AddTheoryPoints(ReadPoints());
@@ -177,7 +177,7 @@ namespace GeoLib.Entities.RectBlanking
     public class Cmd_Leveling : Cmd_ArrowReadPoints
     {
 
-        [CommandMethod("LEVELING", CommandFlags.UsePickSet)]
+        [CommandMethod("LEVELING1", CommandFlags.UsePickSet)]
         public void ExportToFile()
         {
             ArrowData.AddTheoryPoints(ReadPoints());
@@ -238,6 +238,7 @@ namespace GeoLib.Entities.RectBlanking
         {
             // TODO: Avoid duplication
             theoryPoints.AddRange(points); //co to robi?
+            
         }
 
         public static void AddTheoryToBase()
